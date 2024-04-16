@@ -26,6 +26,7 @@
 //    oi_free(sensor_data);
 //}
 
+
 double move_forward(oi_t *sensor_data, double distance_mm) {
     double sum = 0;
     int power = 10;
@@ -118,4 +119,40 @@ double turn_left(oi_t *sensor, double degrees) {
     }
     oi_setWheels(0,0);
     return sum;
+}
+
+double moveCalibrate(oi_t *sensor_data)
+{
+    while(button_getButton() != 4);
+    move_forward(sensor_data, 1000);
+    while(button_getButton() != 4);
+    move_forward(sensor_data,2000);
+    return 0.0;
+}
+
+double turnCalibrate(oi_t *sensor_data)
+{
+
+    double sum;
+    sum = turn_left(sensor_data,90);
+    while(1)
+        {
+            switch(button_getButton())
+            {
+            case(1):
+                sum+=turn_left(sensor_data,1);
+                break;
+            case(2):
+                sum+=turn_right(sensor_data,1);
+                break;
+            case(3):
+                sum+=turn_left(sensor_data,20);
+                break;
+            case(4):
+                sum+=turn_right(sensor_data,20);
+                break;
+            }
+            lcd_printf("%lf", sum);
+        }
+    return 0.0;
 }

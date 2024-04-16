@@ -1,6 +1,6 @@
-#include "adc.h"
+#include "IR.h"
 
-void adc_init()
+void IR_init()
 {
     SYSCTL_RCGCGPIO_R |= 0x2;
     while(!(SYSCTL_RCGCGPIO_R & 0x2));
@@ -24,7 +24,7 @@ void adc_init()
 
     ADC0_ACTSS_R |= 0x8;
 }
-uint16_t adc_read()
+uint16_t IR_read()
 {
     uint16_t temp;
 

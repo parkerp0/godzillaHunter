@@ -121,7 +121,7 @@ float ping_getDistance (void){
     //sprintf(message, "THIS IS A TEST");
     //lcd_printf(message);
 
-    return dif * 0.0000107;//scaled to meters
+    return dif * 0.0000107 + PINGOFFSET;//scaled to meters
 
 }
 
@@ -134,15 +134,37 @@ unsigned long ping_getPulseWidth(){
         if(START_TIME>END_TIME)
         {
             width = START_TIME - END_TIME;
-            sprintf(message, "pulse Width: %lu \nDist: %f \nNo rollover",width,width* 0.0000107);
+            sprintf(message, "pulse Width: %lu \nDist: %f \nNo rollover",width,width* 0.0000107 + PINGOFFSET);
         }
         else
         {
             width = START_TIME + (0xFFFFFF - END_TIME);
-            sprintf(message, "pulse Width: %lu \nDist: %f \n rollover",width,width* 0.0000107);
+            sprintf(message, "pulse Width: %lu \nDist: %f \n rollover",width,width* 0.0000107 + PINGOFFSET);
         }
 
 
         lcd_printf(message);
         return width;
+}
+
+float pingCalibrate()
+{
+    unsigned long width;
+
+        ping_trigger();
+
+
+    while(STATE != DONE);
+            if(START_TIME>END_TIME)
+            {
+                width = START_TIME - END_TIME;
+            }
+            else
+            {
+                width = START_TIME + (0xFFFFFF - END_TIME);
+            }
+
+
+            lcd_printf("width: %lu dist: %f",width,width* 0.0000107);
+            return width;
 }
