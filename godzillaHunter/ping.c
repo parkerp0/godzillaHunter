@@ -121,7 +121,7 @@ float ping_getDistance (void){
     //sprintf(message, "THIS IS A TEST");
     //lcd_printf(message);
 
-    return dif * 0.0000107;//scaled to meters
+    return dif * 0.0000107 * 100;//scaled to meters
 
 }
 
