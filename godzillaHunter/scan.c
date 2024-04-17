@@ -17,6 +17,7 @@ void scan(){
             int i = 0;              //Constants and counters for for loops
             int j = 0;
             int k = 0;
+            int m = 0;
             char toPutty[100];      //Used to make the PuTTy output a message
             char *toPutty_ptr = toPutty;
             int IRmeasurement;
@@ -115,10 +116,15 @@ void scan(){
                         }
                     }
 
-
+                    //initialize the smallest width, angle, and distance
                     int SmallestWidth = 1000;
                     int SmallestWidthAngle = 0;
                     int SmallestWidthDistance = 0;
+                    
+                    //initialize the largest width, angle, and distance
+                    int LargestWidth = 0;
+                    int LargestWidthAngle = 0;
+                    int LargestWidthDistance = 0;
 
 
                     float LinearWidth[10] = {0};    //Stores object linear width
@@ -149,13 +155,31 @@ void scan(){
                             SmallestWidthDistance = avgDist[i];
                         }
                     }
+                
+                    for (i = 0; i < l; i++) {
+                        if (LinearWidth[i] > LargestWidth) {   //Finds the object with the largest linear width and finds their angle and distance
+                            LargestWidth = LinearWidth[i];
+                            LargestWidthAngle = avgAngle[i];
+                            LargestWidthDistance = avgDist[i];
+                        }
+                    }
 
+                            //print smallest object info to Putty
                             sprintf(toPutty, "Smallest object width: %d\tAngle: %d\tDistance: %d\n\r", SmallestWidth, SmallestWidthAngle, SmallestWidthDistance);
                             j = 0;
                             while (toPutty[j] != '\0') {
                             uart_sendChar(toPutty[j]);
                             j++;
                             }
+                            
+                            //print largest object info to Putty
+                            sprintf(toPutty, "Largest object width: %d\tAngle: %d\tDistance: %d\n\r", LargestWidth, LargestWidthAngle, LargestWidthDistance);
+                            m = 0;
+                            while (toPutty[m] != '\0') {
+                                uart_sendChar(toPutty[j]);
+                                m++;
+                            }
+                
 
              break;
             }
