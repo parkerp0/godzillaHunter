@@ -2,7 +2,7 @@
  * scan.c
  *
  *  Created on: Apr 16, 2024
- *      Author: cdoran
+ *      Author: cdoran & lcano
  */
 #include "Timer.h"
 #include "scan.h"
@@ -29,6 +29,7 @@ void scan(){
                     i = 0;
                     j = 0;
                     k = 0;
+                    m = 0;
 
                     int sensorAngle[90] = {0};        //sensorAngle will be set to angles where there is an object
                     float sensorDistance[90] = {0};   //sensorDistance will be set to the distance to the object
@@ -40,7 +41,7 @@ void scan(){
                         servo_move(i);
                         pingDistance = ping_getDistance();
                         IRmeasurement = adc_read();
-                        if (IRmeasurement > 700) {                                //The cybot will detect an object when the IR output is greater than 900
+                        if (IRmeasurement > 900) {                                //The cybot will detect an object when the IR output is greater than 900
                             sprintf(toPutty, "%d\t%f\n\r", i, pingDistance);     //Sends the object angle and distance at that angle to the PuTTy
                             while (toPutty[j] != '\0') {
                                 uart_sendChar(toPutty[j]);
@@ -127,13 +128,13 @@ void scan(){
                     int LargestWidthDistance = 0;
 
 
-                    float LinearWidth[10] = {0};    //Stores object linear width
+                    float LinearWidth[10] = {0};                                                                     //Stores object linear width
                     for (i = 0; i < l; i++) {
                         LinearWidth[i] = sqrt(pow(StartDist[i], 2) + pow(EndDist[i], 2) - 2*StartDist[i]*EndDist[i]*cos((width[i])*(M_PI / 180)));  //Uses Law of Cosines to find the linear width of each object
                     }
 
                     j = 0;
-                    sprintf(toPutty, "\n\rObject\tAngle\tDistance\tWidth\n\r");     //Sets up the PuTTy display before reading off the object angle, distance, and width
+                    sprintf(toPutty, "\n\rObject\tAngle\tDistance\tWidth\n\r");                                     //Sets up the PuTTy display before reading off the object angle, distance, and width
                     while (toPutty[j] != '\0') {
                         uart_sendChar(toPutty[j]);
                         j++;
@@ -176,7 +177,7 @@ void scan(){
                             sprintf(toPutty, "Largest object width: %d\tAngle: %d\tDistance: %d\n\r", LargestWidth, LargestWidthAngle, LargestWidthDistance);
                             m = 0;
                             while (toPutty[m] != '\0') {
-                                uart_sendChar(toPutty[j]);
+                                uart_sendChar(toPutty[m]);
                                 m++;
                             }
                 
