@@ -11,15 +11,14 @@
  */
 int main(void)
 {
-    int breaker = 0;
 
     oi_t *sensorD = oi_alloc();
     oi_init(sensorD);
 
 	timer_init();
 	lcd_init();
-	ping_init();
 	servo_init();
+	ping_init();
 	button_init();
 	IR_init();
 
@@ -32,7 +31,7 @@ int main(void)
 	    switch(button_getButton())
 	    {
 	    case 0:
-	        lcd_printf("1: Move \n2: Turn \n3:Ping \n4:IR");
+	        lcd_printf("1:Move \n2:Servo \n3:Ping \n4:IR");
 	    break;
 	    case 1:
 	        moveCalibrate(sensorD);
@@ -40,7 +39,7 @@ int main(void)
 	        turnCalibrate(sensorD);
 	        timer_waitMillis(1000);
 	    break;
-	    case 2
+	    case 2:
 	        servo_calibrate();
 	        timer_waitMillis(1000);
 	    break;

@@ -60,18 +60,28 @@ void servo_calibrate()
         switch(button_getButton())
         {
         case(1):
+            TIMER1_CTL_R |= 0x100;
             TIMER1_TBMATCHR_R +=10;
+
             break;
         case(2):
+            TIMER1_CTL_R |= 0x100;
             TIMER1_TBMATCHR_R -=10;
             break;
         case(3):
+            TIMER1_CTL_R |= 0x100;
             TIMER1_TBMATCHR_R +=100;
             break;
         case(4):
+            TIMER1_CTL_R |= 0x100;
             TIMER1_TBMATCHR_R -=100;
             break;
+        default:
+            timer_waitMillis(100);
+            TIMER1_CTL_R &=(~0x100);
+            break;
         }
+
 
     sprintf(msgBuffer,"%ud",TIMER1_TBMATCHR_R);
     lcd_printf(msgBuffer);

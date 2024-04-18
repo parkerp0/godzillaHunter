@@ -123,9 +123,11 @@ double turn_left(oi_t *sensor, double degrees) {
 
 double moveCalibrate(oi_t *sensor_data)
 {
-    lcd_printf("PRESS 4 FOR MOVE");
+    lcd_printf("PRESS 4 To move 1 meter");
     while(button_getButton() != 4);
     move_forward(sensor_data, 1000);
+
+    lcd_printf("PRESS 4 To move 2 meters");
     while(button_getButton() != 4);
     move_forward(sensor_data,2000);
     return 0.0;
@@ -133,6 +135,9 @@ double moveCalibrate(oi_t *sensor_data)
 
 double turnCalibrate(oi_t *sensor_data)
 {
+
+    lcd_printf("PRESS 4 to start turn calibration");
+    while(button_getButton() != 4);
 
     double sum;
     sum = turn_left(sensor_data,90);
