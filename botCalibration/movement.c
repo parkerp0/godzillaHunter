@@ -66,7 +66,7 @@ double move_forward(oi_t *sensor_data, double distance_mm) {
             return 0;
         }
 
-        oi_setWheels(power, power);
+        oi_setWheels(power-TWISTOFFSET, power + TWISTOFFSET);
         lcd_printf("%lf", sum);
     }
     oi_setWheels(0,0);
@@ -89,7 +89,7 @@ double move_backward(oi_t *sensor_data, double distance_mm) {
         else if (sum < -distance_mm/2.0  && power < -10)
             power += 10;
 
-        oi_setWheels(power, power);
+        oi_setWheels(power + TWISTOFFSET, power - TWISTOFFSET);//change this
         lcd_printf("%lf", sum);
     }
     oi_setWheels(0,0);
@@ -123,6 +123,7 @@ double turn_left(oi_t *sensor, double degrees) {
 
 double moveCalibrate(oi_t *sensor_data)
 {
+    lcd_printf("PRESS 4 FOR MOVE");
     while(button_getButton() != 4);
     move_forward(sensor_data, 1000);
     while(button_getButton() != 4);
@@ -152,7 +153,7 @@ double turnCalibrate(oi_t *sensor_data)
                 sum+=turn_right(sensor_data,20);
                 break;
             }
-            lcd_printf("%lf", sum);
+            lcd_printf("1: left 1 \n2: right 1 \n3:left 20 \n4:right 20\n%lf", sum);
         }
     return 0.0;
 }

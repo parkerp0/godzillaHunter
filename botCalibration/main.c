@@ -11,6 +11,8 @@
  */
 int main(void)
 {
+    int breaker = 0;
+
     oi_t *sensorD = oi_alloc();
     oi_init(sensorD);
 
@@ -19,11 +21,41 @@ int main(void)
 	ping_init();
 	servo_init();
 	button_init();
+	IR_init();
 
 	//moveCalibrate(sensorD);
-	//turnCalibrate(sensorD);
+	//
 
-	while(1)pingCalibrate();
+	//pingCalibrate();
+	while(1)
+	{
+	    switch(button_getButton())
+	    {
+	    case 0:
+	        lcd_printf("1: Move \n2: Turn \n3:Ping \n4:IR");
+	    break;
+	    case 1:
+	        moveCalibrate(sensorD);
+	        timer_waitMillis(1000);
+	        turnCalibrate(sensorD);
+	        timer_waitMillis(1000);
+	    break;
+	    case 2
+	        servo_calibrate();
+	        timer_waitMillis(1000);
+	    break;
+	    case 3:
+	        pingCalibrate();
+	        timer_waitMillis(1000);
+	    break;
+	    case 4:
+	        IR_calibrate(sensorD);
+	        timer_waitMillis(1000);
+	    break;
+
+	    }
+
+	}
 
 
 	//servo_calibrate();

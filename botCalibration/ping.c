@@ -121,7 +121,7 @@ float ping_getDistance (void){
     //sprintf(message, "THIS IS A TEST");
     //lcd_printf(message);
 
-    return dif * 0.0000107 + PINGOFFSET;//scaled to meters
+    return (dif * 0.0000107) + PINGOFFSET;//scaled to meters
 
 }
 
@@ -151,8 +151,11 @@ float pingCalibrate()
 {
     unsigned long width;
 
-        ping_trigger();
 
+
+    while(button_getButton()!= 4)
+    {
+        ping_trigger();
 
     while(STATE != DONE);
             if(START_TIME>END_TIME)
@@ -165,6 +168,9 @@ float pingCalibrate()
             }
 
 
-            lcd_printf("width: %lu dist: %f",width,width* 0.0000107);
+            lcd_printf("Press 4 to exit\nwidth: %lu dist: %f",width,width* 0.0000107);
+            timer_waitMillis(5);
+            }
+
             return width;
 }

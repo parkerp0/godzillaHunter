@@ -55,7 +55,6 @@ void servo_calibrate()
 {
     char msgBuffer[90];
 
-    button_init();
     while(1)
     {
         switch(button_getButton())
