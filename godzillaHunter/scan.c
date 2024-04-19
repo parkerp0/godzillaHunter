@@ -2,7 +2,7 @@
  * scan.c
  *
  *  Created on: Apr 16, 2024
- *      Author: cdoran
+ *      Author: cdoran & lcano
  */
 #include "Timer.h"
 #include "scan.h"
@@ -16,6 +16,7 @@ void scan(){
             int i = 0;              //Constants and counters for for loops
             int j = 0;
             int k = 0;
+            int m = 0;
             char toPutty[100];      //Used to make the PuTTy output a message
             char *toPutty_ptr = toPutty;
             int IRmeasurement;
@@ -27,6 +28,7 @@ void scan(){
                     i = 0;
                     j = 0;
                     k = 0;
+                    m = 0;
 
                     int sensorAngle[90] = {0};        //sensorAngle will be set to angles where there is an object
                     float sensorDistance[90] = {0};   //sensorDistance will be set to the distance to the object
@@ -37,8 +39,13 @@ void scan(){
                     for (i = 0; i <= 180; i = i + 2) {                              //Has the cybot scan every 2 degrees from 0 to 180 degrees
                         servo_move(i);
                         pingDistance = ping_getDistance();
+<<<<<<< HEAD
                         IRmeasurement = IR_read();
                         if (IRmeasurement > 700) {                                //The cybot will detect an object when the IR output is greater than 900
+=======
+                        IRmeasurement = adc_read();
+                        if (IRmeasurement > 900) {                                //The cybot will detect an object when the IR output is greater than 900
+>>>>>>> 2d29854bb9d49ef8c76d6bb207d6c5e0c664d82d
                             sprintf(toPutty, "%d\t%f\n\r", i, pingDistance);     //Sends the object angle and distance at that angle to the PuTTy
                             while (toPutty[j] != '\0') {
                                 uart_sendChar(toPutty[j]);
@@ -114,19 +121,24 @@ void scan(){
                         }
                     }
 
-
+                    //initialize the smallest width, angle, and distance
                     int SmallestWidth = 1000;
                     int SmallestWidthAngle = 0;
                     int SmallestWidthDistance = 0;
+                    
+                    //initialize the largest width, angle, and distance
+                    int LargestWidth = 0;
+                    int LargestWidthAngle = 0;
+                    int LargestWidthDistance = 0;
 
 
-                    float LinearWidth[10] = {0};    //Stores object linear width
+                    float LinearWidth[10] = {0};                                                                     //Stores object linear width
                     for (i = 0; i < l; i++) {
                         LinearWidth[i] = sqrt(pow(StartDist[i], 2) + pow(EndDist[i], 2) - 2*StartDist[i]*EndDist[i]*cos((width[i])*(M_PI / 180)));  //Uses Law of Cosines to find the linear width of each object
                     }
 
                     j = 0;
-                    sprintf(toPutty, "\n\rObject\tAngle\tDistance\tWidth\n\r");     //Sets up the PuTTy display before reading off the object angle, distance, and width
+                    sprintf(toPutty, "\n\rObject\tAngle\tDistance\tWidth\n\r");                                     //Sets up the PuTTy display before reading off the object angle, distance, and width
                     while (toPutty[j] != '\0') {
                         uart_sendChar(toPutty[j]);
                         j++;
@@ -148,13 +160,31 @@ void scan(){
                             SmallestWidthDistance = avgDist[i];
                         }
                     }
+                
+                    for (i = 0; i < l; i++) {
+                        if (LinearWidth[i] > LargestWidth) {   //Finds the object with the largest linear width and finds their angle and distance
+                            LargestWidth = LinearWidth[i];
+                            LargestWidthAngle = avgAngle[i];
+                            LargestWidthDistance = avgDist[i];
+                        }
+                    }
 
+                            //print smallest object info to Putty
                             sprintf(toPutty, "Smallest object width: %d\tAngle: %d\tDistance: %d\n\r", SmallestWidth, SmallestWidthAngle, SmallestWidthDistance);
                             j = 0;
                             while (toPutty[j] != '\0') {
                             uart_sendChar(toPutty[j]);
                             j++;
                             }
+                            
+                            //print largest object info to Putty
+                            sprintf(toPutty, "Largest object width: %d\tAngle: %d\tDistance: %d\n\r", LargestWidth, LargestWidthAngle, LargestWidthDistance);
+                            m = 0;
+                            while (toPutty[m] != '\0') {
+                                uart_sendChar(toPutty[m]);
+                                m++;
+                            }
+                
 
              break;
             }
