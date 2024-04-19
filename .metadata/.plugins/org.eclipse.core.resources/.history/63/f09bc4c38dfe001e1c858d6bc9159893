@@ -24,7 +24,6 @@ double moveCalibrate(oi_t *sensor_data, coords *robotCoords);
 double turnCalibrate(oi_t *sensor_data, coords *robotCoords);
 
 double move_forward(oi_t *sensor_data, coords *robotCoords, double distance_mm);
-double move_to_point(oi_t *sensor_data, coords *robotCoords, double global_x, double global_y);
 double move_backward(oi_t *sensor_data, coords *robotCoords, double distance_mm);
 double turn_right(oi_t *sensor, coords *robotCoords, double degrees);
 double turn_left(oi_t *sensor, coords *robotCoords, double degrees);

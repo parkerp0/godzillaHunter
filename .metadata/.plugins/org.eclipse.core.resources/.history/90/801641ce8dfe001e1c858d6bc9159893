@@ -2,45 +2,45 @@
 #include "movement.h"
 
 
-//int main() {
-//
-//    oi_t *sensor_data = oi_alloc(); // do this only once at start of main()
-//    oi_init(sensor_data); // do this only once at start of main()
-//
-//
-//
-//    timer_init();
-//    lcd_init();
-//
-//    coords *robotCoords = malloc(sizeof(coords));
-//    robotCoords->x = 0;
-//    robotCoords->y = 0;
-//    robotCoords->heading = 0;
-//
-//    // test movement
-////    turn_right(sensor_data, robotCoords, 405);
-////    timer_waitMillis(1000);
-////    move_forward(sensor_data, robotCoords, 1000.0);
-////    timer_waitMillis(1000);
-////    turn_left(sensor_data, robotCoords, 45);
-////    timer_waitMillis(1000);
-////    move_backward(sensor_data, robotCoords, 1000.0);
-//
-//    // test move to point
-//    move_to_point(sensor_data, robotCoords, 610 * 1.5, 610*3);
-////    move_to_point(sensor_data, robotCoords, -450, 450);
-////    move_to_point(sensor_data, robotCoords, -450, 0);
-////    move_to_point(sensor_data, robotCoords, 450, 0);
-////    move_to_point(sensor_data, robotCoords, 0, 450);
-////    move_to_point(sensor_data, robotCoords, 0, -450);
-////    move_to_point(sensor_data, robotCoords, 450, 450);
-////    move_to_point(sensor_data, robotCoords, 450, -450);
-//
-//
-//    oi_setWheels(0,0);
-//
-//    oi_free(sensor_data);
-//}
+int main() {
+
+    oi_t *sensor_data = oi_alloc(); // do this only once at start of main()
+    oi_init(sensor_data); // do this only once at start of main()
+
+
+
+    timer_init();
+    lcd_init();
+
+    coords *robotCoords = malloc(sizeof(coords));
+    robotCoords->x = 0;
+    robotCoords->y = 0;
+    robotCoords->heading = 0;
+
+    // test movement
+//    turn_right(sensor_data, robotCoords, 405);
+//    timer_waitMillis(1000);
+//    move_forward(sensor_data, robotCoords, 1000.0);
+//    timer_waitMillis(1000);
+//    turn_left(sensor_data, robotCoords, 45);
+//    timer_waitMillis(1000);
+//    move_backward(sensor_data, robotCoords, 1000.0);
+
+    // test move to point
+    move_to_point(sensor_data, robotCoords, 610 * 1.5, 610*3);
+//    move_to_point(sensor_data, robotCoords, -450, 450);
+//    move_to_point(sensor_data, robotCoords, -450, 0);
+//    move_to_point(sensor_data, robotCoords, 450, 0);
+//    move_to_point(sensor_data, robotCoords, 0, 450);
+//    move_to_point(sensor_data, robotCoords, 0, -450);
+//    move_to_point(sensor_data, robotCoords, 450, 450);
+//    move_to_point(sensor_data, robotCoords, 450, -450);
+
+
+    oi_setWheels(0,0);
+
+    oi_free(sensor_data);
+}
 
 
 double move_to_point(oi_t *sensor_data, coords *robotCoords, double global_x, double global_y){

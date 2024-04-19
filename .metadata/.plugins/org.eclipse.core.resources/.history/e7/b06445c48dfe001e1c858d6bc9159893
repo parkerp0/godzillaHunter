@@ -18,60 +18,18 @@
 //    robotCoords->heading = 0;
 //
 //    // test movement
-////    turn_right(sensor_data, robotCoords, 405);
-////    timer_waitMillis(1000);
-////    move_forward(sensor_data, robotCoords, 1000.0);
-////    timer_waitMillis(1000);
-////    turn_left(sensor_data, robotCoords, 45);
-////    timer_waitMillis(1000);
-////    move_backward(sensor_data, robotCoords, 1000.0);
-//
-//    // test move to point
-//    move_to_point(sensor_data, robotCoords, 610 * 1.5, 610*3);
-////    move_to_point(sensor_data, robotCoords, -450, 450);
-////    move_to_point(sensor_data, robotCoords, -450, 0);
-////    move_to_point(sensor_data, robotCoords, 450, 0);
-////    move_to_point(sensor_data, robotCoords, 0, 450);
-////    move_to_point(sensor_data, robotCoords, 0, -450);
-////    move_to_point(sensor_data, robotCoords, 450, 450);
-////    move_to_point(sensor_data, robotCoords, 450, -450);
-//
+//    turn_right(sensor_data, robotCoords, 45);
+//    timer_waitMillis(1000);
+//    move_forward(sensor_data, robotCoords, 1000.0);
+//    timer_waitMillis(1000);
+//    turn_left(sensor_data, robotCoords, 45);
+//    timer_waitMillis(1000);
+//    move_backward(sensor_data, robotCoords, 1000.0);
 //
 //    oi_setWheels(0,0);
 //
 //    oi_free(sensor_data);
 //}
-
-
-double move_to_point(oi_t *sensor_data, coords *robotCoords, double global_x, double global_y){
-
-    double deltaX = global_x - robotCoords->x;
-    double deltaY = global_y - robotCoords->y;
-    double targetHeading = fmod(atan2(deltaX, deltaY) * 180.0 / M_PI, 360); // lock in the degrees to be -360 to 360
-    double deltaHeading = fabs(robotCoords->heading - targetHeading);
-
-    // Figure out which way to turn
-    int turnDir = 1; // default is turn right
-    if (targetHeading < robotCoords->heading) // Turn left instead
-        turnDir = -1;
-//    if (fabs(targetHeading - robotCoords->heading) > 180){ // wraps around so change the direction
-//        turnDir *= -1;
-//        deltaHeading = 180 - deltaHeading;
-//    }
-
-    if (turnDir == 1)
-        turn_right(sensor_data, robotCoords, deltaHeading);
-    else
-        turn_left(sensor_data, robotCoords, deltaHeading);
-
-    lcd_printf("TurnDIR: %d\nTarget: %lf\nCurrent: %lf\nDelta: %lf", turnDir, targetHeading, robotCoords->heading, deltaHeading);
-
-    timer_waitMillis(500);
-    double distance = sqrt(deltaX*deltaX + deltaY*deltaY);
-    move_forward(sensor_data, robotCoords, distance);
-
-    return 0.0;
-}
 
 double move_forward(oi_t *sensor_data, coords *robotCoords, double distance_mm) {
     double sum = 0;
@@ -87,7 +45,6 @@ double move_forward(oi_t *sensor_data, coords *robotCoords, double distance_mm) 
         double deltaHeading = -sensor_data->angle;
 
         robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
 
         robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
         robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
@@ -141,7 +98,6 @@ double move_backward(oi_t *sensor_data, coords *robotCoords, double distance_mm)
         double deltaHeading = -sensor_data->angle;
 
         robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
 
         robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
         robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
@@ -174,7 +130,6 @@ double turn_right(oi_t *sensor, coords *robotCoords,  double degrees) {
         double deltaHeading = -sensor->angle;
 
         robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
 
         robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
         robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
@@ -183,7 +138,6 @@ double turn_right(oi_t *sensor, coords *robotCoords,  double degrees) {
 
 
     robotCoords->heading += TURNOFFSET;
-    robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
     lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     oi_setWheels(0,0);
     return sum;
@@ -199,7 +153,6 @@ double turn_left(oi_t *sensor, coords *robotCoords, double degrees) {
         double deltaHeading = -sensor->angle;
 
         robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
 
         robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
         robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
@@ -208,7 +161,6 @@ double turn_left(oi_t *sensor, coords *robotCoords, double degrees) {
 
 
     robotCoords->heading -= TURNOFFSET;
-    robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
     lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     oi_setWheels(0,0);
     return sum;

@@ -4709,3 +4709,225 @@ CMD.EXE was started with the above path as the current directory.
 UNC paths are not supported.  Defaulting to Windows directory.
 
 **** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../FinalProject_main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="//IASTATE.EDU/Files/Users/jdschul5/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="FinalProject_main.d_raw"  "../FinalProject_main.c"
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+Finished building: "../FinalProject_main.c"
+ 
+Building file: "../adc.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="//IASTATE.EDU/Files/Users/jdschul5/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="adc.d_raw"  "../adc.c"
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+Finished building: "../adc.c"
+ 
+Building file: "../button.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="//IASTATE.EDU/Files/Users/jdschul5/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="button.d_raw"  "../button.c"
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+Finished building: "../button.c"
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="//IASTATE.EDU/Files/Users/jdschul5/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+Finished building: "../IR.c"
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="//IASTATE.EDU/Files/Users/jdschul5/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+Finished building: "../main.c"
+ 
+Building file: "../ping.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="//IASTATE.EDU/Files/Users/jdschul5/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="ping.d_raw"  "../ping.c"
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+Finished building: "../ping.c"
+ 
+Building file: "../servo.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="//IASTATE.EDU/Files/Users/jdschul5/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="servo.d_raw"  "../servo.c"
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+Finished building: "../servo.c"
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="//IASTATE.EDU/Files/Users/jdschul5/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+Finished building: "../scan.c"
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="//IASTATE.EDU/Files/Users/jdschul5/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+"../movement.c", line 256: warning #112-D: statement is unreachable
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./FinalProject_main.obj" "./IR.obj" "./Timer.obj" "./adc.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+error #10056: symbol "main" redefined: first defined in "./main.obj"; redefined in "./movement.obj"
+error #10010: errors encountered during linking; "godzillaHunter.out" not built
+ 
+>> Compilation failure
+makefile:149: recipe for target 'godzillaHunter.out' failed
+gmake[1]: *** [godzillaHunter.out] Error 1
+gmake: *** [all] Error 2
+makefile:145: recipe for target 'all' failed
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="//IASTATE.EDU/Files/Users/jdschul5/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+"../movement.c", line 256: warning #112-D: statement is unreachable
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./FinalProject_main.obj" "./IR.obj" "./Timer.obj" "./adc.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+Finished building target: "godzillaHunter.out"
+ 
+\\IASTATE.EDU\Files\Users\jdschul5\Documents\godzillaHunter\godzillaHunter\Debug
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+
+**** Build Finished ****
