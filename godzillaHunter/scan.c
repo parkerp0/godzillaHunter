@@ -7,7 +7,6 @@
 #include "Timer.h"
 #include "scan.h"
 #include "open_interface.h"
-#include "adc.h"
 #include "lcd.h"
 #include "uart-interrupt.h"
 #include "servo.h"
@@ -38,7 +37,7 @@ void scan(){
                     for (i = 0; i <= 180; i = i + 2) {                              //Has the cybot scan every 2 degrees from 0 to 180 degrees
                         servo_move(i);
                         pingDistance = ping_getDistance();
-                        IRmeasurement = adc_read();
+                        IRmeasurement = IR_read();
                         if (IRmeasurement > 700) {                                //The cybot will detect an object when the IR output is greater than 900
                             sprintf(toPutty, "%d\t%f\n\r", i, pingDistance);     //Sends the object angle and distance at that angle to the PuTTy
                             while (toPutty[j] != '\0') {

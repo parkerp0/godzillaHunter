@@ -30,7 +30,6 @@ void button_init() {
 
 	// delete warning after implementing
 
-
 	// Reading: To initialize and configure GPIO PORTE, visit pg. 656 in the
 	// Tiva datasheet.
 
@@ -41,16 +40,17 @@ void button_init() {
 	// listed below. You will learn more about additional steps in a later lab.
 
 	// 1) Turn on PORTE system clock, do not modify other clock enables
-	SYSCTL_RCGCGPIO_R |= 0b010000;
+	SYSCTL_RCGCGPIO_R |= 0x10;
 	// You may need to add a delay here of several clock cycles for the clock to start, e.g., execute a simple dummy assignment statement, such as "long delay = SYSCTL_RCGCGPIO_R".
+  // long delay = SYSCTL_RCGCGPIO_R;
   // Instead, use the PRGPIO register and busy-wait on the peripheral ready bit for PORTE.
-    while ((SYSCTL_PRGPIO_R & 0x10) == 0) {};
+  while ((SYSCTL_PRGPIO_R & 0x10) == 0) {};
 	// 2) Set the buttons as inputs, do not modify other PORTE wires
-	 GPIO_PORTE_DIR_R &= 0xF0;
+	GPIO_PORTE_DIR_R &= ~0xF;
 
 	// 3) Enable digital functionality for button inputs,
 	//    do not modify other PORTE enables
-	 GPIO_PORTE_DEN_R |= 0x0F;
+	 GPIO_PORTE_DEN_R |= 0xF;
 
 
 	initialized = 1;
@@ -63,8 +63,6 @@ void button_init() {
  * @return the position of the rightmost button being pushed. 1 is the leftmost button, 4 is the rightmost button.  0 indicates no button being pressed
  */
 uint8_t button_getButton() {
-
-    // delete warning after implementing
 
 	//
 	// DELETE ME - How bitmasking works
@@ -97,26 +95,20 @@ uint8_t button_getButton() {
 	// ((GPIO_PORTE_DATA_R >> 2) & 1) => 1 if Sw3 is not pushed
 
 	// TODO: Write code below -- Return the rightmost button position pressed
-    int num = 0;
 
+	// INSERT CODE HERE!
 
-    if(!((GPIO_PORTE_DATA_R >> 3) & 1)){
-                num = 4;
-            }
-    else if(!((GPIO_PORTE_DATA_R >> 2) & 1)){
-            num = 3;
-        }
-
-    else if(!((GPIO_PORTE_DATA_R >> 1) & 1)){
-                num = 2;
-            }
-
-    else if(!((GPIO_PORTE_DATA_R >> 0) & 1)){
-                num = 1;
-            }
+    if((GPIO_PORTE_DATA_R & 0x8) == 0)
+        return 4;
+    if((GPIO_PORTE_DATA_R & 0x4) == 0)
+        return 3;
+    if((GPIO_PORTE_DATA_R & 0x2) == 0)
+        return 2;
+    if((GPIO_PORTE_DATA_R & 0x1) == 0)
+        return 1;
 
 
 
 
-	return num; // EDIT ME
+	return 0; // EDIT ME
 }

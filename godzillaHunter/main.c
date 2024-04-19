@@ -23,7 +23,7 @@
 #include "Timer.h"
 #include "scan.h"
 #include "open_interface.h"
-#include "adc.h"
+#include "IR.h"
 #include "lcd.h"
 #include "uart-interrupt.h"
 #include "servo.h"
@@ -34,12 +34,23 @@
 
 
 int main (void) {
+
+            oi_t *sensorD = oi_alloc();
+            oi_init(sensorD);
+
             timer_init();
             lcd_init();
             uart_interrupt_init();
-            adc_init();
+            IR_init();
             ping_init();
             servo_init();
+            button_init();
+
+            lcd_printf("press 4 cal IR sensor");
+            while(button_getButton()!=4);
+            {
+                IR_calibrate(sensorD);
+            }
 
 
             scan();

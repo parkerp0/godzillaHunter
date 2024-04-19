@@ -12,6 +12,8 @@
 #include <inc/tm4c123gh6pm.h>
 #include "driverlib/interrupt.h"
 
+#define PINGOFFSET 0.01 //constant offset in m determine by pointing at wall
+
 /**
  * Initialize ping sensor. Uses PB3 and Timer 3B
  */
@@ -35,5 +37,7 @@ void TIMER3B_Handler(void);
 float ping_getDistance (void);
 
 unsigned long ping_getPulseWidth();
+
+float pingCalibrate();
 
 #endif /* PING_H_ */
