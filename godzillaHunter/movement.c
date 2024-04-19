@@ -42,7 +42,7 @@ double move_forward(oi_t *sensor_data, double distance_mm) {
 //        else if (sum > distance_mm/2.0  && power > 100)
         else if (distance_mm - sum < power  && power > 20)
             power -= 15;
-
+/*
         if (sensor_data->bumpLeft){
             move_backward(sensor_data, 100.0);
             timer_waitMillis(500);
@@ -68,6 +68,7 @@ double move_forward(oi_t *sensor_data, double distance_mm) {
         oi_setWheels(power, power);
         lcd_printf("%lf", sum);
     }
+        */
     oi_setWheels(0,0);
     return sum;
 }
