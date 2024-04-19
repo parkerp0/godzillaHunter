@@ -12,7 +12,7 @@
 #include "servo.h"
 #include "ping.h"
 
-void scan(){
+object* scan(){
             int i = 0;              //Constants and counters for for loops
             int j = 0;
             int k = 0;
@@ -22,9 +22,9 @@ void scan(){
             int IRmeasurement;
             float pingDistance;
 
+            object *obs = NULL;
 
 
-            while (1) {
                     i = 0;
                     j = 0;
                     k = 0;
@@ -116,15 +116,15 @@ void scan(){
                         }
                     }
 
-                    //initialize the smallest width, angle, and distance
-                    int SmallestWidth = 1000;
-                    int SmallestWidthAngle = 0;
-                    int SmallestWidthDistance = 0;
-                    
-                    //initialize the largest width, angle, and distance
-                    int LargestWidth = 0;
-                    int LargestWidthAngle = 0;
-                    int LargestWidthDistance = 0;
+//                    //initialize the smallest width, angle, and distance
+//                    int SmallestWidth = 1000;
+//                    int SmallestWidthAngle = 0;
+//                    int SmallestWidthDistance = 0;
+//
+//                    //initialize the largest width, angle, and distance
+//                    int LargestWidth = 0;
+//                    int LargestWidthAngle = 0;
+//                    int LargestWidthDistance = 0;
 
 
                     float LinearWidth[10] = {0};                                                                     //Stores object linear width
@@ -148,40 +148,47 @@ void scan(){
                         }
                     }
 
-                    for (i = 0; i < l; i++) {
-                        if (LinearWidth[i] < SmallestWidth) {   //Finds the object with the smallest linear width and finds their angle and distance
-                            SmallestWidth = LinearWidth[i];
-                            SmallestWidthAngle = avgAngle[i];
-                            SmallestWidthDistance = avgDist[i];
-                        }
+                    obs = malloc(sizeof(object)*l);
+                    for(i = 0; i<l; i++)
+                    {
+                        obs[i].x = avgDist[i]*sin(avgAngle[i]*degreesToRadians);//add current x/y coord to it
+                        obs[i].y = avgDist[i]*cos(avgAngle[i]*degreesToRadians);
+                        obs[i].linearWidth = LinearWidth[i];
                     }
+
+
+//                    for (i = 0; i < l; i++) {
+//                        if (LinearWidth[i] < SmallestWidth) {   //Finds the object with the smallest linear width and finds their angle and distance
+//                            SmallestWidth = LinearWidth[i];
+//                            SmallestWidthAngle = avgAngle[i];
+//                            SmallestWidthDistance = avgDist[i];
+//                        }
+//                    }
                 
-                    for (i = 0; i < l; i++) {
-                        if (LinearWidth[i] > LargestWidth) {   //Finds the object with the largest linear width and finds their angle and distance
-                            LargestWidth = LinearWidth[i];
-                            LargestWidthAngle = avgAngle[i];
-                            LargestWidthDistance = avgDist[i];
-                        }
-                    }
+//                    for (i = 0; i < l; i++) {
+//                        if (LinearWidth[i] > LargestWidth) {   //Finds the object with the largest linear width and finds their angle and distance
+//                            LargestWidth = LinearWidth[i];
+//                            LargestWidthAngle = avgAngle[i];
+//                            LargestWidthDistance = avgDist[i];
+//                        }
+//                    }
 
                             //print smallest object info to Putty
-                            sprintf(toPutty, "Smallest object width: %d\tAngle: %d\tDistance: %d\n\r", SmallestWidth, SmallestWidthAngle, SmallestWidthDistance);
-                            j = 0;
-                            while (toPutty[j] != '\0') {
-                            uart_sendChar(toPutty[j]);
-                            j++;
-                            }
-                            
-                            //print largest object info to Putty
-                            sprintf(toPutty, "Largest object width: %d\tAngle: %d\tDistance: %d\n\r", LargestWidth, LargestWidthAngle, LargestWidthDistance);
-                            m = 0;
-                            while (toPutty[m] != '\0') {
-                                uart_sendChar(toPutty[m]);
-                                m++;
-                            }
+//                            sprintf(toPutty, "Smallest object width: %d\tAngle: %d\tDistance: %d\n\r", SmallestWidth, SmallestWidthAngle, SmallestWidthDistance);
+//                            j = 0;
+//                            while (toPutty[j] != '\0') {
+//                            uart_sendChar(toPutty[j]);
+//                            j++;
+//                            }
+//
+//                            //print largest object info to Putty
+//                            sprintf(toPutty, "Largest object width: %d\tAngle: %d\tDistance: %d\n\r", LargestWidth, LargestWidthAngle, LargestWidthDistance);
+//                            m = 0;
+//                            while (toPutty[m] != '\0') {
+//                                uart_sendChar(toPutty[m]);
+//                                m++;
+//                            }
                 
-
-             break;
-            }
+                    return obs;
 }
 

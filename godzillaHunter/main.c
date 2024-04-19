@@ -46,15 +46,23 @@ int main (void) {
             servo_init();
             button_init();
 
+            object *obs = NULL;
+            object *obsTemp = NULL;
+            int obsCount;
+
             //oi_setWheels(0,0);
 
             lcd_printf("press 4 cal IR sensor");
-            while(button_getButton()!=4);
+//            while(button_getButton()!=4);
+//            {
+//                ram(sensorD);
+//            }
+
+            while(1)
             {
-                ram(sensorD);
+                obsTemp = scan();
+                //find a way to iterate through current obs and check for new obs in scan
             }
 
-
-            scan();
 
 }
