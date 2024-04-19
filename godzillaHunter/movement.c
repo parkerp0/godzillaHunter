@@ -26,7 +26,6 @@
 //    oi_free(sensor_data);
 //}
 
-
 double move_forward(oi_t *sensor_data, double distance_mm) {
     double sum = 0;
     int power = 10;
@@ -66,7 +65,7 @@ double move_forward(oi_t *sensor_data, double distance_mm) {
             return 0;
         }
 
-        oi_setWheels(power-TWISTOFFSET, power + TWISTOFFSET);
+        oi_setWheels(power, power);
         lcd_printf("%lf", sum);
     }
     oi_setWheels(0,0);
@@ -89,7 +88,7 @@ double move_backward(oi_t *sensor_data, double distance_mm) {
         else if (sum < -distance_mm/2.0  && power < -10)
             power += 10;
 
-        oi_setWheels(power + TWISTOFFSET, power - TWISTOFFSET);//change this
+        oi_setWheels(power, power);
         lcd_printf("%lf", sum);
     }
     oi_setWheels(0,0);
@@ -121,44 +120,68 @@ double turn_left(oi_t *sensor, double degrees) {
     return sum;
 }
 
-double moveCalibrate(oi_t *sensor_data)
-{
-    lcd_printf("PRESS 4 To move 1 meter");
-    while(button_getButton() != 4);
-    move_forward(sensor_data, 1000);
+void manuever(oi_t *sensor_data, float distance_mm){
+    float distance = 0;
+    oi_update(sensor_data);
 
-    lcd_printf("PRESS 4 To move 2 meters");
-    while(button_getButton() != 4);
-    move_forward(sensor_data,2000);
-    return 0.0;
-}
+    while (distance < distance_mm){
+        oi_update(sensor_data);
+        distance += move_forward(sensor_data, distance);
 
-double turnCalibrate(oi_t *sensor_data)
-{
-
-    lcd_printf("PRESS 4 to start turn calibration");
-    while(button_getButton() != 4);
-
-    double sum;
-    sum = turn_left(sensor_data,90);
-    while(1)
-        {
-            switch(button_getButton())
-            {
-            case(1):
-                sum+=turn_left(sensor_data,1);
-                break;
-            case(2):
-                sum+=turn_right(sensor_data,1);
-                break;
-            case(3):
-                sum+=turn_left(sensor_data,20);
-                break;
-            case(4):
-                sum+=turn_right(sensor_data,20);
-                break;
-            }
-            lcd_printf("1: left 1 \n2: right 1 \n3:left 20 \n4:right 20\n%lf", sum);
+        //cases for bumping either left or right
+        if (sensor_data->bumpLeft && sensor_data->bumpRight){
+            oi_update(sensor_data);
+            move_backward(sensor_data, 100);
+            turn_right(sensor_data, 90);
+            distance += move_forward(sensor_data, 250);
         }
-    return 0.0;
+
+        //case for bumping left
+        else if(sensor_data->bumpLeft){
+            oi_update(sensor_data);
+            move_backward(sensor_data, 100);
+            turn_right(sensor_data, 90);
+            distance += move_forward(sensor_data, 250);
+            turn_left(sensor_data, 90);
+        }
+
+        //case for bumping right
+        else if(sensor_data->bumpRight){
+            oi_update(sensor_data);
+            move_backward(sensor_data, 100);
+            turn_left(sensor_data, 90);
+            distance += move_forward(sensor_data, 250);
+            turn_right(sensor_data, 90);
+        }
+
+        //case for hitting a cliff on the left
+        else if(sensor_data->cliffLeft){
+            oi_update(sensor_data);
+            move_backward(sensor_data, 50);
+            turn_right(sensor_data, 90);
+            distance += move_forward(sensor_data, 300);
+            turn_left(sensor_data, 90);
+        }
+
+        //case for hitting a cliff on the right
+        else if(sensor_data->cliffRight){
+            oi_update(sensor_data);
+            move_backward(sensor_data, 50);
+            turn_left(sensor_data, 90);
+            distance += move_forward(sensor_data, 300);
+            turn_right(sensor_data, 90);
+        }
+
+        //case for hitting a cliff on the front left
+        else if(sensor_data->cliffFrontLeft){
+            oi_update(sensor_data);
+            move_backward(sensor_data, 50);
+            turn_right(sensor_data, 90);
+            distance += move_forward(sensor_data, 300);
+        }
+
+        //case for hitting the boundary
+        //else if(sensor_data->cliffFrontLeftSignal > 2600)
+    }
 }
+
