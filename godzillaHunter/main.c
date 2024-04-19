@@ -46,10 +46,12 @@ int main (void) {
             servo_init();
             button_init();
 
+            //oi_setWheels(0,0);
+
             lcd_printf("press 4 cal IR sensor");
             while(button_getButton()!=4);
             {
-                IR_calibrate(sensorD);
+                ram(sensorD);
             }
 
 

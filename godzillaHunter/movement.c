@@ -121,6 +121,20 @@ double turn_left(oi_t *sensor, double degrees) {
     return sum;
 }
 
+double ram(oi_t *sensor)
+{
+    double dist = 0;
+    oi_setWheels(500,500);
+    while(dist<800 && !sensor->bumpLeft && !sensor->bumpRight)
+    {
+        oi_update(sensor);
+        dist += sensor->distance;
+    }
+    move_backward(sensor,700);
+
+    return 0.0;
+}
+
 double moveCalibrate(oi_t *sensor_data)
 {
     lcd_printf("PRESS 4 To move 1 meter");

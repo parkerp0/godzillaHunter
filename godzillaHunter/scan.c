@@ -39,13 +39,8 @@ void scan(){
                     for (i = 0; i <= 180; i = i + 2) {                              //Has the cybot scan every 2 degrees from 0 to 180 degrees
                         servo_move(i);
                         pingDistance = ping_getDistance();
-<<<<<<< HEAD
                         IRmeasurement = IR_read();
                         if (IRmeasurement > 700) {                                //The cybot will detect an object when the IR output is greater than 900
-=======
-                        IRmeasurement = adc_read();
-                        if (IRmeasurement > 900) {                                //The cybot will detect an object when the IR output is greater than 900
->>>>>>> 2d29854bb9d49ef8c76d6bb207d6c5e0c664d82d
                             sprintf(toPutty, "%d\t%f\n\r", i, pingDistance);     //Sends the object angle and distance at that angle to the PuTTy
                             while (toPutty[j] != '\0') {
                                 uart_sendChar(toPutty[j]);
