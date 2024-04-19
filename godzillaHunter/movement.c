@@ -181,6 +181,15 @@ void manuever(oi_t *sensor_data, float distance_mm){
             distance += move_forward(sensor_data, 300);
         }
 
+        //case for hitting a cliff on the front right
+        else if(sensor_data->cliffFrontRight){
+            oi_update(sensor_data);
+            move_backward(sensor_data, 50);
+            turn_left(sensor_data, 90);
+            distance += move_forward(sensor_data, 300);
+        }
+
+
         //case for hitting the boundary
         //else if(sensor_data->cliffFrontLeftSignal > 2600)
     }
