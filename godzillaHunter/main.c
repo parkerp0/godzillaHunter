@@ -21,6 +21,7 @@
 
 //ram function
 #include "Timer.h"
+#include "movement.h"
 #include "scan.h"
 #include "open_interface.h"
 #include "IR.h"
@@ -50,6 +51,11 @@ int main (void) {
             object *obsTemp = NULL;
             int obsCount;
 
+            coords *robotCoords = malloc(sizeof(coords));
+            robotCoords->x = 0;
+            robotCoords->y = 0;
+            robotCoords->heading = 0;
+
             //oi_setWheels(0,0);
 
             lcd_printf("press 4 cal IR sensor");
@@ -60,7 +66,7 @@ int main (void) {
 
             while(1)
             {
-                obsTemp = scan();
+                obsTemp = scan(robotCoords);
                 //find a way to iterate through current obs and check for new obs in scan
             }
 

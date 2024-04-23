@@ -12,7 +12,7 @@
 #include "servo.h"
 #include "ping.h"
 
-object* scan(){
+object* scan(coords *robotCoords){
             int i = 0;              //Constants and counters for for loops
             int j = 0;
             int k = 0;
@@ -151,9 +151,23 @@ object* scan(){
                     obs = malloc(sizeof(object)*l);
                     for(i = 0; i<l; i++)
                     {
-                        obs[i].x = avgDist[i]*sin(avgAngle[i]*degreesToRadians);//add current x/y coord to it
-                        obs[i].y = avgDist[i]*cos(avgAngle[i]*degreesToRadians);
+                    	float adjDist = sqrt(((IR_SERVO_OFFSET+(avgDist[i]*1000))*(IR_SERVO_OFFSET+(avgDist[i]*1000))) // a squared
+                    			+ ((SERVO_CENTER_OFFSET)*(SERVO_CENTER_OFFSET)) // b squared
+								- (2*(IR_SERVO_OFFSET+(avgDist[i]*1000))*(SERVO_CENTER_OFFSET)*cos(avgAngle[i] * degreesToRadians))); // 2*a*b*cos(theta) where theta is just the servo angle
+
+                    	float adjAngle = 90.0 - avgAngle[i]; // Adjust the angle to be aligned with the robot's heading system
+
+                        obs[i].x = adjDist*sin(adjAngle*degreesToRadians) + robotCoords->x; //add current x/y coord to it
+                        obs[i].y = adjDist*cos(adjAngle*degreesToRadians) + robotCoords->y;
                         obs[i].linearWidth = LinearWidth[i];
+
+                        sprintf(toPutty, "\n\rAdjDist: %f\tX: %lf\tY: %lf\n\r", adjDist, obs[i].x, obs[i].y);
+                        j = 0;
+                        while (toPutty[j] != '\0') {
+                              uart_sendChar(toPutty[j]);
+                              j++;
+                          }
+
                     }
 
 

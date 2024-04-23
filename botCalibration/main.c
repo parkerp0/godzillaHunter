@@ -15,6 +15,8 @@ int main(void)
     oi_t *sensorD = oi_alloc();
     oi_init(sensorD);
 
+    oi_setWheels(0,0);
+
 	timer_init();
 	lcd_init();
 	servo_init();
