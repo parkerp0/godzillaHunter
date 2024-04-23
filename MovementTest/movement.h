@@ -2,7 +2,7 @@
 #define MOVEMENT_H
 
 #define MOVEOFFSET 0
-#define TURNOFFSET 10 // - for undershoot + for overshoot degrees off of correct tur
+#define TURNOFFSET 10 // - for undershoot + for overshoot degrees off of correct turn
 
 #define TWISTOFFSET -1 //positive is clockwise driving forward
 
@@ -28,8 +28,5 @@ double move_to_point(oi_t *sensor_data, coords *robotCoords, double global_x, do
 double move_backward(oi_t *sensor_data, coords *robotCoords, double distance_mm);
 double turn_right(oi_t *sensor, coords *robotCoords, double degrees);
 double turn_left(oi_t *sensor, coords *robotCoords, double degrees);
-double ram(oi_t *sensor);
-
-void manuever(oi_t *sensor_data, float distance_mm, coords *robotCoords);
 
 #endif
