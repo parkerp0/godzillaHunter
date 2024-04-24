@@ -205,7 +205,7 @@ double ram(oi_t *sensor_data, coords *robotCoords)
     return 0.0;
 }
 
-void manuever(oi_t *sensor_data, float distance_mm, coords *robotCoords){
+void maneuver(oi_t *sensor_data, float distance_mm, coords *robotCoords){
     float distance = 0;
     oi_update(sensor_data);
 
@@ -277,4 +277,17 @@ void manuever(oi_t *sensor_data, float distance_mm, coords *robotCoords){
         //case for hitting the boundary
         //else if(sensor_data->cliffFrontLeftSignal > 2600)
     }
+}
+
+//Helper method for detecting cliffs and or objects when navigating
+bool cliff_detected(oi_t *sensor_data, coords *robotCoords){
+    if(sensor_data->cliffRight || sensor_data->cliffLeft  || sensor_data->bumpLeft ||
+            sensor_data->bumpRight || sensor_data->cliffFrontLeft || sensor_data->cliffFrontRight)
+    {
+        // Turns around and maneuvers away
+        turn_right(sensor_data, robotCoords, 180.0);
+        maneuver(sensor_data, 400.0, robotCoords);
+        return true;
+    }
+    return false;
 }

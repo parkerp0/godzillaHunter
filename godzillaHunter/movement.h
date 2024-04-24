@@ -30,6 +30,7 @@ double turn_right(oi_t *sensor, coords *robotCoords, double degrees);
 double turn_left(oi_t *sensor, coords *robotCoords, double degrees);
 double ram(oi_t *sensor_data, coords *robotCoords);
 
-void manuever(oi_t *sensor_data, float distance_mm, coords *robotCoords);
+void maneuver(oi_t *sensor_data, float distance_mm, coords *robotCoords);
+bool cliff_detected(oi_t *sensor_data, coords *robotCoords);
 
 #endif
