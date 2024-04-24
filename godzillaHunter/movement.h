@@ -13,7 +13,6 @@
 #include <math.h>
 
 #define DEGREES_TO_RADS M_PI / 180.0
-
 typedef struct {
     double x;
     double y;
@@ -28,8 +27,9 @@ double move_to_point(oi_t *sensor_data, coords *robotCoords, double global_x, do
 double move_backward(oi_t *sensor_data, coords *robotCoords, double distance_mm);
 double turn_right(oi_t *sensor, coords *robotCoords, double degrees);
 double turn_left(oi_t *sensor, coords *robotCoords, double degrees);
-double ram(oi_t *sensor);
+double ram(oi_t *sensor_data, coords *robotCoords);
 
-void manuever(oi_t *sensor_data, float distance_mm, coords *robotCoords);
+void maneuver(oi_t *sensor_data, float distance_mm, coords *robotCoords);
+bool cliff_detected(oi_t *sensor_data, coords *robotCoords);
 
 #endif

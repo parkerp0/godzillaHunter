@@ -191,21 +191,21 @@ double turnCalibrate(oi_t *sensor_data, coords *robotCoords)
     return 0.0;
 }
   
-double ram(oi_t *sensor)
+double ram(oi_t *sensor_data, coords *robotCoords)
 {
     double dist = 0;
     oi_setWheels(500 + TWISTOFFSET,500 - TWISTOFFSET);
-    while(dist<800 && !sensor->bumpLeft && !sensor->bumpRight)
+    while(dist<800 && !sensor_data->bumpLeft && !sensor_data->bumpRight)
     {
-        oi_update(sensor);
-        dist += sensor->distance;
+        oi_update(sensor_data);
+        dist += sensor_data->distance;
     }
-    move_backward(sensor,700);
+    move_backward(sensor_data, robotCoords, 700);
 
     return 0.0;
 }
 
-void manuever(oi_t *sensor_data, float distance_mm, coords *robotCoords){
+void maneuver(oi_t *sensor_data, float distance_mm, coords *robotCoords){
     float distance = 0;
     oi_update(sensor_data);
 
@@ -216,9 +216,9 @@ void manuever(oi_t *sensor_data, float distance_mm, coords *robotCoords){
         //cases for bumping either left or right
         if (sensor_data->bumpLeft && sensor_data->bumpRight){
             oi_update(sensor_data);
-            move_backward(sensor_data, 100);
+            move_backward(sensor_data, robotCoords, 100);
             turn_right(sensor_data, robotCoords,90);
-            distance += move_forward(sensor_data, 250);
+            distance += move_forward(sensor_data, robotCoords, 250);
         }
 
         //case for bumping left
@@ -226,8 +226,8 @@ void manuever(oi_t *sensor_data, float distance_mm, coords *robotCoords){
             oi_update(sensor_data);
             move_backward(sensor_data, robotCoords,100);
             turn_right(sensor_data, robotCoords,90);
-            distance += move_forward(sensor_data, 250);
-            turn_left(sensor_data, 90);
+            distance += move_forward(sensor_data, robotCoords, 250);
+            turn_left(sensor_data, robotCoords, 90);
         }
 
         //case for bumping right
@@ -235,7 +235,7 @@ void manuever(oi_t *sensor_data, float distance_mm, coords *robotCoords){
             oi_update(sensor_data);
             move_backward(sensor_data, robotCoords,100);
             turn_left(sensor_data,robotCoords, 90);
-            distance += move_forward(sensor_data, 250);
+            distance += move_forward(sensor_data, robotCoords, 250);
             turn_right(sensor_data,robotCoords, 90);
         }
 
@@ -277,4 +277,16 @@ void manuever(oi_t *sensor_data, float distance_mm, coords *robotCoords){
         //case for hitting the boundary
         //else if(sensor_data->cliffFrontLeftSignal > 2600)
     }
+}
+//Helper method for detecting cliffs and or objects when navigating
+bool cliff_detected(oi_t *sensor_data, coords *robotCoords){
+    if(sensor_data->cliffRight || sensor_data->cliffLeft  || sensor_data->bumpLeft ||
+            sensor_data->bumpRight || sensor_data->cliffFrontLeft || sensor_data->cliffFrontRight)
+    {
+        // Turns around and maneuvers away
+        turn_right(sensor_data, robotCoords, 180.0);
+        maneuver(sensor_data, 400.0, robotCoords);
+        return true;
+    }
+    return false;
 }
