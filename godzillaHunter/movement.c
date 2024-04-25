@@ -1,8 +1,48 @@
 #include "movement.h"
 
 
+
+int main (void) {
+
+            oi_t *sensorD = oi_alloc();
+            oi_init(sensorD);
+
+            timer_init();
+            lcd_init();
+            uart_interrupt_init();
+            IR_init();
+            ping_init();
+            servo_init();
+            button_init();
+
+            object *obs = malloc(sizeof(object) * 2);
+            // object *obsTemp = NULL;
+            int obsCount;
+
+            coords *robotCoords = malloc(sizeof(coords));
+            robotCoords->x = 0;
+            robotCoords->y = 0;
+            robotCoords->heading = 0;
+
+            oi_setWheels(0,0);
+
+            obs[1].x = 500; // mm
+            obs[1].y = 500;
+            obs[1].linearWidth = 2.54*4; // about 4 inches wide (in mm)
+
+            lcd_printf("Move To Point test");
+            move_to_point(sensorD, robotCoords, obs, 1000, 1000);
+
+            oi_setWheels(0,0);
+
+}
+
+
+
 double move_to_point(oi_t *sensor_data, coords *robotCoords, object *obs, double global_x, double global_y){
 	// TODO check if the point is outside of the field.
+
+    checkObstacles(sensor_data, robotCoords, obs, global_x, global_y);
 
     double deltaX = global_x - robotCoords->x;
     double deltaY = global_y - robotCoords->y;
@@ -33,23 +73,95 @@ double move_to_point(oi_t *sensor_data, coords *robotCoords, object *obs, double
 }
 
 double checkObstacles(oi_t *sensor_data, coords *robotCoords, object *obs, double global_x, double global_y){
-	// make it check from closest obstacle to farthest
-	for (int i = 0; i < (int)(sizeof(obs) / sizeof(object); i++) {
-		float distPath = calcDistToPath(robotCoords, obs[i], global_x, global_y);
-		if ((distPath - (obs[i].linearWidth/2.0) - (ROBOT_WIDTH/2.0)) <= AVOID_DISTANCE) {
-			// Avoid obstacle
+    int numObs = sizeof(obs) / sizeof(object);
 
-		}
+    // TODO check if the target point is inside of an obstacle zone
 
-	}
+    // Sort obstacles based on distances to the robot
+    qsort(obs, numObs, sizeof(object), compareDistances);
+
+    // Loop through sorted obstacles
+    for (int i = 0; i < numObs; i++) {
+        // Calculate the vector from the robot to the target
+        double targetVectorX = global_x - robotCoords->x;
+        double targetVectorY = global_y - robotCoords->y;
+
+        // Calculate the vector from the robot to the obstacle
+        double obstacleVectorX = obs[i].x - robotCoords->x;
+        double obstacleVectorY = obs[i].y - robotCoords->y;
+
+        // Calculate the dot product of the two vectors
+        double dotProduct = targetVectorX * obstacleVectorX + targetVectorY * obstacleVectorY;
+
+        // Check if the obstacle is between the robot and the target
+        // Greater than 0 ensures that the obstacle is not behind or to the side of the robot.
+        // the targetVector part ensures that the obstacle is not past the target vector.
+        if (dotProduct > 0 && dotProduct < (targetVectorX * targetVectorX + targetVectorY * targetVectorY)) {
+            // Obstacle lies between robot and target, calculate distPath
+            if (obs[i] == NULL) return 0.0;
+
+            float distPath = calcDistToPath(robotCoords, &obs[i], global_x, global_y);
+            if ((distPath - (obs[i].linearWidth / 2.0) - (ROBOT_WIDTH / 2.0)) <= AVOID_DISTANCE) {
+                // Avoid obstacle
+
+                coords newTarget = calculatePerpendicularPoint(robotCoords, obs[i]);
+
+                // Recursively avoid each object in the path.
+                move_to_point(sensor_data, robotCoords, obs, newTarget.x, newTarget.y);
+                
+
+            }
+        }
+    }
+
+    return 0.0;
+}
 
 
-	return 0.0;
+// Define your comparison function for qsort
+int compareDistances(const void *a, const void *b) {
+    object *obsA = (object *)a;
+    object *obsB = (object *)b;
+    // Calculate distances to the robot for both objects
+    double distA = calcDistToRobot(&robotCoords, obsA);
+    double distB = calcDistToRobot(&robotCoords, obsB);
+    // Compare distances
+    if (distA < distB) return -1;
+    else if (distA > distB) return 1;
+    else return 0;
 }
 
 double calcDistToRobot(coords *robotCoords, object *obs){
+    if (obs == NULL) return 1; // make null values be last
 	return sqrt(((obs->x-robotCoords->x)*(obs->x-robotCoords->x)) + ((obs->y-robotCoords->y)*(obs->y-robotCoords->y)));
 }
+
+coords calculatePerpendicularPoint(coords robotCoords, object targetCoords) {
+    // Calculate direction vector from robot to target
+    double directionX = targetCoords.x - robotCoords.x;
+    double directionY = targetCoords.y - robotCoords.y;
+
+    // Normalize direction vector
+    double length = sqrt(directionX * directionX + directionY * directionY);
+    directionX /= length;
+    directionY /= length;
+
+    // Calculate perpendicular vector
+    double perpendicularX = -directionY;
+    double perpendicularY = directionX;
+
+    // Scale perpendicular vector by distance
+    perpendicularX *= (AVOID_DISTANCE + ROBOT_WIDTH);
+    perpendicularY *= (AVOID_DISTANCE + ROBOT_WIDTH);
+
+    // Calculate new point coordinates
+    coords newPoint;
+    newPoint.x = targetCoords.x + perpendicularX;
+    newPoint.y = targetCoords.y + perpendicularY;
+
+    return newPoint;
+}
+
 
 double calcDistToPath(coords *robotCoords, object *obs, double global_x, double global_y){
 	// Convert two points into a line for the path
@@ -62,6 +174,7 @@ double calcDistToPath(coords *robotCoords, object *obs, double global_x, double 
 
 	return top/bot;
 }
+
 double move_forward(oi_t *sensor_data, coords *robotCoords, double distance_mm) {
     double sum = 0;
     int power = 10;

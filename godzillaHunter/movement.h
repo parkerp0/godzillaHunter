@@ -35,6 +35,8 @@ double turnCalibrate(oi_t *sensor_data, coords *robotCoords);
 double move_forward(oi_t *sensor_data, coords *robotCoords, double distance_mm);
 double move_to_point(oi_t *sensor_data, coords *robotCoords, object *obs, double global_x, double global_y);
 double checkObstacles(oi_t *sensor_data, coords *robotCoords, object *obs, double global_x, double global_y);
+coords calculatePerpendicularPoint(coords robotCoords, coords targetCoords);
+int compareDistances(const void *a, const void *b)
 double calcDistToRobot(coords *robotCoords, object *obs);
 double calcDistToPath(coords *robotCoords, object *obs, double global_x, double global_y);
 double move_backward(oi_t *sensor_data, coords *robotCoords, double distance_mm);
