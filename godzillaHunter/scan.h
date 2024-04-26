@@ -29,4 +29,8 @@ typedef struct
 
 object* scan();
 
+object* scanAndRewrite(object *currentObs);
+
+float vectorDifMag(object *obs,object *obs2);
+
 #endif /* SCAN_H_ */

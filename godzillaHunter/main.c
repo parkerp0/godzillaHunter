@@ -31,8 +31,6 @@
 #include "button.h"
 #include <inc/tm4c123gh6pm.h>
 
-#define objMatchThresh 0.03
-
 int main (void) {
 
             oi_t *sensorD = oi_alloc();
@@ -52,7 +50,6 @@ int main (void) {
             coord->y = 0.0;
 
             object *obs = NULL;
-            object *obsTemp = NULL;
             int obsCount = 0;
             int i;
             int flag =1;
@@ -67,40 +64,7 @@ int main (void) {
                 if(command_byte == 'r')
                 {
                     command_byte = -1;
-                    obsTemp = scan();
-                    while(obsTemp->linearWidth!= 0.0)
-                    {
-                        for(i = 0; i<obsCount; i++)
-                        {
-                            if(((obsTemp->x < (obs[i].x + objMatchThresh)) && (obsTemp->x > (obs[i].x - objMatchThresh))) && (obsTemp->y < (obs[i].y + objMatchThresh) && (obsTemp->y > (obs[i].y - objMatchThresh))))
-                            {//rewrite for making the if statement work
-                                obs[i].linearWidth = (obs[i].linearWidth + obsTemp->linearWidth)/2;
-                            }else
-                                flag = 1;
-                        }
-                        if(flag)
-                        {
-                            obsCount++;
-                            obs = realloc(obs,sizeof(object)*obsCount);
-                            //obsCopy(obs[obsCount-1],obsTemp);
-                            obs[obsCount-1].x = obsTemp->x;
-                            obs[obsCount-1].y = obsTemp->y;
-                            obs[obsCount-1].linearWidth = obsTemp->linearWidth;
-                            flag = 0;
-                        }
-                        
-                    obsTemp++;
-                    }
-                    for(i = 0; i<obsCount; i++)
-                    {
-                        sprintf(message,"obs %d: x: %.2f y:%.2f Width:%.2f\n\r",i,obs[i].x,obs[i].y,obs[i].linearWidth);
-                        uart_sendStr(message);
-                    }//prints all objects
-                    
-                    sprintf(message,"Hunter location x:%lf y:%lf heading: %lf\n\r", coord->x,coord->y,coord->heading);
-                    uart_sendStr(message);
-                    free(obsTemp);
-                    obsTemp = NULL;
+                    scanAndRewrite(obs);
                 }
                 //find a way to iterate through current obs and check for new obs in scan
 
