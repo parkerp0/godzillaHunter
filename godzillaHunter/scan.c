@@ -148,7 +148,10 @@ object* scan(){
                         }
                     }
 
-                    obs = malloc(sizeof(object)*l);
+                    obs = malloc(sizeof(object)*(l+1));
+                    obs[l].x = 0.0;
+                    obs[l].y = 0.0;
+                    obs[l].linearWidth = 0.0;//makes the last object 0 to avoid passing another var
                     for(i = 0; i<l; i++)
                     {
                         obs[i].x = avgDist[i]*sin(avgAngle[i]*degreesToRadians);//add current x/y coord to it
