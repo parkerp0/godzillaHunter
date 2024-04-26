@@ -154,7 +154,6 @@ int scanAndRewrite(object *currentObs,int obsCount)
         {
             obsCount++;
             currentObs = realloc(currentObs,sizeof(object)*obsCount);
-            //obsCopy(obs[obsCount-1],obsTemp);
             currentObs[obsCount-1].x = obsTemp->x;
             currentObs[obsCount-1].y = obsTemp->y;
             currentObs[obsCount-1].linearWidth = obsTemp->linearWidth;
