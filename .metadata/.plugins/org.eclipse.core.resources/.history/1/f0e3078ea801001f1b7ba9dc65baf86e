@@ -1,0 +1,35 @@
+/*
+ * scan.h
+ *
+ *  Created on: Apr 16, 2024
+ *      Author: cdoran
+ */
+#include <inc/tm4c123gh6pm.h>
+#include "Timer.h"
+#include "open_interface.h"
+#include "IR.h"
+#include "lcd.h"
+#include "uart-interrupt.h"
+#include "movement.h"
+#include "servo.h"
+#include "ping.h"
+#include <stdlib.h>
+#include <math.h>
+
+#ifndef SCAN_H_
+#define SCAN_H_
+
+#define degreesToRadians M_PI/180.0
+#define SERVO_CENTER_OFFSET 126.5 // distance from the center of the servo to the center of the robot in mm
+#define IR_SERVO_OFFSET 38.1 // distance from the outward face of the IR sensor to the center of the servo in mm
+
+typedef struct
+{
+    double x;
+    double y;
+    double linearWidth;
+}object;
+
+object* scan(coords *robotCoords);
+
+#endif /* SCAN_H_ */

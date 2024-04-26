@@ -1,5 +1,6 @@
 #include "IR.h"
 
+extern coords *robotCoords;
 uint16_t *lookupIR;
 float *lookupDist;
 
@@ -55,7 +56,7 @@ float IR_dist()
     return 1.0*data/lookupIR[19]*lookupDist[19];
 }
 
-float IR_calibrate(oi_t *sensor_data, coords *robotCoords)
+float IR_calibrate(oi_t *sensor_data)
 {
     int i;
     lookupIR = malloc(sizeof(uint16_t)*20);
@@ -64,7 +65,7 @@ float IR_calibrate(oi_t *sensor_data, coords *robotCoords)
     for(i = 0; i<20; i+=1)
     {
     lookupIR[i] = IR_read();
-    if(i !=19)lookupDist[i+1] = lookupDist[i] - move_backward(sensor_data, robotCoords, 50);
+    if(i !=19)lookupDist[i+1] = lookupDist[i] - move_backward(sensor_data, 50);
     timer_waitMillis(50);
     }
 

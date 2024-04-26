@@ -10,6 +10,7 @@
 #include "IR.h"
 #include "lcd.h"
 #include "uart-interrupt.h"
+#include "movement.h"
 #include "servo.h"
 #include "ping.h"
 #include <stdlib.h>
@@ -19,14 +20,9 @@
 #define SCAN_H_
 
 #define degreesToRadians M_PI/180.0
+#define SERVO_CENTER_OFFSET 126.5 // distance from the center of the servo to the center of the robot in mm
+#define IR_SERVO_OFFSET 38.1 // distance from the outward face of the IR sensor to the center of the servo in mm
 
-typedef struct
-{
-    double x;
-    double y;
-    double linearWidth;
-}object;
-
-object* scan();
+object* scan(coords *robotCoords);
 
 #endif /* SCAN_H_ */
