@@ -53,5 +53,6 @@ float turn_left(oi_t *sensor, float degrees);
 float ram(oi_t *sensor);
 
 void manuever(oi_t *sensor_data, float distance_mm);
+bool cliff_detected(oi_t *sensor_data);
 
 #endif
