@@ -200,11 +200,13 @@ object* scan(){
 object findLargestObject() {
     object *obs = scan(); // Call the scan function to get an array of objects
 
+    int i;
+
     //Initially assume the first object is the largest
     object largestObject = obs[0];
 
     // Find the object with the largest linearWidth
-        for (int i = 1; i < count; i++) {  // Iterating through the number of objects
+        for (i = 0; i < count; i++) {  // Iterating through the number of objects
             if (obs[i].linearWidth > largestObject.linearWidth) {
                 largestObject = obs[i];
             }
