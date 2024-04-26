@@ -12,6 +12,8 @@
 #include "servo.h"
 #include "ping.h"
 
+int count = 0;
+
 object* scan(){
             int i = 0;              //Constants and counters for for loops
             int j = 0;
@@ -115,6 +117,7 @@ object* scan(){
                             }
                         }
                     }
+                    count = l;
 
 //                    //initialize the smallest width, angle, and distance
 //                    int SmallestWidth = 1000;
@@ -190,5 +193,25 @@ object* scan(){
 //                            }
                 
                     return obs;
+}
+
+
+// Finds and returns the largest object based on linearWidth
+object findLargestObject() {
+    object *obs = scan(); // Call the scan function to get an array of objects
+
+    //Initially assume the first object is the largest
+    object largestObject = obs[0];
+
+    // Find the object with the largest linearWidth
+        for (int i = 1; i < count; i++) {  // Iterating through the number of objects
+            if (obs[i].linearWidth > largestObject.linearWidth) {
+                largestObject = obs[i];
+            }
+        }
+
+    free(obs); // Free the allocated memory from scan()
+
+    return largestObject;
 }
 

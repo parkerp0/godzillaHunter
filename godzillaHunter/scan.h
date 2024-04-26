@@ -28,5 +28,6 @@ typedef struct
 }object;
 
 object* scan();
+object* findLargestObject();
 
 #endif /* SCAN_H_ */
