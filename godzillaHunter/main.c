@@ -83,12 +83,16 @@ coords *robotCoords = NULL;
 
 //             while(1)
 //             {
-                 obs = scan(robotCoords);
+//                 obs = scan(robotCoords);
 
                  //find a way to iterate through current obs and check for new obs in scan
 //             }
 
-			 move_to_point(sensorD, obsTemp, 3, 0, 0, 1000);
+//			 move_to_point(sensorD, obsTemp, 3, 0, 0, 1000);
+
+			 while (1){
+				 cliff_detected(sensorD);
+			 }
 
 
  }
