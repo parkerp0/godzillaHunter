@@ -51,10 +51,7 @@ int main (void) {
 
             object *obs = NULL;
             int obsCount = 0;
-            int i;
-            int flag =1;
 
-            char message[90];
 
             //oi_setWheels(0,0);
 
@@ -64,7 +61,7 @@ int main (void) {
                 if(command_byte == 'r')
                 {
                     command_byte = -1;
-                    scanAndRewrite(obs);
+                    obsCount = scanAndRewrite(obs,obsCount);
                 }
                 //find a way to iterate through current obs and check for new obs in scan
 

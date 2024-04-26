@@ -132,9 +132,14 @@ object* scan()
     return obs;
 }
 
-object* scanAndRewrite(object *currentObs,int obsCount)
+int scanAndRewrite(object *currentObs,int obsCount)
 {
-    obsTemp = scan();
+    int i;
+    int flag =1;
+    char message[90];
+
+
+    object *obsTemp = scan();
     while(obsTemp->linearWidth!= 0.0)
     {
         for(i = 0; i<obsCount; i++)
@@ -148,7 +153,7 @@ object* scanAndRewrite(object *currentObs,int obsCount)
         if(flag)
         {
             obsCount++;
-            currentObs = realloc(obs,sizeof(object)*obsCount);
+            currentObs = realloc(currentObs,sizeof(object)*obsCount);
             //obsCopy(obs[obsCount-1],obsTemp);
             currentObs[obsCount-1].x = obsTemp->x;
             currentObs[obsCount-1].y = obsTemp->y;
@@ -160,13 +165,15 @@ object* scanAndRewrite(object *currentObs,int obsCount)
     }
     for(i = 0; i<obsCount; i++)
     {
-        sprintf(message,"obs %d: x: %.2f y:%.2f Width:%.2f\n\r",i,obs[i].x,obs[i].y,obs[i].linearWidth);
+        sprintf(message,"obs %d: x: %.2f y:%.2f Width:%.2f\n\r",i,currentObs[i].x,currentObs[i].y,currentObs[i].linearWidth);
         uart_sendStr(message);
     }//prints all objects
     
-    sprintf(message,"Hunter location x:%lf y:%lf heading: %lf\n\r", coord->x,coord->y,coord->heading);
-    uart_sendStr(message);
+    //sprintf(message,"Hunter location x:%lf y:%lf heading: %lf\n\r", coord->x,coord->y,coord->heading);
+    //uart_sendStr(message);
     free(obsTemp);
+
+    return obsCount;
 }
 
 float vectorDifMag(object *obs,object *obs2)
