@@ -197,10 +197,14 @@ object* scan(){
 
 
 // Finds and returns the largest object based on linearWidth
+
 object findLargestObject() {
     object *obs = scan(); // Call the scan function to get an array of objects
 
     int i;
+    int m;
+    char toPutty[100];      //Used to make the PuTTy output a message
+    char *toPutty_ptr = toPutty;
 
     //Initially assume the first object is the largest
     object largestObject = obs[0];
@@ -211,6 +215,14 @@ object findLargestObject() {
                 largestObject = obs[i];
             }
         }
+
+        //print largest object info to Putty
+        sprintf(toPutty, "Largest Object Information: %f\tX Coordinate: %f\tY Coordinate: %f\n\r", largestObject.linearWidth, largestObject.x, largestObject.y);
+        m = 0;
+        while (toPutty[m] != '\0') {
+            uart_sendChar(toPutty[m]);
+            m++;
+       }
 
     free(obs); // Free the allocated memory from scan()
 
