@@ -11,4 +11,4 @@
 void IR_init();
 uint16_t IR_read();
 float IR_dist();
-float IR_calibrate(oi_t *sensor_data, coords *robotCoords);
+float IR_calibrate(oi_t *sensor_data);

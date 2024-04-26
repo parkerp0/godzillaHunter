@@ -6886,3 +6886,2172 @@ CMD.EXE was started with the above path as the current directory.
 UNC paths are not supported.  Defaulting to Windows directory.
 
 **** Build Finished ****
+
+**** Clean-only build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 clean -O 
+ 
+DEL /F  "godzillaHunter.out" 
+DEL /F "IR.obj" "Timer.obj" "button.obj" "lcd.obj" "main.obj" "movement.obj" "open_interface.obj" "ping.obj" "scan.obj" "servo.obj" "tm4c123gh6pm_startup_ccs.obj" "uart-interrupt.obj" 
+DEL /F "IR.d" "Timer.d" "button.d" "lcd.d" "main.d" "movement.d" "open_interface.d" "ping.d" "scan.d" "servo.d" "tm4c123gh6pm_startup_ccs.d" "uart-interrupt.d" 
+Finished clean
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 12: warning #225-D: function "uart_interrupt_init" declared implicitly
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 20: error #515: a value of type "void *" cannot be assigned to an entity of type "coords"
+"../movement.c", line 36: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 46: error #148: declaration is incompatible with "float move_to_point(oi_t *, coords *, object *, float, float)" (declared at line 39 of "..\movement.h")
+"../movement.c", line 49: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 126: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 179: warning #169-D: argument of type "coords *" is incompatible with parameter of type "object *"
+"../movement.c", line 179: error #169: argument of type "object *" is incompatible with parameter of type "float"
+"../movement.c", line 179: error #141: too many arguments in function call
+"../movement.c", line 239: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 285: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 417: warning #112-D: statement is unreachable
+4 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+Building file: "../Timer.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="Timer.d_raw"  "../Timer.c"
+Finished building: "../Timer.c"
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building file: "../button.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="button.d_raw"  "../button.c"
+Finished building: "../button.c"
+ 
+Building file: "../lcd.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="lcd.d_raw"  "../lcd.c"
+Finished building: "../lcd.c"
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+Finished building: "../IR.c"
+ 
+Building file: "../ping.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="ping.d_raw"  "../ping.c"
+"../ping.c", line 156: warning #225-D: function "button_getButton" declared implicitly
+Finished building: "../ping.c"
+ 
+Building file: "../tm4c123gh6pm_startup_ccs.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="tm4c123gh6pm_startup_ccs.d_raw"  "../tm4c123gh6pm_startup_ccs.c"
+Finished building: "../tm4c123gh6pm_startup_ccs.c"
+ 
+Building file: "../servo.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="servo.d_raw"  "../servo.c"
+Finished building: "../servo.c"
+ 
+Building file: "../uart-interrupt.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="uart-interrupt.d_raw"  "../uart-interrupt.c"
+"../uart-interrupt.c", line 19: warning #69-D: integer conversion resulted in a change of sign
+"../uart-interrupt.c", line 104: warning #145-D: a value of type "const char *" cannot be used to initialize an entity of type "char *"
+Finished building: "../uart-interrupt.c"
+ 
+Building file: "../open_interface.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="open_interface.d_raw"  "../open_interface.c"
+"../open_interface.c", line 356: warning #179-D: variable "charging_state" was declared but never referenced
+Finished building: "../open_interface.c"
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+"../scan.c", line 19: warning #552-D: variable "m" was set but never used
+Finished building: "../scan.c"
+ 
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 12: warning #225-D: function "uart_interrupt_init" declared implicitly
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 20: error #515: a value of type "void *" cannot be assigned to an entity of type "coords"
+"../movement.c", line 36: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 37: warning #169-D: argument of type "object *" is incompatible with parameter of type "coords *"
+"../movement.c", line 37: warning #169-D: argument of type "int" is incompatible with parameter of type "object *"
+"../movement.c", line 37: warning #154-D: conversion of nonzero integer to pointer
+"../movement.c", line 37: error #167: too few arguments in function call
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 46: error #148: declaration is incompatible with "float move_to_point(oi_t *, coords *, object *, float, float)" (declared at line 39 of "..\movement.h")
+"../movement.c", line 49: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 53: warning #169-D: argument of type "object *" is incompatible with parameter of type "coords *"
+"../movement.c", line 53: error #169: argument of type "float" is incompatible with parameter of type "object *"
+"../movement.c", line 53: error #167: too few arguments in function call
+"../movement.c", line 122: error #148: declaration is incompatible with "float checkObstacles(oi_t *, coords *, object *, float, float)" (declared at line 40 of "..\movement.h")
+"../movement.c", line 126: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 239: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 285: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 417: warning #112-D: statement is unreachable
+6 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 12: warning #225-D: function "uart_interrupt_init" declared implicitly
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 20: error #515: a value of type "void *" cannot be assigned to an entity of type "coords"
+"../movement.c", line 36: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 49: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 126: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 239: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 285: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 417: warning #112-D: statement is unreachable
+1 error detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+Finished building: "../IR.c"
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+"../scan.c", line 19: warning #552-D: variable "m" was set but never used
+Finished building: "../scan.c"
+ 
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 12: warning #225-D: function "uart_interrupt_init" declared implicitly
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 36: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 49: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 126: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 239: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 285: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 417: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+gmake[1]: 'godzillaHunter.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'IR.obj' failed
+"../IR.c", line 67: error #169: argument of type "coords *" is incompatible with parameter of type "float"
+"../IR.c", line 67: error #141: too many arguments in function call
+2 errors detected in the compilation of "../IR.c".
+gmake: *** [IR.obj] Error 1
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 12: warning #225-D: function "uart_interrupt_init" declared implicitly
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 36: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 49: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 126: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 166: warning #169-D: argument of type "coords *" is incompatible with parameter of type "object *"
+"../movement.c", line 166: error #169: argument of type "object *" is incompatible with parameter of type "float"
+"../movement.c", line 166: error #141: too many arguments in function call
+"../movement.c", line 174: error #169: argument of type "coords *" is incompatible with parameter of type "object"
+"../movement.c", line 174: error #141: too many arguments in function call
+"../movement.c", line 190: error #20: identifier "Define" is undefined
+"../movement.c", line 190: error #66: expected a ";"
+"../movement.c", line 229: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 231: error #171: expected a declaration
+"../movement.c", line 232: error #171: expected a declaration
+"../movement.c", line 279: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 281: error #20: identifier "power" is undefined
+"../movement.c", line 281: error #18: expected a ")"
+"../movement.c", line 281: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 281: error #148: declaration is incompatible with "void oi_setWheels(int16_t, int16_t)" (declared at line 158 of "..\open_interface.h")
+"../movement.c", line 282: error #80: expected a type specifier
+"../movement.c", line 282: error #20: identifier "sum" is undefined
+"../movement.c", line 282: error #760: variable "robotCoords" is not a type name
+"../movement.c", line 282: error #18: expected a ")"
+"../movement.c", line 282: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 282: error #148: declaration is incompatible with "void lcd_printf(const char *, ...)" (declared at line 44 of "..\lcd.h")
+"../movement.c", line 284: error #41: expected an identifier
+"../movement.c", line 284: error #18: expected a ")"
+"../movement.c", line 284: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 284: warning #93-D: identifier-list parameters may only be used in a function definition
+"../movement.c", line 285: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 285: warning #93-D: identifier-list parameters may only be used in a function definition
+"../movement.c", line 286: error #171: expected a declaration
+"../movement.c", line 288: error #171: expected a declaration
+"../movement.c", line 289: error #171: expected a declaration
+"../movement.c", line 314: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 321: error #20: identifier "power" is undefined
+"../movement.c", line 321: error #18: expected a ")"
+"../movement.c", line 321: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 322: error #80: expected a type specifier
+"../movement.c", line 322: error #20: identifier "sum" is undefined
+"../movement.c", line 322: error #760: variable "robotCoords" is not a type name
+"../movement.c", line 322: error #18: expected a ")"
+"../movement.c", line 322: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 323: error #171: expected a declaration
+"../movement.c", line 325: error #171: expected a declaration
+"../movement.c", line 326: error #171: expected a declaration
+"../movement.c", line 349: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 350: error #171: expected a declaration
+"../movement.c", line 351: error #171: expected a declaration
+"../movement.c", line 374: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 375: error #171: expected a declaration
+"../movement.c", line 376: error #171: expected a declaration
+"../movement.c", line 412: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 413: error #171: expected a declaration
+"../movement.c", line 414: error #171: expected a declaration
+"../movement.c", line 416: error #171: expected a declaration
+"../movement.c", line 418: error #171: expected a declaration
+"../movement.c", line 455: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 456: error #41: expected an identifier
+"../movement.c", line 456: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 456: warning #93-D: identifier-list parameters may only be used in a function definition
+"../movement.c", line 456: error #148: declaration is incompatible with "float turn_left(oi_t *, float)" (declared at line 47 of "..\movement.h")
+"../movement.c", line 457: error #171: expected a declaration
+At end of source: warning #12-D: parsing restarts here after previous syntax error
+41 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+"../scan.c", line 19: warning #552-D: variable "m" was set but never used
+Finished building: "../scan.c"
+ 
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 12: warning #225-D: function "uart_interrupt_init" declared implicitly
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 36: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 49: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 126: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 166: warning #169-D: argument of type "coords *" is incompatible with parameter of type "object *"
+"../movement.c", line 166: error #169: argument of type "object *" is incompatible with parameter of type "float"
+"../movement.c", line 166: error #141: too many arguments in function call
+"../movement.c", line 174: error #169: argument of type "coords *" is incompatible with parameter of type "object"
+"../movement.c", line 174: error #141: too many arguments in function call
+"../movement.c", line 190: error #20: identifier "Define" is undefined
+"../movement.c", line 190: error #66: expected a ";"
+"../movement.c", line 229: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 231: error #171: expected a declaration
+"../movement.c", line 232: error #171: expected a declaration
+"../movement.c", line 279: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 281: error #20: identifier "power" is undefined
+"../movement.c", line 281: error #18: expected a ")"
+"../movement.c", line 281: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 281: error #148: declaration is incompatible with "void oi_setWheels(int16_t, int16_t)" (declared at line 158 of "..\open_interface.h")
+"../movement.c", line 282: error #80: expected a type specifier
+"../movement.c", line 282: error #20: identifier "sum" is undefined
+"../movement.c", line 282: error #760: variable "robotCoords" is not a type name
+"../movement.c", line 282: error #18: expected a ")"
+"../movement.c", line 282: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 282: error #148: declaration is incompatible with "void lcd_printf(const char *, ...)" (declared at line 44 of "..\lcd.h")
+"../movement.c", line 284: error #41: expected an identifier
+"../movement.c", line 284: error #18: expected a ")"
+"../movement.c", line 284: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 284: warning #93-D: identifier-list parameters may only be used in a function definition
+"../movement.c", line 285: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 285: warning #93-D: identifier-list parameters may only be used in a function definition
+"../movement.c", line 286: error #171: expected a declaration
+"../movement.c", line 288: error #171: expected a declaration
+"../movement.c", line 289: error #171: expected a declaration
+"../movement.c", line 314: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 321: error #20: identifier "power" is undefined
+"../movement.c", line 321: error #18: expected a ")"
+"../movement.c", line 321: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 322: error #80: expected a type specifier
+"../movement.c", line 322: error #20: identifier "sum" is undefined
+"../movement.c", line 322: error #760: variable "robotCoords" is not a type name
+"../movement.c", line 322: error #18: expected a ")"
+"../movement.c", line 322: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 323: error #171: expected a declaration
+"../movement.c", line 325: error #171: expected a declaration
+"../movement.c", line 326: error #171: expected a declaration
+"../movement.c", line 349: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 350: error #171: expected a declaration
+"../movement.c", line 351: error #171: expected a declaration
+"../movement.c", line 374: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 375: error #171: expected a declaration
+"../movement.c", line 376: error #171: expected a declaration
+"../movement.c", line 412: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 413: error #171: expected a declaration
+"../movement.c", line 414: error #171: expected a declaration
+"../movement.c", line 416: error #171: expected a declaration
+"../movement.c", line 418: error #171: expected a declaration
+"../movement.c", line 455: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 456: error #41: expected an identifier
+"../movement.c", line 456: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 456: warning #93-D: identifier-list parameters may only be used in a function definition
+"../movement.c", line 456: error #148: declaration is incompatible with "float turn_left(oi_t *, float)" (declared at line 47 of "..\movement.h")
+"../movement.c", line 457: error #171: expected a declaration
+At end of source: warning #12-D: parsing restarts here after previous syntax error
+41 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+Finished building: "../IR.c"
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+"../scan.c", line 19: warning #552-D: variable "m" was set but never used
+Finished building: "../scan.c"
+ 
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 12: warning #225-D: function "uart_interrupt_init" declared implicitly
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 36: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 49: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 126: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 190: error #20: identifier "Define" is undefined
+"../movement.c", line 190: error #66: expected a ";"
+"../movement.c", line 229: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 231: error #171: expected a declaration
+"../movement.c", line 232: error #171: expected a declaration
+"../movement.c", line 279: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 281: error #20: identifier "power" is undefined
+"../movement.c", line 281: error #18: expected a ")"
+"../movement.c", line 281: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 281: error #148: declaration is incompatible with "void oi_setWheels(int16_t, int16_t)" (declared at line 158 of "..\open_interface.h")
+"../movement.c", line 282: error #80: expected a type specifier
+"../movement.c", line 282: error #20: identifier "sum" is undefined
+"../movement.c", line 282: error #760: variable "robotCoords" is not a type name
+"../movement.c", line 282: error #18: expected a ")"
+"../movement.c", line 282: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 282: error #148: declaration is incompatible with "void lcd_printf(const char *, ...)" (declared at line 44 of "..\lcd.h")
+"../movement.c", line 284: error #41: expected an identifier
+"../movement.c", line 284: error #18: expected a ")"
+"../movement.c", line 284: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 284: warning #93-D: identifier-list parameters may only be used in a function definition
+"../movement.c", line 285: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 285: warning #93-D: identifier-list parameters may only be used in a function definition
+"../movement.c", line 286: error #171: expected a declaration
+"../movement.c", line 288: error #171: expected a declaration
+"../movement.c", line 289: error #171: expected a declaration
+"../movement.c", line 314: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 321: error #20: identifier "power" is undefined
+"../movement.c", line 321: error #18: expected a ")"
+"../movement.c", line 321: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 322: error #80: expected a type specifier
+"../movement.c", line 322: error #20: identifier "sum" is undefined
+"../movement.c", line 322: error #760: variable "robotCoords" is not a type name
+"../movement.c", line 322: error #18: expected a ")"
+"../movement.c", line 322: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 323: error #171: expected a declaration
+"../movement.c", line 325: error #171: expected a declaration
+"../movement.c", line 326: error #171: expected a declaration
+"../movement.c", line 349: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 350: error #171: expected a declaration
+"../movement.c", line 351: error #171: expected a declaration
+"../movement.c", line 374: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 375: error #171: expected a declaration
+"../movement.c", line 376: error #171: expected a declaration
+"../movement.c", line 412: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 413: error #171: expected a declaration
+"../movement.c", line 414: error #171: expected a declaration
+"../movement.c", line 416: error #171: expected a declaration
+"../movement.c", line 418: error #171: expected a declaration
+"../movement.c", line 455: warning #12-D: parsing restarts here after previous syntax error
+"../movement.c", line 456: error #41: expected an identifier
+"../movement.c", line 456: warning #78-D: this declaration has no storage class or type specifier
+"../movement.c", line 456: warning #93-D: identifier-list parameters may only be used in a function definition
+"../movement.c", line 456: error #148: declaration is incompatible with "float turn_left(oi_t *, float)" (declared at line 47 of "..\movement.h")
+"../movement.c", line 457: error #171: expected a declaration
+At end of source: warning #12-D: parsing restarts here after previous syntax error
+37 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 12: warning #225-D: function "uart_interrupt_init" declared implicitly
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 36: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 49: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 126: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 238: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 284: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 381: error #169: argument of type "coords *" is incompatible with parameter of type "float"
+"../movement.c", line 381: error #141: too many arguments in function call
+"../movement.c", line 385: error #169: argument of type "coords *" is incompatible with parameter of type "float"
+"../movement.c", line 385: error #141: too many arguments in function call
+"../movement.c", line 416: warning #112-D: statement is unreachable
+"../movement.c", line 428: error #169: argument of type "coords *" is incompatible with parameter of type "float"
+"../movement.c", line 428: error #141: too many arguments in function call
+"../movement.c", line 462: error #169: argument of type "coords *" is incompatible with parameter of type "float"
+"../movement.c", line 462: error #141: too many arguments in function call
+8 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 12: warning #225-D: function "uart_interrupt_init" declared implicitly
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 36: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 49: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 126: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 238: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 284: warning #225-D: function "uart_sendStr" declared implicitly
+"../movement.c", line 416: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+Finished building: "../IR.c"
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+"../scan.c", line 19: warning #552-D: variable "m" was set but never used
+Finished building: "../scan.c"
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 373: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'scan.obj' failed
+"../scan.c", line 31: error #20: identifier "m" is undefined
+1 error detected in the compilation of "../scan.c".
+gmake: *** [scan.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+"../scan.c", line 19: warning #552-D: variable "m" was set but never used
+Finished building: "../scan.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+gmake[1]: 'godzillaHunter.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 374: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 380: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 380: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 13: warning #225-D: function "IR_init" declared implicitly
+"../movement.c", line 14: warning #225-D: function "ping_init" declared implicitly
+"../movement.c", line 15: warning #225-D: function "servo_init" declared implicitly
+"../movement.c", line 29: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 384: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 26: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 381: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 26: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 381: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 26: warning #179-D: variable "obsCount" was declared but never referenced
+"../movement.c", line 387: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 40: error #167: too few arguments in function call
+"../movement.c", line 40: error #18: expected a ")"
+"../movement.c", line 56: error #20: identifier "obsCount" is undefined
+"../movement.c", line 84: error #102: "numObs" has already been declared in the current scope
+"../movement.c", line 146: error #20: identifier "obsCount" is undefined
+"../movement.c", line 146: error #167: too few arguments in function call
+"../movement.c", line 146: error #18: expected a ")"
+"../movement.c", line 387: warning #112-D: statement is unreachable
+7 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+Finished building: "../IR.c"
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+"../scan.c", line 19: warning #552-D: variable "m" was set but never used
+Finished building: "../scan.c"
+ 
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 40: error #167: too few arguments in function call
+"../movement.c", line 40: error #18: expected a ")"
+"../movement.c", line 56: error #20: identifier "obsCount" is undefined
+"../movement.c", line 84: error #102: "numObs" has already been declared in the current scope
+"../movement.c", line 146: error #20: identifier "obsCount" is undefined
+"../movement.c", line 146: error #167: too few arguments in function call
+"../movement.c", line 146: error #18: expected a ")"
+"../movement.c", line 387: warning #112-D: statement is unreachable
+7 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 84: error #102: "numObs" has already been declared in the current scope
+"../movement.c", line 387: warning #112-D: statement is unreachable
+1 error detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 387: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+gmake[1]: 'godzillaHunter.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+gmake[1]: 'godzillaHunter.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 56: error #167: too few arguments in function call
+"../movement.c", line 390: warning #112-D: statement is unreachable
+1 error detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+Finished building: "../IR.c"
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+"../scan.c", line 19: warning #552-D: variable "m" was set but never used
+Finished building: "../scan.c"
+ 
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 390: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 390: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 390: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 392: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 393: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+gmake[1]: 'godzillaHunter.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 393: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 393: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 393: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 393: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 393: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 390: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 393: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 394: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 398: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+Finished building: "../IR.c"
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+"../scan.c", line 19: warning #552-D: variable "m" was set but never used
+Finished building: "../scan.c"
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 391: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 391: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 397: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 397: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 397: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 397: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 399: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+gmake[1]: 'godzillaHunter.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 398: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 398: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 398: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'main.obj' failed
+"../main.c", line 74: error #20: identifier "numObs" is undefined
+"../main.c", line 51: warning #552-D: variable "obsTemp" was set but never used
+"../main.c", line 52: warning #179-D: variable "obsCount" was declared but never referenced
+1 error detected in the compilation of "../main.c".
+gmake: *** [main.obj] Error 1
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 68: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 122: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 182: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 187: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 220: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 247: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 266: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 285: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 318: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 327: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 343: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 352: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 398: warning #112-D: statement is unreachable
+12 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'main.obj' failed
+"../main.c", line 74: error #20: identifier "numObs" is undefined
+"../main.c", line 51: warning #552-D: variable "obsTemp" was set but never used
+"../main.c", line 52: warning #179-D: variable "obsCount" was declared but never referenced
+1 error detected in the compilation of "../main.c".
+gmake: *** [main.obj] Error 1
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 3: warning #262-D: explicit type is missing ("int" assumed)
+"../movement.c", line 69: error #45: expression must have pointer type
+"../movement.c", line 70: error #45: expression must have pointer type
+"../movement.c", line 72: error #45: expression must have pointer type
+"../movement.c", line 76: error #45: expression must have pointer type
+"../movement.c", line 83: error #45: expression must have pointer type
+"../movement.c", line 123: error #45: expression must have pointer type
+"../movement.c", line 124: error #45: expression must have pointer type
+"../movement.c", line 127: error #45: expression must have pointer type
+"../movement.c", line 128: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 188: error #45: expression must have pointer type
+"../movement.c", line 189: error #45: expression must have pointer type
+"../movement.c", line 221: error #45: expression must have pointer type
+"../movement.c", line 222: error #45: expression must have pointer type
+"../movement.c", line 223: error #45: expression must have pointer type
+"../movement.c", line 223: error #45: expression must have pointer type
+"../movement.c", line 248: error #45: expression must have pointer type
+"../movement.c", line 249: error #45: expression must have pointer type
+"../movement.c", line 249: error #45: expression must have pointer type
+"../movement.c", line 251: error #45: expression must have pointer type
+"../movement.c", line 251: error #45: expression must have pointer type
+"../movement.c", line 252: error #45: expression must have pointer type
+"../movement.c", line 252: error #45: expression must have pointer type
+"../movement.c", line 260: error #45: expression must have pointer type
+"../movement.c", line 260: error #45: expression must have pointer type
+"../movement.c", line 260: error #45: expression must have pointer type
+"../movement.c", line 267: error #45: expression must have pointer type
+"../movement.c", line 267: error #45: expression must have pointer type
+"../movement.c", line 267: error #45: expression must have pointer type
+"../movement.c", line 286: error #45: expression must have pointer type
+"../movement.c", line 287: error #45: expression must have pointer type
+"../movement.c", line 287: error #45: expression must have pointer type
+"../movement.c", line 289: error #45: expression must have pointer type
+"../movement.c", line 289: error #45: expression must have pointer type
+"../movement.c", line 290: error #45: expression must have pointer type
+"../movement.c", line 290: error #45: expression must have pointer type
+"../movement.c", line 304: error #45: expression must have pointer type
+"../movement.c", line 304: error #45: expression must have pointer type
+"../movement.c", line 304: error #45: expression must have pointer type
+"../movement.c", line 319: error #45: expression must have pointer type
+"../movement.c", line 320: error #45: expression must have pointer type
+"../movement.c", line 320: error #45: expression must have pointer type
+"../movement.c", line 322: error #45: expression must have pointer type
+"../movement.c", line 322: error #45: expression must have pointer type
+"../movement.c", line 323: error #45: expression must have pointer type
+"../movement.c", line 323: error #45: expression must have pointer type
+"../movement.c", line 324: error #45: expression must have pointer type
+"../movement.c", line 324: error #45: expression must have pointer type
+"../movement.c", line 324: error #45: expression must have pointer type
+"../movement.c", line 328: error #45: expression must have pointer type
+"../movement.c", line 329: error #45: expression must have pointer type
+"../movement.c", line 329: error #45: expression must have pointer type
+"../movement.c", line 330: error #45: expression must have pointer type
+"../movement.c", line 330: error #45: expression must have pointer type
+"../movement.c", line 330: error #45: expression must have pointer type
+"../movement.c", line 344: error #45: expression must have pointer type
+"../movement.c", line 345: error #45: expression must have pointer type
+"../movement.c", line 345: error #45: expression must have pointer type
+"../movement.c", line 347: error #45: expression must have pointer type
+"../movement.c", line 347: error #45: expression must have pointer type
+"../movement.c", line 348: error #45: expression must have pointer type
+"../movement.c", line 348: error #45: expression must have pointer type
+"../movement.c", line 349: error #45: expression must have pointer type
+"../movement.c", line 349: error #45: expression must have pointer type
+"../movement.c", line 349: error #45: expression must have pointer type
+"../movement.c", line 353: error #45: expression must have pointer type
+"../movement.c", line 354: error #45: expression must have pointer type
+"../movement.c", line 354: error #45: expression must have pointer type
+"../movement.c", line 355: error #45: expression must have pointer type
+"../movement.c", line 355: error #45: expression must have pointer type
+"../movement.c", line 355: error #45: expression must have pointer type
+"../movement.c", line 399: warning #112-D: statement is unreachable
+74 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 3: warning #262-D: explicit type is missing ("int" assumed)
+"../movement.c", line 69: error #45: expression must have pointer type
+"../movement.c", line 70: error #45: expression must have pointer type
+"../movement.c", line 72: error #45: expression must have pointer type
+"../movement.c", line 76: error #45: expression must have pointer type
+"../movement.c", line 83: error #45: expression must have pointer type
+"../movement.c", line 123: error #45: expression must have pointer type
+"../movement.c", line 124: error #45: expression must have pointer type
+"../movement.c", line 127: error #45: expression must have pointer type
+"../movement.c", line 128: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 188: error #45: expression must have pointer type
+"../movement.c", line 189: error #45: expression must have pointer type
+"../movement.c", line 221: error #45: expression must have pointer type
+"../movement.c", line 222: error #45: expression must have pointer type
+"../movement.c", line 223: error #45: expression must have pointer type
+"../movement.c", line 223: error #45: expression must have pointer type
+"../movement.c", line 248: error #45: expression must have pointer type
+"../movement.c", line 249: error #45: expression must have pointer type
+"../movement.c", line 249: error #45: expression must have pointer type
+"../movement.c", line 251: error #45: expression must have pointer type
+"../movement.c", line 251: error #45: expression must have pointer type
+"../movement.c", line 252: error #45: expression must have pointer type
+"../movement.c", line 252: error #45: expression must have pointer type
+"../movement.c", line 260: error #45: expression must have pointer type
+"../movement.c", line 260: error #45: expression must have pointer type
+"../movement.c", line 260: error #45: expression must have pointer type
+"../movement.c", line 267: error #45: expression must have pointer type
+"../movement.c", line 267: error #45: expression must have pointer type
+"../movement.c", line 267: error #45: expression must have pointer type
+"../movement.c", line 286: error #45: expression must have pointer type
+"../movement.c", line 287: error #45: expression must have pointer type
+"../movement.c", line 287: error #45: expression must have pointer type
+"../movement.c", line 289: error #45: expression must have pointer type
+"../movement.c", line 289: error #45: expression must have pointer type
+"../movement.c", line 290: error #45: expression must have pointer type
+"../movement.c", line 290: error #45: expression must have pointer type
+"../movement.c", line 304: error #45: expression must have pointer type
+"../movement.c", line 304: error #45: expression must have pointer type
+"../movement.c", line 304: error #45: expression must have pointer type
+"../movement.c", line 319: error #45: expression must have pointer type
+"../movement.c", line 320: error #45: expression must have pointer type
+"../movement.c", line 320: error #45: expression must have pointer type
+"../movement.c", line 322: error #45: expression must have pointer type
+"../movement.c", line 322: error #45: expression must have pointer type
+"../movement.c", line 323: error #45: expression must have pointer type
+"../movement.c", line 323: error #45: expression must have pointer type
+"../movement.c", line 324: error #45: expression must have pointer type
+"../movement.c", line 324: error #45: expression must have pointer type
+"../movement.c", line 324: error #45: expression must have pointer type
+"../movement.c", line 328: error #45: expression must have pointer type
+"../movement.c", line 329: error #45: expression must have pointer type
+"../movement.c", line 329: error #45: expression must have pointer type
+"../movement.c", line 330: error #45: expression must have pointer type
+"../movement.c", line 330: error #45: expression must have pointer type
+"../movement.c", line 330: error #45: expression must have pointer type
+"../movement.c", line 344: error #45: expression must have pointer type
+"../movement.c", line 345: error #45: expression must have pointer type
+"../movement.c", line 345: error #45: expression must have pointer type
+"../movement.c", line 347: error #45: expression must have pointer type
+"../movement.c", line 347: error #45: expression must have pointer type
+"../movement.c", line 348: error #45: expression must have pointer type
+"../movement.c", line 348: error #45: expression must have pointer type
+"../movement.c", line 349: error #45: expression must have pointer type
+"../movement.c", line 349: error #45: expression must have pointer type
+"../movement.c", line 349: error #45: expression must have pointer type
+"../movement.c", line 353: error #45: expression must have pointer type
+"../movement.c", line 354: error #45: expression must have pointer type
+"../movement.c", line 354: error #45: expression must have pointer type
+"../movement.c", line 355: error #45: expression must have pointer type
+"../movement.c", line 355: error #45: expression must have pointer type
+"../movement.c", line 355: error #45: expression must have pointer type
+"../movement.c", line 399: warning #112-D: statement is unreachable
+74 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+"../main.c", line 50: warning #179-D: variable "obs" was declared but never referenced
+"../main.c", line 52: warning #179-D: variable "obsCount" was declared but never referenced
+Finished building: "../main.c"
+ 
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 3: warning #262-D: explicit type is missing ("int" assumed)
+"../movement.c", line 69: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 70: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 72: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 76: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 83: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 123: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 124: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 127: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 128: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 183: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 183: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 183: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 183: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 188: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 189: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 221: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 222: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 223: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 223: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 248: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 249: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 249: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 251: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 251: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 252: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 252: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 260: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 260: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 260: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 267: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 267: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 267: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 286: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 287: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 287: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 289: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 289: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 290: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 290: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 304: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 304: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 304: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 319: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 320: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 320: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 322: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 322: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 323: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 323: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 324: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 324: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 324: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 328: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 329: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 329: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 330: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 330: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 330: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 344: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 345: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 345: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 347: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 347: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 348: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 348: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 349: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 349: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 349: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 353: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 354: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 354: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 355: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 355: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 355: error #133: expression must have pointer-to-struct-or-union type
+"../movement.c", line 399: warning #112-D: statement is unreachable
+74 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 3: error #41: expected an identifier
+"../movement.c", line 69: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 123: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 183: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 188: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 221: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 248: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 267: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 286: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 319: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 328: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 344: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 353: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 399: warning #112-D: statement is unreachable
+13 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 3: error #41: expected an identifier
+"../movement.c", line 69: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 123: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 183: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 188: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 221: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 248: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 267: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 286: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 319: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 328: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 344: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 353: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 399: warning #112-D: statement is unreachable
+13 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 3: warning #262-D: explicit type is missing ("int" assumed)
+"../movement.c", line 69: error #45: expression must have pointer type
+"../movement.c", line 70: error #45: expression must have pointer type
+"../movement.c", line 72: error #45: expression must have pointer type
+"../movement.c", line 76: error #45: expression must have pointer type
+"../movement.c", line 83: error #45: expression must have pointer type
+"../movement.c", line 123: error #45: expression must have pointer type
+"../movement.c", line 124: error #45: expression must have pointer type
+"../movement.c", line 127: error #45: expression must have pointer type
+"../movement.c", line 128: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 183: error #45: expression must have pointer type
+"../movement.c", line 188: error #45: expression must have pointer type
+"../movement.c", line 189: error #45: expression must have pointer type
+"../movement.c", line 221: error #45: expression must have pointer type
+"../movement.c", line 222: error #45: expression must have pointer type
+"../movement.c", line 223: error #45: expression must have pointer type
+"../movement.c", line 223: error #45: expression must have pointer type
+"../movement.c", line 248: error #45: expression must have pointer type
+"../movement.c", line 249: error #45: expression must have pointer type
+"../movement.c", line 249: error #45: expression must have pointer type
+"../movement.c", line 251: error #45: expression must have pointer type
+"../movement.c", line 251: error #45: expression must have pointer type
+"../movement.c", line 252: error #45: expression must have pointer type
+"../movement.c", line 252: error #45: expression must have pointer type
+"../movement.c", line 260: error #45: expression must have pointer type
+"../movement.c", line 260: error #45: expression must have pointer type
+"../movement.c", line 260: error #45: expression must have pointer type
+"../movement.c", line 267: error #45: expression must have pointer type
+"../movement.c", line 267: error #45: expression must have pointer type
+"../movement.c", line 267: error #45: expression must have pointer type
+"../movement.c", line 286: error #45: expression must have pointer type
+"../movement.c", line 287: error #45: expression must have pointer type
+"../movement.c", line 287: error #45: expression must have pointer type
+"../movement.c", line 289: error #45: expression must have pointer type
+"../movement.c", line 289: error #45: expression must have pointer type
+"../movement.c", line 290: error #45: expression must have pointer type
+"../movement.c", line 290: error #45: expression must have pointer type
+"../movement.c", line 304: error #45: expression must have pointer type
+"../movement.c", line 304: error #45: expression must have pointer type
+"../movement.c", line 304: error #45: expression must have pointer type
+"../movement.c", line 319: error #45: expression must have pointer type
+"../movement.c", line 320: error #45: expression must have pointer type
+"../movement.c", line 320: error #45: expression must have pointer type
+"../movement.c", line 322: error #45: expression must have pointer type
+"../movement.c", line 322: error #45: expression must have pointer type
+"../movement.c", line 323: error #45: expression must have pointer type
+"../movement.c", line 323: error #45: expression must have pointer type
+"../movement.c", line 324: error #45: expression must have pointer type
+"../movement.c", line 324: error #45: expression must have pointer type
+"../movement.c", line 324: error #45: expression must have pointer type
+"../movement.c", line 328: error #45: expression must have pointer type
+"../movement.c", line 329: error #45: expression must have pointer type
+"../movement.c", line 329: error #45: expression must have pointer type
+"../movement.c", line 330: error #45: expression must have pointer type
+"../movement.c", line 330: error #45: expression must have pointer type
+"../movement.c", line 330: error #45: expression must have pointer type
+"../movement.c", line 344: error #45: expression must have pointer type
+"../movement.c", line 345: error #45: expression must have pointer type
+"../movement.c", line 345: error #45: expression must have pointer type
+"../movement.c", line 347: error #45: expression must have pointer type
+"../movement.c", line 347: error #45: expression must have pointer type
+"../movement.c", line 348: error #45: expression must have pointer type
+"../movement.c", line 348: error #45: expression must have pointer type
+"../movement.c", line 349: error #45: expression must have pointer type
+"../movement.c", line 349: error #45: expression must have pointer type
+"../movement.c", line 349: error #45: expression must have pointer type
+"../movement.c", line 353: error #45: expression must have pointer type
+"../movement.c", line 354: error #45: expression must have pointer type
+"../movement.c", line 354: error #45: expression must have pointer type
+"../movement.c", line 355: error #45: expression must have pointer type
+"../movement.c", line 355: error #45: expression must have pointer type
+"../movement.c", line 355: error #45: expression must have pointer type
+"../movement.c", line 399: warning #112-D: statement is unreachable
+74 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'movement.obj' failed
+"../movement.c", line 68: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 122: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 182: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 187: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 220: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 247: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 266: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 285: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 318: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 327: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 343: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 352: error #20: identifier "robotCoords" is undefined
+"../movement.c", line 398: warning #112-D: statement is unreachable
+12 errors detected in the compilation of "../movement.c".
+gmake: *** [movement.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 400: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'IR.obj' failed
+"../IR.c", line 4: error #66: expected a ";"
+"../IR.c", line 51: error #20: identifier "lookupIR" is undefined
+"../IR.c", line 56: error #20: identifier "lookupIR" is undefined
+"../IR.c", line 62: error #20: identifier "lookupIR" is undefined
+4 errors detected in the compilation of "../IR.c".
+gmake: *** [IR.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+Finished building: "../IR.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+gmake[1]: 'godzillaHunter.out' is up to date.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+"../main.c", line 50: warning #179-D: variable "obs" was declared but never referenced
+"../main.c", line 52: warning #179-D: variable "obsCount" was declared but never referenced
+Finished building: "../main.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 400: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+ 
+>> Compilation failure
+subdir_rules.mk:9: recipe for target 'main.obj' failed
+"../main.c", line 50: error #20: identifier "numObs" is undefined
+"../main.c", line 52: warning #179-D: variable "obsCount" was declared but never referenced
+1 error detected in the compilation of "../main.c".
+gmake: *** [main.obj] Error 1
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 400: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 400: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project godzillaHunter ****
+
+"C:\\ti\\ccs1230\\ccs\\utils\\bin\\gmake" -k -j 20 all -O 
+ 
+Building file: "../main.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="main.d_raw"  "../main.c"
+Finished building: "../main.c"
+ 
+Building file: "../IR.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="IR.d_raw"  "../IR.c"
+Finished building: "../IR.c"
+ 
+Building file: "../scan.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="scan.d_raw"  "../scan.c"
+"../scan.c", line 19: warning #552-D: variable "m" was set but never used
+Finished building: "../scan.c"
+ 
+Building file: "../movement.c"
+Invoking: Arm Compiler
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --include_path="U:/Documents/godzillaHunter/godzillaHunter" --include_path="C:/ti/TivaWare_C_Series-2.2.0.295" --include_path="C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi --preproc_with_compile --preproc_dependency="movement.d_raw"  "../movement.c"
+"../movement.c", line 399: warning #112-D: statement is unreachable
+Finished building: "../movement.c"
+ 
+Building target: "godzillaHunter.out"
+Invoking: Arm Linker
+"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --define=ccs="ccs" --define=PART_TM4C123GH6PM -g --gcc --diag_warning=225 --diag_wrap=off --display_error_number --abi=eabi -z -m"godzillaHunter.map" --heap_size=4096 --stack_size=4096 -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/lib" -i"C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="godzillaHunter_linkInfo.xml" --rom_model -o "godzillaHunter.out" "./IR.obj" "./Timer.obj" "./button.obj" "./lcd.obj" "./main.obj" "./movement.obj" "./open_interface.obj" "./ping.obj" "./scan.obj" "./servo.obj" "./tm4c123gh6pm_startup_ccs.obj" "./uart-interrupt.obj" "../tm4c123gh6pm.cmd"  -llibc.a -l"C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/ccs/Debug/driverlib.lib" 
+<Linking>
+Finished building target: "godzillaHunter.out"
+ 
+
+**** Build Finished ****
