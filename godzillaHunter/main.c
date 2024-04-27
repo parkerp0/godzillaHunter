@@ -1,60 +1,59 @@
-/*
- * main.c
- *
- *  Created on: Apr 12, 2024
- *      Author: cdoran
- */
+ /*
+  * main.c
+  *
+  *  Created on: Apr 12, 2024
+  *      Author: cdoran
+  */
 
 
 
-//uart interrupt scheme
+ //uart interrupt scheme
 
-//scan function with sweep: servo, ping, IR
+ //scan function with sweep: servo, ping, IR
 
-//functions for bump and cliff sensors
+ //functions for bump and cliff sensors
 
-//object classification
+ //object classification
 
-//calibration software
+ //calibration software
 
-//mapping robot and obstacle locations
+ //mapping robot and obstacle locations
 
-//ram function
-#include "Timer.h"
-#include "scan.h"
-#include "open_interface.h"
-#include "IR.h"
-#include "lcd.h"
-#include "uart-interrupt.h"
-#include "servo.h"
-#include "ping.h"
-#include "button.h"
-#include <inc/tm4c123gh6pm.h>
+ //ram function
+ #include "Timer.h"
+ #include "movement.h"
+ #include "scan.h"
+ #include "open_interface.h"
+ #include "IR.h"
+ #include "lcd.h"
+ #include "uart-interrupt.h"
+ #include "servo.h"
+ #include "ping.h"
+ #include "button.h"
+ #include <inc/tm4c123gh6pm.h>
 
-int main (void) {
+coords *robotCoords = NULL;
 
-            oi_t *sensorD = oi_alloc();
-            oi_init(sensorD);
+ int main (void) {
 
-            timer_init();
-            lcd_init();
-            uart_interrupt_init();
-            IR_init();
-            ping_init();
-            servo_init();
-            button_init();
+             oi_t *sensorD = oi_alloc();
+             oi_init(sensorD);
 
-            coords *coord = malloc(sizeof(coords));
+             timer_init();
+             lcd_init();
+             uart_interrupt_init();
+             IR_init();
+             ping_init();
+             servo_init();
+             button_init();
+   
+            robotCoords = malloc(sizeof(coords));
             coord->heading = 0.0;
             coord->x = 0.0;
             coord->y = 0.0;
 
             object *obs = NULL;
             int obsCount = 0;
-
-
-            //oi_setWheels(0,0);
-
 
             while(1)
             {
@@ -100,6 +99,4 @@ int main (void) {
                     break;
                 }
             }
-
-
-}
+ }
