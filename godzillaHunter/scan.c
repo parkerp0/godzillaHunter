@@ -4,21 +4,14 @@
  *  Created on: Apr 16, 2024
  *      Author: cdoran & lcano
  */
-#include "Timer.h"
 #include "scan.h"
-#include "open_interface.h"
-#include "lcd.h"
-#include "uart-interrupt.h"
-#include "servo.h"
-#include "ping.h"
 
 #define objMatchThresh 0.03 //threshold for deciding if objects are the same
 
-object* scan(coords *robotCoords){
+object* scan(){
             int i = 0;              //Constants and counters for for loops
             int j = 0;
             int k = 0;
-            int m = 0;
             char toPutty[100];      //Used to make the PuTTy output a message
             char *toPutty_ptr = toPutty;
             int IRmeasurement;
@@ -26,11 +19,9 @@ object* scan(coords *robotCoords){
 
             object *obs = NULL;
 
-
                     i = 0;
                     j = 0;
                     k = 0;
-                    m = 0;
 
                     int sensorAngle[90] = {0};        //sensorAngle will be set to angles where there is an object
                     float sensorDistance[90] = {0};   //sensorDistance will be set to the distance to the object

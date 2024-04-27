@@ -20,6 +20,7 @@
  //mapping robot and obstacle locations
 
  //ram function
+
  #include "Timer.h"
  #include "movement.h"
  #include "scan.h"
@@ -31,8 +32,8 @@
  #include "ping.h"
  #include "button.h"
  #include <inc/tm4c123gh6pm.h>
+#include "structs.h"
 
-coords *robotCoords = NULL;
 
  int main (void) {
 
@@ -47,10 +48,10 @@ coords *robotCoords = NULL;
              servo_init();
              button_init();
    
-            robotCoords = malloc(sizeof(coords));
-            coord->heading = 0.0;
-            coord->x = 0.0;
-            coord->y = 0.0;
+            coords *robotCoords = malloc(sizeof(coords));
+            robotCoords->heading = 0.0;
+            robotCoords->x = 0.0;
+            robotCoords->y = 0.0;
 
             object *obs = NULL;
             int obsCount = 0;
@@ -76,26 +77,26 @@ coords *robotCoords = NULL;
                 if(command_byte == 'w')//movement block wasd forward/backward 10 cm left/right 45 degrees
                 {
                     command_byte = -1;
-                    move_forward(sensorD,coord, 100);
+                    move_forward(sensorD, 100);
                 }
                 if(command_byte == 'a')
                 {
                     command_byte = -1;
-                    turn_left(sensorD,coord,45);
+                    turn_left(sensorD,45);
                 }
                 if(command_byte == 's')
                 {
                     command_byte = -1;
-                    move_backward(sensorD,coord,100);
+                    move_backward(sensorD,100);
                 }
                 if(command_byte == 'd')
                 {
                     command_byte = -1;
-                    turn_right(sensorD,coord,45);
+                    turn_right(sensorD,45);
                 }
                 if(command_byte == 'k')
                 {
-                    ram(sensorD,coord);
+                    ram(sensorD);
                     break;
                 }
             }

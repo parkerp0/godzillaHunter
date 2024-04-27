@@ -403,10 +403,10 @@ float ram(oi_t *sensor)
 {
 	float dist = 0;
     oi_setWheels(500 + TWISTOFFSET,500 - TWISTOFFSET);
-    while(dist<800 && !sensor_data->bumpLeft && !sensor_data->bumpRight)
+    while(dist<800 && !sensor->bumpLeft && !sensor->bumpRight)
     {
-        oi_update(sensor_data);
-        dist += sensor_data->distance;
+        oi_update(sensor);
+        dist += sensor->distance;
     }
   
     move_backward(sensor, 700);
@@ -493,8 +493,8 @@ bool cliff_detected(oi_t *sensor_data){
             sensor_data->bumpRight || sensor_data->cliffFrontLeft || sensor_data->cliffFrontRight)
     {
         // Turns around and maneuvers away
-        turn_right(sensor_data, robotCoords, 180.0);
-        maneuver(sensor_data, 400.0, robotCoords);
+        turn_right(sensor_data, 180.0);
+        manuever(sensor_data, 400.0);
         return true;
     }
     return false;
