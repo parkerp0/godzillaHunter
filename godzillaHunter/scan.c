@@ -6,7 +6,7 @@
  */
 #include "scan.h"
 
-#define objMatchThresh 0.03 //threshold for deciding if objects are the same
+#define objMatchThresh 3 //threshold for deciding if objects are the same
 
 object* scan(){
             int i = 0;              //Constants and counters for for loops
