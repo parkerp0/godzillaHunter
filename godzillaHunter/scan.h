@@ -29,7 +29,7 @@ typedef struct
 
 object* scan();
 
-int scanAndRewrite(object *currentObs,int obsCount);
+int scanAndRewrite(object **currentObs,int obsCount);
 
 float vectorDifMag(object *obs,object *obs2);
 

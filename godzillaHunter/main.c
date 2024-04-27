@@ -61,7 +61,7 @@ int main (void) {
                 if(command_byte == 'r')
                 {
                     command_byte = -1;
-                    obsCount = scanAndRewrite(obs,obsCount);
+                    obsCount = scanAndRewrite(&obs,obsCount);
                 }
                 //find a way to iterate through current obs and check for new obs in scan
 

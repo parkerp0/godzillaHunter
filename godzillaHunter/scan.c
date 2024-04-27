@@ -19,7 +19,6 @@ object* scan()
     int i = 0;              //Constants and counters for for loops
     int j = 0;
     int k = 0;
-    int m = 0;
     char toPutty[100];      //Used to make the PuTTy output a message
     char *toPutty_ptr = toPutty;
     int IRmeasurement;
@@ -29,7 +28,6 @@ object* scan()
     i = 0;
     j = 0;
     k = 0;
-    m = 0;
     int sensorAngle[90] = {0};        //sensorAngle will be set to angles where there is an object
     float sensorDistance[90] = {0};   //sensorDistance will be set to the distance to the object
 
@@ -132,10 +130,10 @@ object* scan()
     return obs;
 }
 
-int scanAndRewrite(object *currentObs,int obsCount)
+int scanAndRewrite(object **currentObs,int obsCount)
 {
     int i;
-    int flag =1;
+    int flag = 0;
     char message[90];
 
 
@@ -144,19 +142,19 @@ int scanAndRewrite(object *currentObs,int obsCount)
     {
         for(i = 0; i<obsCount; i++)
         {
-            if(vectorDifMag(obsTemp,&currentObs[i]) < objMatchThresh)
+            if(vectorDifMag(obsTemp,&(*currentObs)[i]) < objMatchThresh)
             {//rewritten might work
-                currentObs[i].linearWidth = (currentObs[i].linearWidth + obsTemp->linearWidth)/2;
+                (*currentObs)[i].linearWidth = ((*currentObs)[i].linearWidth + obsTemp->linearWidth)/2;
             }else
                 flag = 1;
         }
-        if(flag)
+        if(flag || (*currentObs == NULL))
         {
             obsCount++;
-            currentObs = realloc(currentObs,sizeof(object)*obsCount);
-            currentObs[obsCount-1].x = obsTemp->x;
-            currentObs[obsCount-1].y = obsTemp->y;
-            currentObs[obsCount-1].linearWidth = obsTemp->linearWidth;
+            (*currentObs) = realloc((*currentObs),sizeof(object)*obsCount);
+            (*currentObs)[obsCount-1].x = obsTemp->x;
+            (*currentObs)[obsCount-1].y = obsTemp->y;
+            (*currentObs)[obsCount-1].linearWidth = obsTemp->linearWidth;
             flag = 0;
         }
         
@@ -164,7 +162,7 @@ int scanAndRewrite(object *currentObs,int obsCount)
     }
     for(i = 0; i<obsCount; i++)
     {
-        sprintf(message,"obs %d: x: %.2f y:%.2f Width:%.2f\n\r",i,currentObs[i].x,currentObs[i].y,currentObs[i].linearWidth);
+        sprintf(message,"obs %d: x: %.2f y:%.2f Width:%.2f\n\r",i,(*currentObs)[i].x,(*currentObs)[i].y,(*currentObs)[i].linearWidth);
         uart_sendStr(message);
     }//prints all objects
     
@@ -177,7 +175,7 @@ int scanAndRewrite(object *currentObs,int obsCount)
 
 float vectorDifMag(object *obs,object *obs2)
 {
-    int newX = obs->x - obs2->x;
-    int newY = obs->y - obs2->y;
+    float newX = obs->x - obs2->x;
+    float newY = obs->y - obs2->y;
     return sqrt((newX*newX) + (newY*newY));
 }
