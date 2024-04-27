@@ -11,6 +11,7 @@
 #include "button.h"
 #include "uart-interrupt.h"
 #include "Timer.h"
+#include "structs.h"
 #include <math.h>
 
 #define DEGREES_TO_RADS M_PI / 180.0
@@ -20,20 +21,6 @@
 #define TILE_WIDTH 20 * 2.54 // my guess
 #define FIELD_WIDTH 4 * TILEWIDTH
 #define FIELD_LENGTH 7 * TILEWIDTH
-
-typedef struct {
-    float x;
-    float y;
-    float heading;
-} coords;
-
-typedef struct
-{
-    float x;
-    float y;
-    float linearWidth;
-}object;
-
 
 char toPutty[55];
 

@@ -1,6 +1,5 @@
 #include "IR.h"
 
-extern coords *robotCoords;
 uint16_t *lookupIR;
 float *lookupDist;
 

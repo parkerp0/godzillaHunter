@@ -1,7 +1,7 @@
 #include "servo.h"
 
-#define START_VAL 6920
-#define END_VAL   35040
+#define START_VAL 8970
+#define END_VAL   37190
 
 void servo_init()
 {
@@ -46,7 +46,7 @@ void servo_move(int degrees)
 
     TIMER1_CTL_R |= 0x100;
     TIMER1_TBMATCHR_R = (END_VAL - START_VAL)/180 *degrees + START_VAL;
-    timer_waitMillis(1000);
+    timer_waitMillis(100);
     TIMER1_CTL_R &=(~0x100);
 
 }
