@@ -62,6 +62,9 @@
                 {
                     command_byte = -1;
                     obsCount = scanAndRewrite(&obs,obsCount);
+                    move_to_point(sensorD,obs,obsCount,0,obs[0].x * 2, obs[0].y * 2);
+                    turn_left(sensorD,180);
+                    obsCount = scanAndRewrite(&obs,obsCount);
                 }
                 //find a way to iterate through current obs and check for new obs in scan
 

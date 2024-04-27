@@ -6,7 +6,7 @@
  */
 #include "scan.h"
 
-#define objMatchThresh 3 //threshold for deciding if objects are the same
+#define objMatchThresh 10 //threshold for deciding if objects are the same might be mm idk
 
 object* scan(){
             int i = 0;              //Constants and counters for for loops
@@ -205,29 +205,31 @@ object* scan(){
 int scanAndRewrite(object **currentObs,int obsCount)
 {
     int i;
-    int flag = 0;
+    int flag;
     char message[90];
 
 
     object *obsTemp = scan();
     while(obsTemp->linearWidth!= 0.0)
     {
+        flag = 1;//assume that the new object is new
         for(i = 0; i<obsCount; i++)
         {
             if(vectorDifMag(obsTemp,&(*currentObs)[i]) < objMatchThresh)
             {//rewritten might work
                 (*currentObs)[i].linearWidth = ((*currentObs)[i].linearWidth + obsTemp->linearWidth)/2;
-            }else
-                flag = 1;
+                flag = 0;//the object is found to be not new
+                break;
+            }
+
         }
-        if(flag || (*currentObs == NULL))
+        if(flag)
         {
             obsCount++;
             (*currentObs) = realloc((*currentObs),sizeof(object)*obsCount);
             (*currentObs)[obsCount-1].x = obsTemp->x;
             (*currentObs)[obsCount-1].y = obsTemp->y;
             (*currentObs)[obsCount-1].linearWidth = obsTemp->linearWidth;
-            flag = 0;
         }
         
     obsTemp++;
