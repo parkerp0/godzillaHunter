@@ -72,9 +72,13 @@
                 {
                     ;//hang here and wait for more input from the terminal
                 }
-                while(command_byte == 'f')
+                if(command_byte == 'f')
                 {
                     //stop the scanning routine and move toward the zone
+                    oi_free(sensorD);
+                    free(obs);
+                    free(robotCoords);
+                    break;
                 }
 
                 if(command_byte == 'w')//movement block wasd forward/backward 10 cm left/right 45 degrees
