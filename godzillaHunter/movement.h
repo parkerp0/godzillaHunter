@@ -21,6 +21,8 @@
 #define FIELD_WIDTH 4 * TILEWIDTH
 #define FIELD_LENGTH 7 * TILEWIDTH
 
+#define BUMP_OBJECT_WIDTH = 2.54 * 4 // my guess
+
 typedef struct {
     float x;
     float y;
@@ -53,6 +55,6 @@ float turn_left(oi_t *sensor, float degrees);
 float ram(oi_t *sensor_data);
 
 void manuever(oi_t *sensor_data, float distance_mm);
-bool cliff_detected(oi_t *sensor_data);
+int cliff_detected(oi_t *sensor_data, object *obs, int numObs);
 
 #endif

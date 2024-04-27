@@ -62,6 +62,23 @@ float move_to_point(oi_t *sensor_data, object *obs, int numObs, int numAttempts,
     // Sort obstacles based on distances to the robot
     qsort(obs, numObs, sizeof(object), compareDistances);
 
+    int j;
+    for (j = 0; j < numObs; j++) {
+        // Check if there is an obstacle too close to the target location
+        if (((obs[j].linearWidth/2.0) + sqrt(((obs[j]->x-global_x)*(obs[j]->x-global_x)) + 
+            ((obs[j]->y-global_y)*(obs[j]->y-global_y)))) <= ((ROBOT_WIDTH/2.0) + (AVOID_DISTANCE))){
+            // If the original target point is obstructed then just end
+            if (numAttempts == 0)
+                return -1;
+            else { // If it is just an intermediate point then go to the side
+                coords newTarget = calculatePerpendicularPoint(obs[j]);
+                global_x = newTarget.x;
+                global_y = newTarget.y;
+            }
+            break;
+        }
+    }
+
     checkObstacles(sensor_data, obs, numObs, numAttempts, global_x, global_y);
 	sprintf(toPutty, "MTP After obstacles: X: %.2f\t Y: %.2f\n\r", global_x, global_y);
 	uart_sendStr(toPutty);
@@ -488,18 +505,50 @@ void manuever(oi_t *sensor_data, float distance_mm){
     }
 }
 //Helper method for detecting cliffs and or objects when navigating
-bool cliff_detected(oi_t *sensor_data){
+int cliff_detected(oi_t *sensor_data, object *obs, int numObs){
+    if (sensor_data->cliffLeft){
+        obs = malloc(sizeof(object)*(numObs+1));
+        obs[numObs].x = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-60 + robotCoords->heading)*degreesToRadians) + robotCoords->x;
+        obs[numObs].y = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((-60 + robotCoords->heading)*degreesToRadians) + robotCoords->y;
+        obs[numObs].linearWidth = BUMP_OBJECT_WIDTH;
+    } else if (sensor_data->cliffFrontLeft){
+        obs = malloc(sizeof(object)*(numObs+1));
+        obs[numObs].x = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-20 + robotCoords->heading)*degreesToRadians) + robotCoords->x;
+        obs[numObs].y = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((-20 + robotCoords->heading)*degreesToRadians) + robotCoords->y;
+        obs[numObs].linearWidth = BUMP_OBJECT_WIDTH;
+    } else if (sensor_data->cliffFrontRight){
+        obs = malloc(sizeof(object)*(numObs+1));
+        obs[numObs].x = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((20 + robotCoords->heading)*degreesToRadians) + robotCoords->x;
+        obs[numObs].y = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((20 + robotCoords->heading)*degreesToRadians) + robotCoords->y;
+        obs[numObs].linearWidth = BUMP_OBJECT_WIDTH;
+    } else if (sensor_data->cliffRight){
+        obs = malloc(sizeof(object)*(numObs+1));
+        obs[numObs].x = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((60 + robotCoords->heading)*degreesToRadians) + robotCoords->x;
+        obs[numObs].y = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((60 + robotCoords->heading)*degreesToRadians) + robotCoords->y;
+        obs[numObs].linearWidth = BUMP_OBJECT_WIDTH;
+    } else if (sensor_data->bumpLeft){
+        obs = malloc(sizeof(object)*(numObs+1));
+        obs[numObs].x = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-45 + robotCoords->heading)*degreesToRadians) + robotCoords->x;
+        obs[numObs].y = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((-45 + robotCoords->heading)*degreesToRadians) + robotCoords->y;
+        obs[numObs].linearWidth = BUMP_OBJECT_WIDTH;
+    } else if (sensor_data->bumpRight){
+        obs = malloc(sizeof(object)*(numObs+1));
+        obs[numObs].x = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((45 + robotCoords->heading)*degreesToRadians) + robotCoords->x;
+        obs[numObs].y = (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((45 + robotCoords->heading)*degreesToRadians) + robotCoords->y;
+        obs[numObs].linearWidth = BUMP_OBJECT_WIDTH
+    } 
+
+    // TODO finalize the avoidance algorithm  
     if(sensor_data->cliffRight || sensor_data->cliffLeft  || sensor_data->bumpLeft ||
             sensor_data->bumpRight || sensor_data->cliffFrontLeft || sensor_data->cliffFrontRight)
     {
         // Turns around and maneuvers away
-
         lcd_printf("CLIFF DETECTED!!!!");
-//        turn_right(sensor_data, 180.0);
-//        manuever(sensor_data, 400.0);
-        return true;
+       turn_right(sensor_data, 180.0);
+       manuever(sensor_data, 400.0);
+        return 0;
     } else {
     	lcd_clear();
     }
-    return false;
+    return 0;
 }
