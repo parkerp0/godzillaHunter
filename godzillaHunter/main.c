@@ -34,6 +34,7 @@
  #include <inc/tm4c123gh6pm.h>
 #include "structs.h"
 
+coords *robotCoords;
 
  int main (void) {
 
@@ -48,7 +49,7 @@
              servo_init();
              button_init();
    
-            coords *robotCoords = malloc(sizeof(coords));
+            robotCoords = malloc(sizeof(coords));
             robotCoords->heading = 0.0;
             robotCoords->x = 0.0;
             robotCoords->y = 0.0;

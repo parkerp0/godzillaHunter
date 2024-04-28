@@ -2,9 +2,9 @@
 #define MOVEMENT_H
 
 #define MOVEOFFSET 0
-#define TURNOFFSET 14 // - for undershoot + for overshoot degrees off of correct tur
+#define TURNOFFSET 13 // - for undershoot + for overshoot degrees off of correct tur
 
-#define TWISTOFFSET -7 //positive is clockwise driving forward
+#define TWISTOFFSET -5.5 //positive is clockwise driving forward
 
 
 #include "open_interface.h"
@@ -15,15 +15,14 @@
 #include <math.h>
 
 #define DEGREES_TO_RADS M_PI / 180.0
-#define ROBOT_WIDTH 304.8 // I guessed this
+#define ROBOT_WIDTH 340
 #define AVOID_DISTANCE 200
 
-#define TILE_WIDTH 20 * 2.54 // my guess
+#define TILE_WIDTH 590 // mm
 #define FIELD_WIDTH 4 * TILEWIDTH
 #define FIELD_LENGTH 7 * TILEWIDTH
 
-#define BUMP_OBJECT_WIDTH 2.54 * 4 // my guess
-
+#define BUMP_OBJECT_WIDTH 120
 char toPutty[55];
 
 float moveCalibrate(oi_t *sensor_data);

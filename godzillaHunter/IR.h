@@ -6,7 +6,7 @@
 #include "lcd.h"
 #include "movement.h"
 
-#define IROFFSET 1 //measure against wall look for linear error of IR sensor
+#define IROFFSET 2 //measure against wall look for linear error of IR sensor
 
 void IR_init();
 uint16_t IR_read();
