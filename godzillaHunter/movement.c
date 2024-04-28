@@ -420,10 +420,10 @@ float ram(oi_t *sensor_data)
 {
 	float dist = 0;
     oi_setWheels(500 + TWISTOFFSET,500 - TWISTOFFSET);
-    while(dist<800 && !sensor->bumpLeft && !sensor->bumpRight)
+    while(dist<800 && !sensor_data->bumpLeft && !sensor_data->bumpRight)
     {
-        oi_update(sensor);
-        dist += sensor->distance;
+        oi_update(sensor_data);
+        dist += sensor_data->distance;
     }
   
     move_backward(sensor_data, 700);

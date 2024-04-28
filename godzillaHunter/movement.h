@@ -24,19 +24,6 @@
 
 #define BUMP_OBJECT_WIDTH 2.54 * 4 // my guess
 
-typedef struct {
-    float x;
-    float y;
-    float heading;
-} coords;
-
-typedef struct
-{
-    float x;
-    float y;
-    float linearWidth;
-}object;
-
 char toPutty[55];
 
 float moveCalibrate(oi_t *sensor_data);
