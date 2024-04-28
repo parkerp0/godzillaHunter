@@ -48,11 +48,11 @@ coords *robotCoords;
              ping_init();
              servo_init();
              button_init();
-   
+
             robotCoords = malloc(sizeof(coords));
             robotCoords->heading = 0.0;
-            robotCoords->x = 0.0;
-            robotCoords->y = 0.0;
+            robotCoords->x = START_X;
+            robotCoords->y = START_Y;
 
             object *obs = NULL;
             int obsCount = 0;
