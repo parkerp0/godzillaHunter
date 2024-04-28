@@ -419,7 +419,7 @@ char oi_uartReceive(void)
     // uint32_t tempData; //used for error checking
     char data;
 
-    while ((UART4_FR_R & UART_FR_RXFE))
+    while ((UART4_FR_R & UART_FR_RXFE))//if it hangs here the bot is not on b/c the board has not heard back from bot
         ; // wait here until data is recieved
 
     data = (char)(UART4_DR_R & 0xFF);

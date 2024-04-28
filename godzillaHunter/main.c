@@ -20,6 +20,7 @@
  //mapping robot and obstacle locations
 
  //ram function
+
  #include "Timer.h"
  #include "movement.h"
  #include "scan.h"
@@ -31,8 +32,8 @@
  #include "ping.h"
  #include "button.h"
  #include <inc/tm4c123gh6pm.h>
+#include "structs.h"
 
-coords *robotCoords = NULL;
 
  int main (void) {
 
@@ -46,49 +47,64 @@ coords *robotCoords = NULL;
              ping_init();
              servo_init();
              button_init();
+   
+            coords *robotCoords = malloc(sizeof(coords));
+            robotCoords->heading = 0.0;
+            robotCoords->x = 0.0;
+            robotCoords->y = 0.0;
 
+            object *obs = NULL;
+            int obsCount = 0;
 
-		     int numObs = 3;
-             object *obs =  malloc(sizeof(object) * numObs);
-             object *obsTemp = NULL;
+            while(1)
+            {
+                if(command_byte == 'r')
+                {
+                    command_byte = -1;
+                    obsCount = scanAndRewrite(&obs,obsCount);
+                    move_to_point(sensorD,obs,obsCount,0,obs[0].x * 2, obs[0].y * 2);
+                    turn_left(sensorD,180);
+                    obsCount = scanAndRewrite(&obs,obsCount);
+                }
+                //find a way to iterate through current obs and check for new obs in scan
 
-             obs[0].x = 100000; // mm
-             obs[0].y = 100000;
-             obs[0].linearWidth = 2.54*4; // about 4 inches wide (in mm)
+                while(command_byte == 't')
+                {
+                    ;//hang here and wait for more input from the terminal
+                }
+                if(command_byte == 'f')
+                {
+                    //stop the scanning routine and move toward the zone
+                    oi_free(sensorD);
+                    free(obs);
+                    free(robotCoords);
+                    break;
+                }
 
-
-             obs[1].x = 100000; // mm
-             obs[1].y = 100000;
-             obs[1].linearWidth = 2.54*4; // about 4 inches wide (in mm)
-
-
-
-             obs[2].x = 10000; // mm
-             obs[2].y = 10000;
-             obs[2].linearWidth = 2.54*4; // about 4 inches wide (in mm)
-
-             robotCoords = malloc(sizeof(coords));
-             robotCoords->x = 0;
-             robotCoords->y = 0;
-             robotCoords->heading = 0;
-
-             oi_setWheels(0,0);
-
-			 lcd_printf("Move To Point test");
-			 uart_sendStr("-----------------------------Move to Point test--------------------------------\n\r");
- //            while(button_getButton()!=4);
- //            {
- //                ram(sensorD);
- //            }
-
-//             while(1)
-//             {
-//                 obs = scan(robotCoords);
-
-                 //find a way to iterate through current obs and check for new obs in scan
-//             }
-
-//			 move_to_point(sensorD, obsTemp, 3, 0, 0, 1000);
-
-
+                if(command_byte == 'w')//movement block wasd forward/backward 10 cm left/right 45 degrees
+                {
+                    command_byte = -1;
+                    move_forward(sensorD, 100);
+                }
+                if(command_byte == 'a')
+                {
+                    command_byte = -1;
+                    turn_left(sensorD,45);
+                }
+                if(command_byte == 's')
+                {
+                    command_byte = -1;
+                    move_backward(sensorD,100);
+                }
+                if(command_byte == 'd')
+                {
+                    command_byte = -1;
+                    turn_right(sensorD,45);
+                }
+                if(command_byte == 'k')
+                {
+                    ram(sensorD);
+                    break;
+                }
+            }
  }

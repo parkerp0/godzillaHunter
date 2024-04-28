@@ -11,6 +11,7 @@
 #include "button.h"
 #include "uart-interrupt.h"
 #include "Timer.h"
+#include "structs.h"
 #include <math.h>
 
 #define DEGREES_TO_RADS M_PI / 180.0
@@ -35,7 +36,6 @@ typedef struct
     float y;
     float linearWidth;
 }object;
-
 
 char toPutty[55];
 
