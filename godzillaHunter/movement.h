@@ -22,6 +22,21 @@
 #define FIELD_WIDTH 4 * TILEWIDTH
 #define FIELD_LENGTH 7 * TILEWIDTH
 
+#define BUMP_OBJECT_WIDTH 2.54 * 4 // my guess
+
+typedef struct {
+    float x;
+    float y;
+    float heading;
+} coords;
+
+typedef struct
+{
+    float x;
+    float y;
+    float linearWidth;
+}object;
+
 char toPutty[55];
 
 float moveCalibrate(oi_t *sensor_data);
@@ -37,9 +52,9 @@ float calcDistToPath(object *obs, float global_x, float global_y);
 float move_backward(oi_t *sensor_data, float distance_mm);
 float turn_right(oi_t *sensor, float degrees);
 float turn_left(oi_t *sensor, float degrees);
-float ram(oi_t *sensor);
+float ram(oi_t *sensor_data);
 
 void manuever(oi_t *sensor_data, float distance_mm);
-bool cliff_detected(oi_t *sensor_data);
+int cliff_detected(oi_t *sensor_data, object *obs, int numObs);
 
 #endif
