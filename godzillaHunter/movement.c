@@ -2,8 +2,6 @@
 
  extern coords *robotCoords;
 
-//coords *robotCoords = NULL;
-//
 //int main (void) {
 //
 //            oi_t *sensorD = oi_alloc();
@@ -44,7 +42,10 @@
 //
 //            lcd_printf("Move To Point test");
 //        	uart_sendStr("-----------------------------Move to Point test--------------------------------\n\r");
-//            move_to_point(sensorD, obs, numObs, 0, 1000, 1000);
+//            int status = move_to_point(sensorD, obs, numObs, 0, 1000, 1000);
+//
+//            sprintf(toPutty, "FINAL STATUS: %d\n\r", status);
+//            uart_sendStr(toPutty);
 //
 //            oi_setWheels(0,0);
 ////            oi_free(sensorD);
@@ -56,8 +57,6 @@
 float move_to_point(oi_t *sensor_data, object *obs, int numObs, int numAttempts, float global_x, float global_y){
 	sprintf(toPutty, "Moving To point: X: %lf\t Y: %lf\n\r", global_x, global_y);
 	uart_sendStr(toPutty);
-
-	// TODO check if the point is outside of the field.
 
     // Sort obstacles based on distances to the robot
     qsort(obs, numObs, sizeof(object), compareDistances);
@@ -79,7 +78,18 @@ float move_to_point(oi_t *sensor_data, object *obs, int numObs, int numAttempts,
         }
     }
 
-    checkObstacles(sensor_data, obs, numObs, numAttempts, global_x, global_y);
+    // Check if the point is outside of the field
+    if (global_x < 0 || global_y < 0 || global_x > FIELD_WIDTH || global_y > FIELD_LENGTH) { // Here x is the shorter way and y is the longer direction
+        sprintf(toPutty, "POINT OUTSIDE OF FIELD: X: %lf\t Y: %lf\n\r", global_x, global_y);
+        uart_sendStr(toPutty);
+        return -1;
+    }
+
+    int status = checkObstacles(sensor_data, obs, numObs, numAttempts, global_x, global_y);
+    sprintf(toPutty, "MTP STATUS AFTER ATTEMPT %d: %d\n\r", numAttempts, status);
+    uart_sendStr(toPutty);
+    if (status == -1) return -1;
+
 	sprintf(toPutty, "MTP After obstacles: X: %.2f\t Y: %.2f\n\r", global_x, global_y);
 	uart_sendStr(toPutty);
 
@@ -114,11 +124,8 @@ float checkObstacles(oi_t *sensor_data, object *obs, int numObs, int numAttempts
 	sprintf(toPutty, "numObs: %d\n\r", numObs);
 	uart_sendStr(toPutty);
 
-    // TODO check if the target point is inside of an obstacle zone
-
-
     if (numAttempts >= numObs)
-    	return 0.0;
+    	return 1; // return positive 1 because it isn't really an error, and idk if it should be considered a normal exit condition
 
     int j;
     for (j = numAttempts; j < numObs; j++) {
@@ -172,8 +179,13 @@ float checkObstacles(oi_t *sensor_data, object *obs, int numObs, int numAttempts
             	uart_sendStr(toPutty);
 
                 // Recursively avoid each object in the path.
-                move_to_point(sensor_data, obs, numObs, numAttempts + 1, newTarget.x, newTarget.y);
-                
+                int status = move_to_point(sensor_data, obs, numObs, numAttempts + 1, newTarget.x, newTarget.y);
+
+                sprintf(toPutty, "CHECK OBS STATUS AFTER ATTEMPT %d: %d\n\r", numAttempts, status);
+                uart_sendStr(toPutty);
+
+                if (status == -1)
+                    return -1;
 
             }
         }
@@ -439,7 +451,7 @@ void manuever(oi_t *sensor_data, float distance_mm){
         oi_update(sensor_data);
         distance += move_forward(sensor_data, distance);
 
-        //cases for bumping either left or right
+        //cases for bumping either left and right
         if (sensor_data->bumpLeft && sensor_data->bumpRight){
             oi_update(sensor_data);
             move_backward(sensor_data, 100);
