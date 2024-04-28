@@ -21,7 +21,7 @@
 #define FIELD_WIDTH 4 * TILEWIDTH
 #define FIELD_LENGTH 7 * TILEWIDTH
 
-#define BUMP_OBJECT_WIDTH = 2.54 * 4 // my guess
+#define BUMP_OBJECT_WIDTH 2.54 * 4 // my guess
 
 typedef struct {
     float x;
