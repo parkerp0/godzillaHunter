@@ -79,7 +79,8 @@ float move_to_point(oi_t *sensor_data, object *obs, int numObs, int numAttempts,
     }
 
     // Check if the point is outside of the field
-    if (global_x < 0 || global_y < 0 || global_x > FIELD_WIDTH || global_y > FIELD_LENGTH) { // Here x is the shorter way and y is the longer direction
+    if (global_x < (ROBOT_WIDTH/2.0) || global_y < (ROBOT_WIDTH/2.0) ||
+            global_x > (FIELD_WIDTH - (ROBOT_WIDTH/2.0)) || global_y > (FIELD_LENGTH - (ROBOT_WIDTH/2.0))) { // Here x is the shorter way and y is the longer direction
         sprintf(toPutty, "POINT OUTSIDE OF FIELD: X: %lf\t Y: %lf\n\r", global_x, global_y);
         uart_sendStr(toPutty);
         return -1;
