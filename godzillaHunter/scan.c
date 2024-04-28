@@ -8,6 +8,8 @@
 
 #define objMatchThresh 10 //threshold for deciding if objects are the same might be mm idk
 
+int count = 0;
+
 object* scan(){
             int i = 0;              //Constants and counters for for loops
             int j = 0;
@@ -108,6 +110,7 @@ object* scan(){
                             }
                         }
                     }
+                    count = l;
 
 //                    //initialize the smallest width, angle, and distance
 //                    int SmallestWidth = 1000;
@@ -252,4 +255,37 @@ float vectorDifMag(object *obs,object *obs2)
     float newX = obs->x - obs2->x;
     float newY = obs->y - obs2->y;
     return sqrt((newX*newX) + (newY*newY));
+}
+
+// Finds and returns the largest object based on linearWidth
+
+object findLargestObject() {
+    object *obs = scan(); // Call the scan function to get an array of objects
+
+    int i;
+    int m;
+    char toPutty[100];      //Used to make the PuTTy output a message
+    char *toPutty_ptr = toPutty;
+
+    //Initially assume the first object is the largest
+    object largestObject = obs[0];
+
+    // Find the object with the largest linearWidth
+        for (i = 0; i < count; i++) {  // Iterating through the number of objects
+            if (obs[i].linearWidth > largestObject.linearWidth) {
+                largestObject = obs[i];
+            }
+        }
+
+        //print largest object info to Putty
+        sprintf(toPutty, "Largest Object Information: %f\tX Coordinate: %f\tY Coordinate: %f\n\r", largestObject.linearWidth, largestObject.x, largestObject.y);
+        m = 0;
+        while (toPutty[m] != '\0') {
+            uart_sendChar(toPutty[m]);
+            m++;
+       }
+
+    free(obs); // Free the allocated memory from scan()
+
+    return largestObject;
 }
