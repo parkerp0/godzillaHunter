@@ -2,13 +2,13 @@
 CPRE288 Final mission repo
 
 # Putty Commands:
-  t - Starts the overall scan process
-  b - while in the scan loop will break after the next scan is done if outside of the loop prints debug
-  r - free obs and resets coordinates for a manual restart
-  p - pauses and causes the program to hang for no good reason
-  f - frees everything USE at end of program
-  w,a,s,d - manual movement just in case
-  k - kill, ram into whatever it is looking at
+  t - Starts the overall scan process <br>
+  b - while in the scan loop will break after the next scan is done if outside of the loop prints debug <br>
+  r - free obs and resets coordinates for a manual restart <br>
+  p - pauses and causes the program to hang for no good reason <br>
+  f - frees everything USE at end of program <br>
+  w,a,s,d - manual movement just in case <br>
+  k - kill, ram into whatever it is looking at<br>
 
 
 
