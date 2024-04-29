@@ -57,17 +57,58 @@ coords *robotCoords;
             object *obs = NULL;
             int obsCount = 0;
 
+            int targetX = START_X;
+            int targetY = START_Y;
+
+            int i;
+
+            char message[90];
+
+
             while(1)
             {
-                if(command_byte == 'r')
+                if(command_byte == 't')//start the overall scanning routine
                 {
                     command_byte = -1;
-                    obsCount = scanAndRewrite(&obs,obsCount);
-                    move_to_point(sensorD,obs,obsCount,0,obs[0].x * 2, obs[0].y * 2);
-                    turn_left(sensorD,180);
-                    obsCount = scanAndRewrite(&obs,obsCount);
+
+                    while(targetX < FIELD_WIDTH)
+                    {
+                        while(targetY < FIELD_LENGTH)
+                        {
+                            obsCount = scanAndRewrite(&obs,obsCount);
+                            move_to_point(sensorD,obs,obsCount,0,targetX,targetY);
+                            if(command_byte == 'b')break;//breaks out after the most recent loop for a restart
+                        }
+                        if(command_byte == 'b')
+                        {
+                            command_byte = -1;
+                            break;
+                        }
+                    }
                 }
-                //find a way to iterate through current obs and check for new obs in scan
+
+                if(command_byte == 'b')//debug block to allow for the putty op to look at the robot state
+                {
+                    command_byte = -1;
+                    sprintf(message,"\n\r\n\r\n\rcurrent location \n\rX: %.3f, \n\rY: %.3f, \n\rHeading: %.3f\n\r",robotCoords->x,robotCoords->y,robotCoords->heading);
+                    uart_sendStr(message);
+                    for(i = 0; i<obsCount; i++)
+                    {
+                        sprintf(message,"obsNum:%d X: %.3f, Y: %.3f, Width: %.3f\n\r",i,obs[i].x,obs[i].y,obs[i].linearWidth);
+                        uart_sendStr(message);
+                    }
+                }
+
+                if(command_byte == 'r')//reset the program to allow it to be restarted from putty without having to hardware restart it
+                {
+                    command_byte = -1;
+                    free(obs);
+                    obs = NULL;
+                    obsCount = 0;
+                    robotCoords->heading = 0.0;
+                    robotCoords->x = START_X;
+                    robotCoords->y = START_Y;
+                }
 
                 while(command_byte == 't')
                 {

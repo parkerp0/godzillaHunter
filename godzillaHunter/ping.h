@@ -7,6 +7,7 @@
 #define PING_H_
 
 #include "lcd.h"
+#include "button.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include <inc/tm4c123gh6pm.h>
