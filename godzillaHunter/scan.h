@@ -4,6 +4,10 @@
  *  Created on: Apr 16, 2024
  *      Author: cdoran
  */
+
+#ifndef SCAN_H_
+#define SCAN_H_
+
 #include <inc/tm4c123gh6pm.h>
 #include "Timer.h"
 #include "open_interface.h"
@@ -16,9 +20,6 @@
 #include "structs.h"
 #include <stdlib.h>
 #include <math.h>
-
-#ifndef SCAN_H_
-#define SCAN_H_
 
 #define degreesToRadians M_PI/180.0
 #define SERVO_CENTER_OFFSET 126.5 // distance from the center of the servo to the center of the robot in mm
