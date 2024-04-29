@@ -68,6 +68,8 @@ float move_to_point(oi_t *sensor_data, object *obs, int *numObs, int numAttempts
             ((obs[j].y-global_y)*(obs[j].y-global_y)))) <= ((ROBOT_WIDTH/2.0) + (AVOID_DISTANCE))){
             // If the original target point is obstructed then just end
             if (numAttempts == 0){
+                sprintf(toPutty, "CAN'T GO TO THIS LOCATION: X: %lf\t Y: %lf\n\r", global_x, global_y);
+                uart_sendStr(toPutty);
                 return -1;
             }
             else { // If it is just an intermediate point then go to the side

@@ -80,7 +80,7 @@ coords *robotCoords;
                             obsCount = scanAndRewrite(&obs,obsCount);
                             if(command_byte == 'b')break;//breaks out after the most recent loop for a restart
                             targetY += 500;
-                            move_to_point(sensorD,obs,obsCount,0,targetX,targetY,1);
+                            move_to_point(sensorD,obs,&obsCount,0,targetX,targetY,1);
 
                         }
                         if(command_byte == 'b')
