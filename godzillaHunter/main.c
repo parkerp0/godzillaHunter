@@ -70,6 +70,12 @@ coords *robotCoords;
             command_byte = -1;
             while(1)
             {
+                if(command_byte == 'q')
+                {
+                    command_byte = -1;
+                    obsCount = scanAndRewrite(&obs,obsCount);
+                }
+
                 if(command_byte == 't')//start the overall scanning routine
                 {
                     command_byte = -1;

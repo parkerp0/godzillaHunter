@@ -158,20 +158,17 @@ object* scan(){
                     	+ ((SERVO_CENTER_OFFSET)*(SERVO_CENTER_OFFSET))  // b squared
 						- (2*a*(SERVO_CENTER_OFFSET)*cos((avgAngle[i]+90) * degreesToRadians))); // 2*a*b*cos(theta) where theta is just the servo angle
 
-						float adjAngle = 90.0 - asin(sin(avgAngle[i]*degreesToRadians)/adjDist);
+						float adjAngle = asin(a * sin((avgAngle[i]+90)*degreesToRadians)/adjDist);
 
                     	 // Adjust the angle to be aligned with the robot's heading system
 
-                        obs[i].x = adjDist*sin(adjAngle) + robotCoords->x; //add current x/y coord to it
-                        obs[i].y = adjDist*cos(adjAngle) + robotCoords->y;
+                        obs[i].x = adjDist*sin(adjAngle - (robotCoords->heading * degreesToRadians)) + robotCoords->x; //add current x/y coord to it
+                        obs[i].y = adjDist*cos(adjAngle - (robotCoords->heading * degreesToRadians)) + robotCoords->y;
                         obs[i].linearWidth = LinearWidth[i];
 
-                        sprintf(toPutty, "\n\rAdjDist: %f\tX: %lf\tY: %lf\n\r", adjDist, obs[i].x, obs[i].y);
-                        j = 0;
-                        while (toPutty[j] != '\0') {
-                              uart_sendChar(toPutty[j]);
-                              j++;
-                          }
+                        sprintf(toPutty, "\n\rAdjDist: %f A:%f B:%f AdjAngle:%f \n\r", adjDist,a,SERVO_CENTER_OFFSET,adjAngle * radianToDegrees);
+                        uart_sendStr(toPutty);
+                        j = 0;//?
 
                     }
 
