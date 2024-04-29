@@ -63,7 +63,7 @@ coords *robotCoords;
                 {
                     command_byte = -1;
                     obsCount = scanAndRewrite(&obs,obsCount);
-                    move_to_point(sensorD,obs,obsCount,0,obs[0].x * 2, obs[0].y * 2);
+                    move_to_point(sensorD,obs,&obsCount,0,obs[0].x * 2, obs[0].y * 2, 0);
                     turn_left(sensorD,180);
                     obsCount = scanAndRewrite(&obs,obsCount);
                 }
@@ -85,7 +85,7 @@ coords *robotCoords;
                 if(command_byte == 'w')//movement block wasd forward/backward 10 cm left/right 45 degrees
                 {
                     command_byte = -1;
-                    move_forward(sensorD, 100);
+                    move_forward(sensorD, obs, &obsCount, 100, 1);
                 }
                 if(command_byte == 'a')
                 {
