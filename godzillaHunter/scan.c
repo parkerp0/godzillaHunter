@@ -252,8 +252,8 @@ float vectorDifMag(object *obs,object *obs2)
 
 // Finds and returns the largest object based on linearWidth
 
-object findLargestObject() {
-    object *obs = scan(); // Call the scan function to get an array of objects
+object findLargestObject(object *obs) { // Search through the list of found objects
+    //object *obs = scan(); // Call the scan function to get an array of objects
 
     int i;
     int m;

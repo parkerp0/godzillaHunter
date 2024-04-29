@@ -42,6 +42,7 @@ float move_backward(oi_t *sensor_data, float distance_mm);
 float turn_right(oi_t *sensor, float degrees);
 float turn_left(oi_t *sensor, float degrees);
 float ram(oi_t *sensor_data);
+float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, int numAttempts, object *godzilla, int dir); // global x and y should be godzilla's
 
 void manuever(oi_t *sensor_data, float distance_mm);
 int cliff_detected(oi_t *sensor_data, object *obs, int *numObs, int dir);

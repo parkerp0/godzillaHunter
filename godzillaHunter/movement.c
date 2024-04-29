@@ -80,12 +80,12 @@ float move_to_point(oi_t *sensor_data, object *obs, int *numObs, int numAttempts
     }
 
     // Check if the point is outside of the field
-//    if (global_x < (ROBOT_WIDTH/2.0) || global_y < (ROBOT_WIDTH/2.0) ||
-//            global_x > (FIELD_WIDTH - (ROBOT_WIDTH/2.0)) || global_y > (FIELD_LENGTH - (ROBOT_WIDTH/2.0))) { // Here x is the shorter way and y is the longer direction
-//        sprintf(toPutty, "POINT OUTSIDE OF FIELD: X: %lf\t Y: %lf\n\r", global_x, global_y);
-//        uart_sendStr(toPutty);
-//        return -1;
-//    }
+    if (global_x < (ROBOT_WIDTH/2.0) || global_y < (ROBOT_WIDTH/2.0) ||
+            global_x > (FIELD_WIDTH - (ROBOT_WIDTH/2.0)) || global_y > (FIELD_LENGTH - (ROBOT_WIDTH/2.0))) { // Here x is the shorter way and y is the longer direction
+        sprintf(toPutty, "POINT OUTSIDE OF FIELD: X: %lf\t Y: %lf\n\r", global_x, global_y);
+        uart_sendStr(toPutty);
+        return -1;
+    }
 
     int status = checkObstacles(sensor_data, obs, numObs, numAttempts, global_x, global_y, dir);
     sprintf(toPutty, "MTP STATUS AFTER ATTEMPT %d: %d\n\r", numAttempts, status);
@@ -247,8 +247,6 @@ coords calculatePerpendicularPoint(object targetCoords, int dir) {
 
 
 float calcDistToPath(object *obs, float global_x, float global_y){
-
-
 	sprintf(toPutty, "obs: %d   \n\r", sizeof(*obs));
 	uart_sendStr(toPutty);
 	sprintf(toPutty, "Obs at point: X: %lf\t Y: %lf\n\r", obs->x, obs->y);
@@ -395,47 +393,6 @@ float turn_left(oi_t *sensor, float degrees) {
     return sum;
 }
 
-//float moveCalibrate(oi_t *sensor_data)
-//{
-//    lcd_printf("PRESS 4 To move 1 meter");
-//    while(button_getButton() != 4);
-//    move_forward(sensor_data, 1000);
-//
-//    lcd_printf("PRESS 4 To move 2 meters");
-//    while(button_getButton() != 4);
-//    move_forward(sensor_data, 2000);
-//    return 0.0;
-//}
-//
-//float turnCalibrate(oi_t *sensor_data)
-//{
-//
-//    lcd_printf("PRESS 4 to start turn calibration");
-//    while(button_getButton() != 4);
-//
-//    float sum;
-//    sum = turn_left(sensor_data, 90);
-//    while(1)
-//        {
-//            switch(button_getButton())
-//            {
-//            case(1):
-//                sum+=turn_left(sensor_data, 1);
-//                break;
-//            case(2):
-//                sum+=turn_right(sensor_data, 1);
-//                break;
-//            case(3):
-//                sum+=turn_left(sensor_data, 20);
-//                break;
-//            case(4):
-//                sum+=turn_right(sensor_data, 20);
-//                break;
-//            }
-//            lcd_printf("1: left 1 \n2: right 1 \n3:left 20 \n4:right 20\n%lf", sum);
-//        }
-//    return 0.0;
-//}
 
 float ram(oi_t *sensor_data)
 {
@@ -452,10 +409,96 @@ float ram(oi_t *sensor_data)
     return 0.0;
 }
 
-void manuever(oi_t *sensor_data, float distance_mm){
-    float distance = 0;
-    oi_update(sensor_data);
+float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, int numAttempts, object *godzilla, int dir){
 
+
+
+
+    // Rotate to face Godzilla
+    float deltaX = godzilla->x - robotCoords->x;
+    float deltaY = godzilla->y - robotCoords->y;
+    float targetHeading = fmod(atan2(deltaX, deltaY) * 180.0 / M_PI, 360); // lock in the degrees to be -360 to 360
+    float deltaHeading = fabs(robotCoords->heading - targetHeading);
+
+    // Figure out which way to turn
+    int turnDir = 1; // default is turn right
+    if (targetHeading < robotCoords->heading) // Turn left instead
+        turnDir = -1;
+    if (turnDir == 1)
+        turn_right(sensor_data, deltaHeading);
+    else
+        turn_left(sensor_data, deltaHeading);
+
+    lcd_printf("TurnDIR: %d\nTarget: %f\nCurrent: %f\nDelta: %f", turnDir, targetHeading, robotCoords->heading, deltaHeading);
+
+
+    timer_waitMillis(500);
+    // Return the distance to Godzilla so that we can get confirmation and hit it.
+    return sqrt(deltaX*deltaX + deltaY*deltaY);
+
+}
+
+//Helper method for detecting cliffs and or objects when navigating
+int cliff_detected(oi_t *sensor_data, object *obs, int *numObs, int dir){
+    if (sensor_data->cliffLeft){
+        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
+                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((-60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
+    } else if (sensor_data->cliffFrontLeft){
+        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-20 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
+                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((260 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
+    } else if (sensor_data->cliffFrontRight){
+        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((20 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
+                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((20 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
+    } else if (sensor_data->cliffRight){
+        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
+                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
+    } else if (sensor_data->bumpLeft){
+        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-45 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
+                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((-45 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
+    } else if (sensor_data->bumpRight){
+        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((45 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
+                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((45 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
+    }
+
+    // TODO finalize the avoidance algorithm
+    if(sensor_data->cliffRight || sensor_data->cliffLeft  || sensor_data->bumpLeft ||
+            sensor_data->bumpRight || sensor_data->cliffFrontLeft || sensor_data->cliffFrontRight)
+    {
+        // Turns around and maneuvers away
+        lcd_printf("CLIFF DETECTED!!!!");
+
+        // print all objects
+        int i;
+        for(i = 0; i< (*numObs); i++)
+        {
+            sprintf(toPutty,"obs %d: x: %.2f y:%.2f Width:%.2f\n\r",i,(obs)[i].x,(obs)[i].y,(obs)[i].linearWidth);
+            uart_sendStr(toPutty);
+        }
+
+        move_backward(sensor_data, 50); // move back slightly
+
+        // Move perpendicular to it to avoid the object and continue the path
+        coords newTarget = calculatePerpendicularPoint(obs[(*numObs)-1], dir);
+        sprintf(toPutty, "New target after BUMP/CLIFF: X: %lf\t Y: %lf\n\r", newTarget.x, newTarget.y);
+        uart_sendStr(toPutty);
+
+        // Recursively avoid each object in the path.
+        int status = move_to_point(sensor_data, obs, numObs, 0, newTarget.x, newTarget.y, dir);
+        if (status == -1) return -1;
+
+//        turn_right(sensor_data, 180.0);
+//        manuever(sensor_data, 400.0);
+        return 0;
+    } else {
+    	lcd_clear();
+    }
+    return 0;
+}
+
+void manuever(oi_t *sensor_data, float distance_mm){
+//    float distance = 0;
+//    oi_update(sensor_data);
+//
 //    while (distance < distance_mm){
 //        oi_update(sensor_data);
 //        distance += move_forward(sensor_data, distance);
@@ -524,61 +567,4 @@ void manuever(oi_t *sensor_data, float distance_mm){
 //        //case for hitting the boundary
 //        //else if(sensor_data->cliffFrontLeftSignal > 2600)
 //    }
-}
-
-//Helper method for detecting cliffs and or objects when navigating
-int cliff_detected(oi_t *sensor_data, object *obs, int *numObs, int dir){
-    if (sensor_data->cliffLeft){
-        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
-                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((-60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
-    } else if (sensor_data->cliffFrontLeft){
-        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-20 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
-                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((260 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
-    } else if (sensor_data->cliffFrontRight){
-        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((20 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
-                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((20 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
-    } else if (sensor_data->cliffRight){
-        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
-                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
-    } else if (sensor_data->bumpLeft){
-        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-45 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
-                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((-45 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
-    } else if (sensor_data->bumpRight){
-        *numObs = addObject(&obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((45 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
-                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((45 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
-    } 
-
-    // TODO finalize the avoidance algorithm  
-    if(sensor_data->cliffRight || sensor_data->cliffLeft  || sensor_data->bumpLeft ||
-            sensor_data->bumpRight || sensor_data->cliffFrontLeft || sensor_data->cliffFrontRight)
-    {
-        // Turns around and maneuvers away
-        lcd_printf("CLIFF DETECTED!!!!");
-
-        // print all objects
-        int i;
-        for(i = 0; i< (*numObs); i++)
-        {
-            sprintf(toPutty,"obs %d: x: %.2f y:%.2f Width:%.2f\n\r",i,(obs)[i].x,(obs)[i].y,(obs)[i].linearWidth);
-            uart_sendStr(toPutty);
-        }
-
-        move_backward(sensor_data, 50); // move back slightly
-
-        // Move perpendicular to it to avoid the object and continue the path
-        coords newTarget = calculatePerpendicularPoint(obs[(*numObs)-1], dir);
-        sprintf(toPutty, "New target after BUMP/CLIFF: X: %lf\t Y: %lf\n\r", newTarget.x, newTarget.y);
-        uart_sendStr(toPutty);
-
-        // Recursively avoid each object in the path.
-        int status = move_to_point(sensor_data, obs, numObs, 0, newTarget.x, newTarget.y, dir);
-        if (status == -1) return -1;
-
-//        turn_right(sensor_data, 180.0);
-//        manuever(sensor_data, 400.0);
-        return 0;
-    } else {
-    	lcd_clear();
-    }
-    return 0;
 }

@@ -55,21 +55,73 @@ coords *robotCoords;
             robotCoords->y = START_Y;
 
             object *obs = NULL;
+            object largest;
             int obsCount = 0;
 
+            int targetX = START_X;
+            int targetY = START_Y;
+
+            int i;
+
+            char message[90];
+
+            oi_setWheels(0,0);
+            command_byte = -1;
             while(1)
             {
-                if(command_byte == 'r')
+                if(command_byte == 't')//start the overall scanning routine
                 {
                     command_byte = -1;
-                    obsCount = scanAndRewrite(&obs,obsCount);
-                    move_to_point(sensorD,obs,&obsCount,0,obs[0].x * 2, obs[0].y * 2, 0);
-                    turn_left(sensorD,180);
-                    obsCount = scanAndRewrite(&obs,obsCount);
-                }
-                //find a way to iterate through current obs and check for new obs in scan
 
-                while(command_byte == 't')
+                    while(targetX < FIELD_WIDTH)
+                    {
+                        while(targetY < FIELD_LENGTH)
+                        {
+                            obsCount = scanAndRewrite(&obs,obsCount);
+                            if(command_byte == 'b') break; //breaks out after the most recent loop for a restart
+                            targetY += 500;
+                            move_to_point(sensorD,obs,obsCount,0,targetX,targetY,1);
+
+                        }
+                        if(command_byte == 'b')
+                        {
+                            command_byte = -1;
+                            break;
+                        }
+                        targetX+= 500;
+                    }
+//                    largest = findLargestObject(obs);
+
+//
+//                    move_to_point(sensorD,obs,obsCount,0,largest.x + 60,largest.y + 60);
+//                    sprintf(message,"Godzilla is X:%.3f Y:%.3f Width: %.3f\n\r Press k to ram",largest.x,largest.y,largest.linearWidth);
+//                    uart_sendStr(message);
+                }
+
+                if(command_byte == 'b')//debug block to allow for the putty op to look at the robot state
+                {
+                    command_byte = -1;
+                    sprintf(message,"\n\r\n\r\n\rcurrent location \n\rX: %.3f, \n\rY: %.3f, \n\rHeading: %.3f\n\r",robotCoords->x,robotCoords->y,robotCoords->heading);
+                    uart_sendStr(message);
+                    for(i = 0; i<obsCount; i++)
+                    {
+                        sprintf(message,"obsNum:%d X: %.3f, Y: %.3f, Width: %.3f\n\r",i,obs[i].x,obs[i].y,obs[i].linearWidth);
+                        uart_sendStr(message);
+                    }
+                }
+
+                if(command_byte == 'r')//reset the program to allow it to be restarted from putty without having to hardware restart it
+                {
+                    command_byte = -1;
+                    free(obs);
+                    obs = NULL;
+                    obsCount = 0;
+                    robotCoords->heading = 0.0;
+                    robotCoords->x = START_X;
+                    robotCoords->y = START_Y;
+                }
+
+                while(command_byte == 'p')
                 {
                     ;//hang here and wait for more input from the terminal
                 }
