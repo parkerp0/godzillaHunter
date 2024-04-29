@@ -1,3 +1,6 @@
+#ifndef IR_H
+#define IR_H
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
@@ -12,3 +15,5 @@ void IR_init();
 uint16_t IR_read();
 float IR_dist();
 float IR_calibrate(oi_t *sensor_data);
+
+#endif

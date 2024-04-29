@@ -226,15 +226,8 @@ int scanAndRewrite(object **currentObs,int obsCount)
             }
 
         }
-        if(flag)
-        {
-            obsCount++;
-            (*currentObs) = realloc((*currentObs),sizeof(object)*obsCount);
-            (*currentObs)[obsCount-1].x = obsTemp->x;
-            (*currentObs)[obsCount-1].y = obsTemp->y;
-            (*currentObs)[obsCount-1].linearWidth = obsTemp->linearWidth;
-        }
-        
+        if(flag) obsCount = addObject(currentObs,obsCount,obsTemp->x,obsTemp->y,obsTemp->linearWidth);
+
     obsTemp++;
     }
     for(i = 0; i<obsCount; i++)
