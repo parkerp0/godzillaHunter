@@ -150,14 +150,20 @@ object* scan(){
                     obs[l].linearWidth = 0.0;
                     for(i = 0; i<l; i++)
                     {
-                    	float adjDist = sqrt(((IR_SERVO_OFFSET+(avgDist[i]*1000))*(IR_SERVO_OFFSET+(avgDist[i]*1000))) // a squared
-                    			+ ((SERVO_CENTER_OFFSET)*(SERVO_CENTER_OFFSET)) // b squared
-								- (2*(IR_SERVO_OFFSET+(avgDist[i]*1000))*(SERVO_CENTER_OFFSET)*cos(avgAngle[i] * degreesToRadians))); // 2*a*b*cos(theta) where theta is just the servo angle
 
-                    	float adjAngle = 90.0 - avgAngle[i]; // Adjust the angle to be aligned with the robot's heading system
 
-                        obs[i].x = adjDist*sin(adjAngle*degreesToRadians) + robotCoords->x; //add current x/y coord to it
-                        obs[i].y = adjDist*cos(adjAngle*degreesToRadians) + robotCoords->y;
+                        float a = IR_SERVO_OFFSET+(avgDist[i]*1000)+(0.5 * LinearWidth[i]);
+
+                    	float adjDist = sqrt((a * a)  // a squared
+                    	+ ((SERVO_CENTER_OFFSET)*(SERVO_CENTER_OFFSET))  // b squared
+						- (2*(IR_SERVO_OFFSET+(avgDist[i]*1000))*(SERVO_CENTER_OFFSET)*cos((avgAngle[i]+90) * degreesToRadians))); // 2*a*b*cos(theta) where theta is just the servo angle
+
+						float adjAngle = asin(sin(avgAngle[i]*degreesToRadians)/adjDist);
+
+                    	 // Adjust the angle to be aligned with the robot's heading system
+
+                        obs[i].x = adjDist*sin(adjAngle) + robotCoords->x; //add current x/y coord to it
+                        obs[i].y = adjDist*cos(adjAngle) + robotCoords->y;
                         obs[i].linearWidth = LinearWidth[i];
 
                         sprintf(toPutty, "\n\rAdjDist: %f\tX: %lf\tY: %lf\n\r", adjDist, obs[i].x, obs[i].y);
