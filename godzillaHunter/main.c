@@ -88,10 +88,10 @@ coords *robotCoords;
                         }
                         targetX+= 500;
                     }
-                    largest = findLargestObject();
-                    move_to_point(sensorD,obs,obsCount,0,largest.x + 60,largest.y + 60);
-                    sprintf(message,"Godzilla is X:%.3f Y:%.3f Width: %.3f\n\r Press k to ram",largest.x,largest.y,largest.linearWidth);
-                    uart_sendStr(message);
+                    //largest = findLargestObject();
+                    //move_to_point(sensorD,obs,obsCount,0,largest.x + 60,largest.y + 60);
+                    //sprintf(message,"Godzilla is X:%.3f Y:%.3f Width: %.3f\n\r Press k to ram",largest.x,largest.y,largest.linearWidth);
+                    //uart_sendStr(message);
 
                 }
 
@@ -118,7 +118,7 @@ coords *robotCoords;
                     robotCoords->y = START_Y;
                 }
 
-                while(command_byte == 't')
+                while(command_byte == 'p')
                 {
                     ;//hang here and wait for more input from the terminal
                 }
