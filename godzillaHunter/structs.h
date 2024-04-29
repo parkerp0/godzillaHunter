@@ -16,4 +16,6 @@ typedef struct
 
 extern coords *robotCoords;
 
+int addObject(object** currentList, int obsCount, float x,float y, float linearWidth);//reutrns the new number of obstacles
+
 #endif
