@@ -55,6 +55,7 @@ coords *robotCoords;
             robotCoords->y = START_Y;
 
             object *obs = NULL;
+            object largest;
             int obsCount = 0;
 
             int targetX = START_X;
@@ -78,13 +79,20 @@ coords *robotCoords;
                             obsCount = scanAndRewrite(&obs,obsCount);
                             move_to_point(sensorD,obs,obsCount,0,targetX,targetY);
                             if(command_byte == 'b')break;//breaks out after the most recent loop for a restart
+                            targetY += 500;
                         }
                         if(command_byte == 'b')
                         {
                             command_byte = -1;
                             break;
                         }
+                        targetX+= 500;
                     }
+                    largest = findLargestObject();
+                    move_to_point(sensorD,obs,obsCount,0,largest.x + 60,largest.y + 60);
+                    sprintf(message,"Godzilla is X:%.3f Y:%.3f Width: %.3f\n\r Press k to ram",largest.x,largest.y,largest.linearWidth);
+                    uart_sendStr(message);
+
                 }
 
                 if(command_byte == 'b')//debug block to allow for the putty op to look at the robot state
