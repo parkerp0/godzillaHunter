@@ -72,12 +72,20 @@ coords *robotCoords;
                 {
                     command_byte = -1;
 
+                    obsCount = scanAndRewrite(&obs,obsCount);
+                    move_to_point(sensorD,obs,&obsCount,0,obs[0].x * 2, obs[0].y * 2, 0);
+                    turn_left(sensorD,180);
+                    obsCount = scanAndRewrite(&obs,obsCount);
+                }
+                //find a way to iterate through current obs and check for new obs in scan
+
+
                     while(targetX < FIELD_WIDTH)
                     {
                         while(targetY < FIELD_LENGTH)
                         {
                             obsCount = scanAndRewrite(&obs,obsCount);
-                            move_to_point(sensorD,obs,obsCount,0,targetX,targetY);
+                            move_to_point(sensorD,obs,&obsCount,0,targetX,targetY, 1);
                             if(command_byte == 'b')break;//breaks out after the most recent loop for a restart
                             targetY += 500;
                         }
@@ -92,8 +100,6 @@ coords *robotCoords;
                     //move_to_point(sensorD,obs,obsCount,0,largest.x + 60,largest.y + 60);
                     //sprintf(message,"Godzilla is X:%.3f Y:%.3f Width: %.3f\n\r Press k to ram",largest.x,largest.y,largest.linearWidth);
                     //uart_sendStr(message);
-
-                }
 
                 if(command_byte == 'b')//debug block to allow for the putty op to look at the robot state
                 {
@@ -134,7 +140,7 @@ coords *robotCoords;
                 if(command_byte == 'w')//movement block wasd forward/backward 10 cm left/right 45 degrees
                 {
                     command_byte = -1;
-                    move_forward(sensorD, 100);
+                    move_forward(sensorD, obs, &obsCount, 100, 1);
                 }
                 if(command_byte == 'a')
                 {
