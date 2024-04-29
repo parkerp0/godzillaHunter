@@ -156,9 +156,9 @@ object* scan(){
 
                     	float adjDist = sqrt((a * a)  // a squared
                     	+ ((SERVO_CENTER_OFFSET)*(SERVO_CENTER_OFFSET))  // b squared
-						- (2*(IR_SERVO_OFFSET+(avgDist[i]*1000))*(SERVO_CENTER_OFFSET)*cos((avgAngle[i]+90) * degreesToRadians))); // 2*a*b*cos(theta) where theta is just the servo angle
+						- (2*a*(SERVO_CENTER_OFFSET)*cos((avgAngle[i]+90) * degreesToRadians))); // 2*a*b*cos(theta) where theta is just the servo angle
 
-						float adjAngle = asin(sin(avgAngle[i]*degreesToRadians)/adjDist);
+						float adjAngle = 90.0 - asin(sin(avgAngle[i]*degreesToRadians)/adjDist);
 
                     	 // Adjust the angle to be aligned with the robot's heading system
 
@@ -264,7 +264,6 @@ object findLargestObject() {
     int i;
     int m;
     char toPutty[100];      //Used to make the PuTTy output a message
-    char *toPutty_ptr = toPutty;
 
     //Initially assume the first object is the largest
     object largestObject = obs[0];

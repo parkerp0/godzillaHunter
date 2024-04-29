@@ -58,10 +58,11 @@ coords *robotCoords;
             object largest;
             int obsCount = 0;
 
-            int targetX = START_X;
-            int targetY = START_Y;
+            int targetX;
+            int targetY;
 
             int i;
+            int upFlag;
 
             char message[90];
 
@@ -72,22 +73,26 @@ coords *robotCoords;
                 if(command_byte == 't')//start the overall scanning routine
                 {
                     command_byte = -1;
-
+                    upFlag = 1;
+                    targetX = START_X;
                     while(targetX < FIELD_WIDTH)
                     {
-                        while(targetY < FIELD_LENGTH)
+                        targetY = START_Y + 20;
+                        while(targetY < FIELD_LENGTH && targetY > START_Y)
                         {
                             obsCount = scanAndRewrite(&obs,obsCount);
                             if(command_byte == 'b')break;//breaks out after the most recent loop for a restart
-                            targetY += 500;
+                            if(upFlag)targetY+=500;//increment in the correct direction
+                            else targetY-=500;
                             move_to_point(sensorD,obs,&obsCount,0,targetX,targetY,1);
-
                         }
                         if(command_byte == 'b')
                         {
                             command_byte = -1;
                             break;
                         }
+                        if(upFlag)upFlag = 0;
+                        else upFlag = 1;//flip the up and down
                         targetX+= 500;
                     }
                     //largest = findLargestObject();
