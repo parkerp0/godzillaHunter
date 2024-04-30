@@ -23,10 +23,10 @@ extern coords *robotCoords;
 //
 //            int numObs = 1;
 //            object *obs = malloc(sizeof(object) * numObs);
-//
-//            obs[0].x = 500 + START_X; // mm
-//            obs[0].y = 500 + START_Y;
-//            obs[0].linearWidth = 2.54*4; // about 4 inches wide (in mm)
+////
+////            obs[0].x = 500 + START_X; // mm
+////            obs[0].y = 500 + START_Y;
+////            obs[0].linearWidth = 2.54*4; // about 4 inches wide (in mm)
 ////
 ////
 ////            obs[1].x = 200; // mm
@@ -39,10 +39,10 @@ extern coords *robotCoords;
 ////            obs[2].y = 1500;
 ////            obs[2].linearWidth = 2.54*4; // about 4 inches wide (in mm)
 //
-//            object godzilla;
-//            godzilla.x = 2500;
-//            godzilla.y = 2500;
-//            godzilla.linearWidth = 20;
+////            object godzilla;
+////            godzilla.x = 2500;
+////            godzilla.y = 2500;
+////            godzilla.linearWidth = 20;
 //
 //
 //            lcd_printf("Move To Point test");
@@ -51,7 +51,24 @@ extern coords *robotCoords;
 ////            int status = move_to_point(sensorD, obs, &numObs, 0, 1000+START_X, 1000+START_Y, 1);
 ////        	turn_right(sensorD, 45);
 ////        	    int status = 0;
-//        	int status = move_to_godzilla(sensorD, obs, &numObs, &godzilla, 1);
+////        	int status = move_to_godzilla(sensorD, obs, &numObs, &godzilla, 1);
+//
+//            timer_waitMillis(2000);
+//        	turn_right(sensorD, 45);
+//            timer_waitMillis(2000);
+//            move_forward(sensorD, &obs, &numObs, 500, 1);
+//            timer_waitMillis(2000);
+//            turn_left(sensorD, 45);
+//            timer_waitMillis(2000);
+//            move_forward(sensorD, &obs, &numObs, 500, 1);
+//            timer_waitMillis(2000);
+//            turn_right(sensorD, 180);
+//            timer_waitMillis(2000);
+//            move_forward(sensorD, &obs, &numObs, 1000, 1);
+//            timer_waitMillis(2000);
+//            turn_right(sensorD, 90);
+//            timer_waitMillis(2000);
+//            move_forward(sensorD, &obs, &numObs, 500, 1);
 //
 ////            sprintf(toPutty, "FINAL STATUS: %d\n\r", status);
 ////            uart_sendStr(toPutty);
@@ -67,44 +84,22 @@ float move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempt
 	sprintf(toPutty, "Moving To point: X: %lf\t Y: %lf\n\r", global_x, global_y);
 	uart_sendStr(toPutty);
 
+	*numObs = scanAndRewrite(obs,*numObs);//add scan block to find more thing in between rerouting
+
+	if(checkPerpendicularPoint((*obs),*numObs,global_x,global_y)!=1)return -1.0;
+
     // Sort obstacles based on distances to the robot
     qsort((*obs), *numObs, sizeof(object), compareDistances);
 
-    int j;
-    for (j = 0; j < *numObs; j++) {
-        // Check if there is an obstacle too close to the target location
-        if ((((*obs)[j].linearWidth/2.0) + sqrt((((*obs)[j].x-global_x)*((*obs)[j].x-global_x)) +
-            (((*obs)[j].y-global_y)*((*obs)[j].y-global_y)))) <= ((ROBOT_WIDTH/2.0) + (AVOID_DISTANCE))){
-            // If the original target point is obstructed then just end
-            if (numAttempts == 0){
-                sprintf(toPutty, "CAN'T GO TO THIS LOCATION: X: %lf\t Y: %lf\n\r", global_x, global_y);
-                uart_sendStr(toPutty);
-                return -1;
-            }
-            else { // If it is just an intermediate point then go to the side
-                coords newTarget = calculatePerpendicularPoint((*obs)[j], dir);
-                global_x = newTarget.x;
-                global_y = newTarget.y;
-            }
-            break;
-        }
-    }
 
-    // Check if the point is outside of the field
-    if (global_x < (ROBOT_WIDTH/2.0) || global_y < (ROBOT_WIDTH/2.0) ||
-            global_x > (FIELD_WIDTH - (ROBOT_WIDTH/2.0)) || global_y > (FIELD_LENGTH - (ROBOT_WIDTH/2.0))) { // Here x is the shorter way and y is the longer direction
-        sprintf(toPutty, "POINT OUTSIDE OF FIELD: X: %lf\t Y: %lf\n\r", global_x, global_y);
-        uart_sendStr(toPutty);
-        return -1;
-    }
 
     int status = checkObstacles(sensor_data, obs, numObs, numAttempts, global_x, global_y, dir);
     sprintf(toPutty, "MTP STATUS AFTER ATTEMPT %d: %d\n\r", numAttempts, status);
     uart_sendStr(toPutty);
 
-    if (numAttempts == 0 && status == -1 && dir == 1) { // if it is the top level call and it failed going to the right, try going to the left
-        status = move_to_point(sensor_data, obs, numObs, numAttempts, global_x, global_y, -1);
-    }
+    // if (numAttempts == 0 && status == -1 && dir == 1) { // if it is the top level call and it failed going to the right, try going to the left
+    //     status = move_to_point(sensor_data, obs, numObs, numAttempts, global_x, global_y, -1);
+    // }
 
     if (status == -1) return -1;
 
@@ -114,18 +109,15 @@ float move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempt
     float deltaX = global_x - robotCoords->x;
     float deltaY = global_y - robotCoords->y;
     float targetHeading = fmod(atan2(deltaX, deltaY) * 180.0 / M_PI, 360); // lock in the degrees to be -360 to 360
-    float deltaHeading = fabs(robotCoords->heading - targetHeading);
+    float deltaHeading = fabs((robotCoords->heading) - targetHeading);
 
     // Figure out which way to turn
-    int turnDir = 1; // default is turn right
-    if (targetHeading < robotCoords->heading) // Turn left instead
-        turnDir = -1;
-	if (turnDir == 1)
-		turn_right(sensor_data, deltaHeading);
-	else
-		turn_left(sensor_data, deltaHeading);
+    if (targetHeading < robotCoords->heading) // Turn left
+        turn_left(sensor_data, deltaHeading);
+    else
+        turn_right(sensor_data, deltaHeading); // Turn right
 
-    lcd_printf("TurnDIR: %d\nTarget: %f\nCurrent: %f\nDelta: %f", turnDir, targetHeading, robotCoords->heading, deltaHeading);
+    lcd_printf("TurnDIR: %d\nTarget: %f\nCurrent: %f\nDelta: %f", (targetHeading < robotCoords->heading) ? -1 : 1, targetHeading, robotCoords->heading, deltaHeading);
 
 
     timer_waitMillis(500);
@@ -138,8 +130,8 @@ float move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempt
 float checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttempts, float global_x, float global_y, int dir){
 //    int numObs = sizeof(*obs) / sizeof(object);
 
-	sprintf(toPutty, "numObs: %d\n\r", *numObs);
-	uart_sendStr(toPutty);
+//	sprintf(toPutty, "numObs: %d\n\r", *numObs);
+//	uart_sendStr(toPutty);
 
     if (numAttempts >= *numObs)
     	return 1; // return positive 1 because it isn't really an error, and idk if it should be considered a normal exit condition
@@ -177,7 +169,7 @@ float checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttemp
         if (dotProduct > 0 && dotProduct < (targetVectorX * targetVectorX + targetVectorY * targetVectorY)) {
 
 
-        	uart_sendStr("Inside of the dot product check.\n\r");
+//        	uart_sendStr("Inside of the dot product check.\n\r");
 //        	sprintf(toPutty, "Dot product: %f\tTargetVectorSquared: %f\n\r", dotProduct, (targetVectorX * targetVectorX + targetVectorY * targetVectorY));
 //        	uart_sendStr(toPutty);
             // Obstacle lies between robot and target, calculate distPath
@@ -186,12 +178,16 @@ float checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttemp
             float distPath = calcDistToPath(&(*obs)[i], global_x, global_y);
             if ((distPath - ((*obs)[i].linearWidth / 2.0) - (ROBOT_WIDTH / 2.0)) <= AVOID_DISTANCE) {
                 // Avoid obstacle
-            	sprintf(toPutty, "Dist to path: %f \n\r", distPath);
-            	uart_sendStr(toPutty);
+//            	sprintf(toPutty, "Dist to path: %f \n\r", distPath);
+//            	uart_sendStr(toPutty);
 
-            	uart_sendStr("Inside of avoid obstacle part.\n\r");
+//            	uart_sendStr("Inside of avoid obstacle part.\n\r");
 
-                coords newTarget = calculatePerpendicularPoint((*obs)[i], dir);
+                coords newTarget = calculatePerpendicularPoint((*obs),*numObs,(*obs)[i], dir);
+                if (newTarget.x == -1 && newTarget.y == -1 && newTarget.heading == -1){
+                    uart_sendStr("COULD NOT CALCULATE PERPENDICULAR POINT\n\r");
+                    return -1;
+                }
             	sprintf(toPutty, "New target: X: %lf\t Y: %lf\n\r", newTarget.x, newTarget.y);
             	uart_sendStr(toPutty);
 
@@ -229,7 +225,33 @@ float calcDistToRobot(object *obs){
 	return sqrt(((obs->x-robotCoords->x)*(obs->x-robotCoords->x)) + ((obs->y-robotCoords->y)*(obs->y-robotCoords->y)));
 }
 
-coords calculatePerpendicularPoint(object targetCoords, int dir) {
+
+int checkPerpendicularPoint(object *obs, int numObs, float global_x, float global_y){
+    int j;
+    float distToObs;
+    float padDist;
+
+    if (global_x < (ROBOT_WIDTH/2.0) || global_y < (ROBOT_WIDTH/2.0) ||
+                global_x > (FIELD_WIDTH - (ROBOT_WIDTH/2.0)) || global_y > (FIELD_LENGTH - (ROBOT_WIDTH/2.0))) // Here x is the shorter way and y is the longer direction
+        {
+            sprintf(toPutty, "POINT OUTSIDE OF FIELD: X: %f\t Y: %f\n\r", global_x, global_y);
+            return -1;//point is out of the field
+        }
+
+    for (j = 0; j < numObs; j++)
+    {
+        // Check if there is an obstacle too close to the target location
+        distToObs = sqrt((obs[j].x - global_x)*(obs[j].x - global_x) + (obs[j].y - global_y) * (obs[j].y - global_y));//how close it is
+        padDist = (0.5 * obs[j].linearWidth) + (ROBOT_WIDTH * 0.5) + AVOID_DISTANCE; //closest it can be
+        if(distToObs < padDist){
+            sprintf(toPutty, "POINT IS INTERSECTING A OBJECT: X: %f\t Y: %f\n\r", global_x, global_y);
+            return 0;//point is inside of a robot (or obstacle?)
+        }
+    }
+    return 1;
+}
+
+coords calculatePerpendicularPoint(object *obs, int obsCount, object targetCoords, int dir) {
     // Calculate direction vector from robot to target
 	float directionX = targetCoords.x - robotCoords->x;
 	float directionY = targetCoords.y - robotCoords->y;
@@ -246,6 +268,28 @@ coords calculatePerpendicularPoint(object targetCoords, int dir) {
     // Scale perpendicular vector by distance
     perpendicularX *= (AVOID_DISTANCE + ROBOT_WIDTH + targetCoords.linearWidth);
     perpendicularY *= (AVOID_DISTANCE + ROBOT_WIDTH + targetCoords.linearWidth);
+
+    sprintf(toPutty, "Calculate Perpendicular Point: (%lf, %lf) \n\r", perpendicularX, perpendicularY);
+    uart_sendStr(toPutty);
+
+    while(checkPerpendicularPoint(obs,obsCount,targetCoords.x - (dir * perpendicularX),targetCoords.y - (dir * perpendicularY))!= 1)
+    {
+        dir*=-1;//switch the direction that it checking
+        perpendicularX *= 1.2;//scale the point until it finds somewhere it can go
+        perpendicularY *= 1.2;
+
+        sprintf(toPutty, "Calculate Perpendicular Point: (%lf, %lf) \n\r", targetCoords.x - (dir * perpendicularX), targetCoords.y - (dir * perpendicularY));
+        uart_sendStr(toPutty);
+
+        if (fabs(perpendicularY) >= FIELD_LENGTH || fabs(perpendicularX) >= FIELD_WIDTH){
+            coords newPoint;
+            newPoint.x = -1;
+            newPoint.y = -1;
+            newPoint.heading = -1;
+
+            return newPoint;
+        }
+    }
 
     // Calculate new point coordinates
     coords newPoint;
@@ -295,7 +339,10 @@ float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_
         robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
         robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
 
-        cliff_detected(sensor_data, obs, numObs, dir);
+        if (cliff_detected(sensor_data, obs, numObs, dir) == -1) {
+            return -1.0;
+        }
+
 
         if (distance_mm - sum > power  && power < 200)
             power += 10;
@@ -362,19 +409,21 @@ float turn_right(oi_t *sensor,  float degrees) {
         float deltaDistance = sensor->distance;
         float deltaHeading = -sensor->angle;
 
-        robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
-
-        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
-        lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
+//        robotCoords->heading += deltaHeading;
+//        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
+//
+//        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
+//        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
+//        lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     }
 
 
-    robotCoords->heading += TURNOFFSET;
+    robotCoords->heading += degrees;
     robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
     lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     oi_setWheels(0,0);
+    sprintf(toPutty, "AFTER TURN RIGHT: %f\nX: %f\nY: %f\nA: %f\tDegrees: %f\n\r", sum, robotCoords->x, robotCoords->y, robotCoords->heading, degrees);
+    uart_sendStr(toPutty);
     return sum;
 }
 
@@ -387,19 +436,21 @@ float turn_left(oi_t *sensor, float degrees) {
         float deltaDistance = sensor->distance;
         float deltaHeading = -sensor->angle;
 
-        robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
-
-        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
-        lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
+//        robotCoords->heading += deltaHeading;
+//        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
+//
+//        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
+//        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
+//        lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     }
 
 
-    robotCoords->heading -= TURNOFFSET;
+    robotCoords->heading -= degrees;
     robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
     lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     oi_setWheels(0,0);
+    sprintf(toPutty, "AFTER TURN LEFT: %f\nX: %f\nY: %f\nA: %f\tDegrees: %f\n\r", sum, robotCoords->x, robotCoords->y, robotCoords->heading, degrees);
+    uart_sendStr(toPutty);
     return sum;
 }
 
@@ -609,6 +660,7 @@ int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir){
     {
         // Turns around and maneuvers away
         lcd_printf("CLIFF DETECTED!!!!");
+        uart_sendStr("CLIFF OR BUMP DETECTED !!!");
 
         // print all objects
         int i;
@@ -618,10 +670,14 @@ int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir){
             uart_sendStr(toPutty);
         }
 
-        move_backward(sensor_data, 50); // move back slightly
+        move_backward(sensor_data, 100); // move back slightly
 
         // Move perpendicular to it to avoid the object and continue the path
-        coords newTarget = calculatePerpendicularPoint((*obs)[(*numObs)-1], dir);
+        coords newTarget = calculatePerpendicularPoint((*obs),*numObs,(*obs)[(*numObs)-1], dir);
+        if (newTarget.x == -1 && newTarget.y == -1 && newTarget.heading == -1){
+            uart_sendStr("COULD NOT CALCULATE PERPENDICULAR POINT\n\r");
+            return -1;
+        }
         sprintf(toPutty, "New target after BUMP/CLIFF: X: %lf\t Y: %lf\n\r", newTarget.x, newTarget.y);
         uart_sendStr(toPutty);
 

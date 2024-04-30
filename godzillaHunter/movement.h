@@ -2,9 +2,9 @@
 #define MOVEMENT_H
 
 #define MOVEOFFSET 0
-#define TURNOFFSET 11 // - for undershoot + for overshoot degrees off of correct turn
+#define TURNOFFSET 17 // - for undershoot + for overshoot degrees off of correct turn
 
-#define TWISTOFFSET -1 //positive is clockwise driving forward
+#define TWISTOFFSET -6.5 //positive is clockwise driving forward
 
 
 #include "open_interface.h"
@@ -18,11 +18,12 @@
 #define ROBOT_WIDTH 340
 #define AVOID_DISTANCE 50.0
 #define GODZILLA_RAM_DISTANCE (AVOID_DISTANCE*2.0) + ROBOT_WIDTH // can be adjusted
+#define RESCAN_DIST 750 // mm that the robot should travel before rescanning
 
 
 #define TILE_WIDTH 590 // mm
-#define FIELD_WIDTH 2 * TILE_WIDTH
-#define FIELD_LENGTH 3 * TILE_WIDTH
+#define FIELD_WIDTH 4 * TILE_WIDTH
+#define FIELD_LENGTH 7 * TILE_WIDTH
 
 #define START_X ROBOT_WIDTH/2.0
 #define START_Y ROBOT_WIDTH/2.0
@@ -36,7 +37,8 @@ char toPutty[55];
 float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_mm, int dir);
 float move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempts, float global_x, float global_y, int dir); // dir: -1 for left, +1 for right
 float checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttempts, float global_x, float global_y, int dir);
-coords calculatePerpendicularPoint(object targetCoords, int dir);
+int checkPerpendicularPoint(object *obs, int numObs, float global_x, float global_y);
+coords calculatePerpendicularPoint(object *obs, int obsCount, object targetCoords, int dir);
 int compareDistances(const void *a, const void *b);
 float calcDistToRobot(object *obs);
 float calcDistToPath(object *obs, float global_x, float global_y);

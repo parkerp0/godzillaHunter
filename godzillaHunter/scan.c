@@ -170,7 +170,7 @@ object* scan(){
                             l--;
                         }
 
-                        sprintf(toPutty, "\n\rAdjDist: %f A:%f B:%f AdjAngle:%f \n\r", adjDist,a,SERVO_CENTER_OFFSET,adjAngle * radianToDegrees);
+                        sprintf(toPutty, "\n\rAdjDist: %f A:%f B:%f AdjAngle:%f \tl: %d\n\r", adjDist,a,SERVO_CENTER_OFFSET,adjAngle * radianToDegrees, l);
                         uart_sendStr(toPutty);
                         j = 0;//?
 

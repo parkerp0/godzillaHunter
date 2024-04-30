@@ -1,26 +1,26 @@
- /*
-  * main.c
-  *
-  *  Created on: Apr 12, 2024
-  *      Author: cdoran
-  */
-
-
-
- //uart interrupt scheme
-
- //scan function with sweep: servo, ping, IR
-
- //functions for bump and cliff sensors
-
- //object classification
-
- //calibration software
-
- //mapping robot and obstacle locations
-
- //ram function
-
+// /*
+//  * main.c
+//  *
+//  *  Created on: Apr 12, 2024
+//  *      Author: cdoran
+//  */
+//
+//
+//
+// //uart interrupt scheme
+//
+// //scan function with sweep: servo, ping, IR
+//
+// //functions for bump and cliff sensors
+//
+// //object classification
+//
+// //calibration software
+//
+// //mapping robot and obstacle locations
+//
+// //ram function
+//
  #include "Timer.h"
  #include "movement.h"
  #include "scan.h"
@@ -68,12 +68,16 @@ coords *robotCoords;
 
             oi_setWheels(0,0);
             command_byte = -1;
+
+
+
             while(1)
             {
                 if(command_byte == 'q')
                 {
                     command_byte = -1;
                     obsCount = scanAndRewrite(&obs,obsCount);
+                    move_to_point(sensorD,&obs,&obsCount,0,obs[0].x*2,obs[0].y*2,1);
                 }
 
                 if(command_byte == 't')//start the overall scanning routine
@@ -88,11 +92,18 @@ coords *robotCoords;
                         while(targetY < FIELD_LENGTH && targetY > START_Y)
                         {
                             move_to_point(sensorD,&obs,&obsCount,0,targetX,targetY,1);
-                            obsCount = scanAndRewrite(&obs,obsCount);
+                            //obsCount = scanAndRewrite(&obs,obsCount);
                             if(command_byte == 'b')break;//breaks out after the most recent loop for a restart
                             if(upFlag)targetY+=500;//increment in the correct direction
                             else targetY-=500;
+
+                            if(command_byte == 'b')
+                            {
+                                command_byte = -1;
+                                break;
+                            }
                         }
+
                         if(command_byte == 'b')
                         {
                             command_byte = -1;
@@ -170,4 +181,4 @@ coords *robotCoords;
                     break;
                 }
             }
- }
+}
