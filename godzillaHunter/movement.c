@@ -2,64 +2,64 @@
 
 extern coords *robotCoords;
 
-int main (void) {
-
-            oi_t *sensorD = oi_alloc();
-            oi_init(sensorD);
-
-            timer_init();
-            lcd_init();
-            uart_interrupt_init();
-            button_init();
-
-
-
-            robotCoords = malloc(sizeof(coords));
-            robotCoords->x = START_X;
-            robotCoords->y = START_Y;
-            robotCoords->heading = 0;
-
-            oi_setWheels(0,0);
-
-            int numObs = 1;
-            object *obs = malloc(sizeof(object) * numObs);
-
-            obs[0].x = 500 + START_X; // mm
-            obs[0].y = 500 + START_Y;
-            obs[0].linearWidth = 2.54*4; // about 4 inches wide (in mm)
+//int main (void) {
 //
+//            oi_t *sensorD = oi_alloc();
+//            oi_init(sensorD);
 //
-//            obs[1].x = 200; // mm
-//            obs[1].y = 600;
-//            obs[1].linearWidth = 2.54*4; // about 4 inches wide (in mm)
+//            timer_init();
+//            lcd_init();
+//            uart_interrupt_init();
+//            button_init();
 //
 //
 //
-//            obs[2].x = 300; // mm
-//            obs[2].y = 1500;
-//            obs[2].linearWidth = 2.54*4; // about 4 inches wide (in mm)
-
-            object godzilla;
-            godzilla.x = 2500;
-            godzilla.y = 2500;
-            godzilla.linearWidth = 20;
-
-
-            lcd_printf("Move To Point test");
-            oi_setWheels(0,0);
-        	uart_sendStr("-----------------------------Move to Point test--------------------------------\n\r");
-//            int status = move_to_point(sensorD, obs, &numObs, 0, 1000+START_X, 1000+START_Y, 1);
-//        	turn_right(sensorD, 45);
-//        	    int status = 0;
-        	int status = move_to_godzilla(sensorD, obs, &numObs, &godzilla, 1);
-
-//            sprintf(toPutty, "FINAL STATUS: %d\n\r", status);
-//            uart_sendStr(toPutty);
-
-            oi_setWheels(0,0);
-//            oi_free(sensorD);
-            while(1);
-}
+//            robotCoords = malloc(sizeof(coords));
+//            robotCoords->x = START_X;
+//            robotCoords->y = START_Y;
+//            robotCoords->heading = 0;
+//
+//            oi_setWheels(0,0);
+//
+//            int numObs = 1;
+//            object *obs = malloc(sizeof(object) * numObs);
+//
+//            obs[0].x = 500 + START_X; // mm
+//            obs[0].y = 500 + START_Y;
+//            obs[0].linearWidth = 2.54*4; // about 4 inches wide (in mm)
+////
+////
+////            obs[1].x = 200; // mm
+////            obs[1].y = 600;
+////            obs[1].linearWidth = 2.54*4; // about 4 inches wide (in mm)
+////
+////
+////
+////            obs[2].x = 300; // mm
+////            obs[2].y = 1500;
+////            obs[2].linearWidth = 2.54*4; // about 4 inches wide (in mm)
+//
+//            object godzilla;
+//            godzilla.x = 2500;
+//            godzilla.y = 2500;
+//            godzilla.linearWidth = 20;
+//
+//
+//            lcd_printf("Move To Point test");
+//            oi_setWheels(0,0);
+//        	uart_sendStr("-----------------------------Move to Point test--------------------------------\n\r");
+////            int status = move_to_point(sensorD, obs, &numObs, 0, 1000+START_X, 1000+START_Y, 1);
+////        	turn_right(sensorD, 45);
+////        	    int status = 0;
+//        	int status = move_to_godzilla(sensorD, obs, &numObs, &godzilla, 1);
+//
+////            sprintf(toPutty, "FINAL STATUS: %d\n\r", status);
+////            uart_sendStr(toPutty);
+//
+//            oi_setWheels(0,0);
+////            oi_free(sensorD);
+//            while(1);
+//}
 
 
 
@@ -515,6 +515,7 @@ float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, object *godz
         uart_sendStr(toPutty);
     }
 
+    // Move to the Target
     if (move_to_point(sensor_data,obs,numObs,0,target.x,target.y,dir) == -1){ // basically if status == -1
         sprintf(toPutty, "WARNING! COULD NOT NAVIGATE TO GODZILLA! move_to_point\n\r");
         uart_sendStr(toPutty);
