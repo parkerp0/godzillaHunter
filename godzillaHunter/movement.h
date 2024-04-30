@@ -16,7 +16,7 @@
 
 #define DEGREES_TO_RADS M_PI / 180.0
 #define ROBOT_WIDTH 340
-#define AVOID_DISTANCE 200
+#define AVOID_DISTANCE 200.0
 #define GODZILLA_RAM_DISTANCE (AVOID_DISTANCE*2.0) + ROBOT_WIDTH // can be adjusted
 
 #define TILE_WIDTH 590 // mm
