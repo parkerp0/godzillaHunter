@@ -1,6 +1,18 @@
 # godzillaHunter
 CPRE288 Final mission repo
 
+# Putty Commands:
+  q - runs a single scan and saves the objects useful for testing mostly <br>
+  t - Starts the overall scan process <br>
+  b - while in the scan loop will break after the next scan is done if outside of the loop prints debug <br>
+  r - free obs and resets coordinates for a manual restart <br>
+  p - pauses and causes the program to hang for no good reason <br>
+  f - frees everything USE at end of program <br>
+  w,a,s,d - manual movement just in case <br>
+  k - kill, ram into whatever it is looking at<br>
+
+
+
 # Calibration Routine:
 
 **Defines guide**

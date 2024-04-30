@@ -199,4 +199,7 @@ double oi_getMotorCalibrationLeft(void);
 // Gets the encoder calibration for the right encoder
 double oi_getMotorCalibrationRight(void);
 
+//Play created song
+void play_victoryChant();
+
 #endif /* OPEN_INTERFACE_H_ */

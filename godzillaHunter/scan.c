@@ -145,29 +145,39 @@ object* scan(){
                     }
 
                     obs = malloc(sizeof(object)*(l+1));
+                    for(i = 0,j=0; j<l; i++ ,j++)
+                    {
+
+
+                        float a = IR_SERVO_OFFSET+(avgDist[i]*1000)+(0.5 * LinearWidth[i]);
+
+                    	float adjDist = sqrt((a * a)  // a squared
+                    	+ ((SERVO_CENTER_OFFSET)*(SERVO_CENTER_OFFSET))  // b squared
+						- (2*a*(SERVO_CENTER_OFFSET)*cos((avgAngle[i]+90) * degreesToRadians))); // 2*a*b*cos(theta) where theta is just the servo angle
+
+						float adjAngle = asin(a * sin((avgAngle[i]+90)*degreesToRadians)/adjDist);
+
+                    	 // Adjust the angle to be aligned with the robot's heading system
+
+
+                        obs[j].x = adjDist*sin(adjAngle - (robotCoords->heading * degreesToRadians)) + robotCoords->x; //add current x/y coord to it
+                        obs[j].y = adjDist*cos(adjAngle - (robotCoords->heading * degreesToRadians)) + robotCoords->y;
+                        obs[j].linearWidth = LinearWidth[i] * 1000; //standardize to mm
+
+                        if(obs[j].x < 0 || obs[j].x >FIELD_WIDTH || obs[j].y < 0 || obs[j].y > FIELD_LENGTH)
+                        {
+                            j--;
+                            l--;
+                        }
+
+                        sprintf(toPutty, "\n\rAdjDist: %f A:%f B:%f AdjAngle:%f \n\r", adjDist,a,SERVO_CENTER_OFFSET,adjAngle * radianToDegrees);
+                        uart_sendStr(toPutty);
+                        j = 0;//?
+
+                    }
                     obs[l].x = 0.0;
                     obs[l].y = 0.0;
                     obs[l].linearWidth = 0.0;
-                    for(i = 0; i<l; i++)
-                    {
-                    	float adjDist = sqrt(((IR_SERVO_OFFSET+(avgDist[i]*1000))*(IR_SERVO_OFFSET+(avgDist[i]*1000))) // a squared
-                    			+ ((SERVO_CENTER_OFFSET)*(SERVO_CENTER_OFFSET)) // b squared
-								- (2*(IR_SERVO_OFFSET+(avgDist[i]*1000))*(SERVO_CENTER_OFFSET)*cos(avgAngle[i] * degreesToRadians))); // 2*a*b*cos(theta) where theta is just the servo angle
-
-                    	float adjAngle = 90.0 - avgAngle[i]; // Adjust the angle to be aligned with the robot's heading system
-
-                        obs[i].x = adjDist*sin(adjAngle*degreesToRadians) + robotCoords->x; //add current x/y coord to it
-                        obs[i].y = adjDist*cos(adjAngle*degreesToRadians) + robotCoords->y;
-                        obs[i].linearWidth = LinearWidth[i];
-
-                        sprintf(toPutty, "\n\rAdjDist: %f\tX: %lf\tY: %lf\n\r", adjDist, obs[i].x, obs[i].y);
-                        j = 0;
-                        while (toPutty[j] != '\0') {
-                              uart_sendChar(toPutty[j]);
-                              j++;
-                          }
-
-                    }
 
 
 //                    for (i = 0; i < l; i++) {
@@ -250,35 +260,36 @@ float vectorDifMag(object *obs,object *obs2)
     return sqrt((newX*newX) + (newY*newY));
 }
 
-// Finds and returns the largest object based on linearWidth
+//Finds and returns the largest object based on linearWidth. 
+//*CALL AFTER* scanAndRewrite. Will break if you call it before
 
-object findLargestObject(object *obs) { // Search through the list of found objects
-    //object *obs = scan(); // Call the scan function to get an array of objects
+object* findLargestObj(object **currentObs, int obsCount) {
 
     int i;
     int m;
-    char toPutty[100];      //Used to make the PuTTy output a message
-    char *toPutty_ptr = toPutty;
 
-    //Initially assume the first object is the largest
-    object largestObject = obs[0];
+    int indexLargest = 0; // Start assuming the first object is the largest.
+    float maxWidth = (*currentObs)[0].linearWidth; // Initial max width set to the first object's width.
 
-    // Find the object with the largest linearWidth
-        for (i = 0; i < count; i++) {  // Iterating through the number of objects
-            if (obs[i].linearWidth > largestObject.linearWidth) {
-                largestObject = obs[i];
-            }
+    char toPutty[100];           //Used to make the PuTTy output a message
+    char *toPutty_ptr = toPutty; //Used to make the PuTTy output a message
+
+
+    //find the largest object in the struct
+    for (i = 1; i < obsCount; i++) {
+        if ((*currentObs)[i].linearWidth > maxWidth) {
+            maxWidth = (*currentObs)[i].linearWidth;
+            indexLargest = i;
         }
+    }
 
-        //print largest object info to Putty
-        sprintf(toPutty, "Largest Object Information: %f\tX Coordinate: %f\tY Coordinate: %f\n\r", largestObject.linearWidth, largestObject.x, largestObject.y);
-        m = 0;
-        while (toPutty[m] != '\0') {
-            uart_sendChar(toPutty[m]);
-            m++;
-       }
+    //print the largest object in the struct to Putty
+    sprintf(toPutty, "\n\rLargest Object: %f\tX Coordinate: %f\tY Coordinate: %f\n\r", (*currentObs)[indexLargest].linearWidth, (*currentObs)[indexLargest].x, (*currentObs)[indexLargest].y);
+    m = 0;
+    while (toPutty[m] != '\0') {
+        uart_sendChar(toPutty[m]);
+        m++;
+    }
 
-    free(obs); // Free the allocated memory from scan()
-
-    return largestObject;
+    return &((*currentObs)[indexLargest]); // Return a pointer to the largest object found.
 }

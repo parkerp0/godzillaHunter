@@ -22,11 +22,12 @@
 #include <math.h>
 
 #define degreesToRadians M_PI/180.0
+#define radianToDegrees 180.0/M_PI
 #define SERVO_CENTER_OFFSET 126.5 // distance from the center of the servo to the center of the robot in mm
 #define IR_SERVO_OFFSET 38.1 // distance from the outward face of the IR sensor to the center of the servo in mm
 
 object* scan();
-object findLargestObject(object *obs);
+object* findLargestObj(object **currentObs, int obsCount);
 
 int scanAndRewrite(object **currentObs,int obsCount);
 

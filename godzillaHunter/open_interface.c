@@ -626,3 +626,30 @@ double oi_getMotorCalibrationLeft(void) { return motor_cal_factor_L; }
  */
 double oi_getMotorCalibrationRight(void) { return motor_cal_factor_R; }
 
+/**
+ * @brief Defines the song, index, number of notes, notes, and their durations
+ * @author Luca Cano
+ *
+ * @return void
+ */
+
+void play_victoryChant(){
+    //Song 1
+    int song_index0 = 0;
+    int num_notes = 2;
+    unsigned char notes[] = {60, 62}; // MIDI notes for Middle C and D
+    unsigned char durations1[] = {64, 64}; // Durations in ticks (1 second each)
+
+    //Song 2
+    int song_index1 = 1;
+    int num_jingle = 8;
+    unsigned char jingle[] = {60, 62, 64, 69, 67};
+    unsigned char durations2[] = {16, 16, 16, 16, 32};
+
+    // Load the songs into the iRobot
+    oi_loadSong(song_index0, num_notes, notes, durations1);
+    oi_loadSong(song_index1, num_jingle, jingle, durations2);
+
+    // Play the song
+    oi_play_song(song_index1);
+}

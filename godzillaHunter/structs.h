@@ -1,6 +1,8 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
+#include <stdlib.h>
+
 typedef struct {
     float x;
     float y;
