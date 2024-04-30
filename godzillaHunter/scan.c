@@ -4,19 +4,16 @@
  *  Created on: Apr 16, 2024
  *      Author: cdoran & lcano
  */
-#include "Timer.h"
 #include "scan.h"
-#include "open_interface.h"
-#include "lcd.h"
-#include "uart-interrupt.h"
-#include "servo.h"
-#include "ping.h"
+
+#define objMatchThresh 10 //threshold for deciding if objects are the same might be mm idk
+
+int count = 0;
 
 object* scan(){
             int i = 0;              //Constants and counters for for loops
             int j = 0;
             int k = 0;
-            int m = 0;
             char toPutty[100];      //Used to make the PuTTy output a message
             char *toPutty_ptr = toPutty;
             int IRmeasurement;
@@ -24,11 +21,9 @@ object* scan(){
 
             object *obs = NULL;
 
-
                     i = 0;
                     j = 0;
                     k = 0;
-                    m = 0;
 
                     int sensorAngle[90] = {0};        //sensorAngle will be set to angles where there is an object
                     float sensorDistance[90] = {0};   //sensorDistance will be set to the distance to the object
@@ -115,6 +110,7 @@ object* scan(){
                             }
                         }
                     }
+                    count = l;
 
 //                    //initialize the smallest width, angle, and distance
 //                    int SmallestWidth = 1000;
@@ -148,12 +144,29 @@ object* scan(){
                         }
                     }
 
-                    obs = malloc(sizeof(object)*l);
+                    obs = malloc(sizeof(object)*(l+1));
+                    obs[l].x = 0.0;
+                    obs[l].y = 0.0;
+                    obs[l].linearWidth = 0.0;
                     for(i = 0; i<l; i++)
                     {
-                        obs[i].x = avgDist[i]*sin(avgAngle[i]*degreesToRadians);//add current x/y coord to it
-                        obs[i].y = avgDist[i]*cos(avgAngle[i]*degreesToRadians);
+                    	float adjDist = sqrt(((IR_SERVO_OFFSET+(avgDist[i]*1000))*(IR_SERVO_OFFSET+(avgDist[i]*1000))) // a squared
+                    			+ ((SERVO_CENTER_OFFSET)*(SERVO_CENTER_OFFSET)) // b squared
+								- (2*(IR_SERVO_OFFSET+(avgDist[i]*1000))*(SERVO_CENTER_OFFSET)*cos(avgAngle[i] * degreesToRadians))); // 2*a*b*cos(theta) where theta is just the servo angle
+
+                    	float adjAngle = 90.0 - avgAngle[i]; // Adjust the angle to be aligned with the robot's heading system
+
+                        obs[i].x = adjDist*sin(adjAngle*degreesToRadians) + robotCoords->x; //add current x/y coord to it
+                        obs[i].y = adjDist*cos(adjAngle*degreesToRadians) + robotCoords->y;
                         obs[i].linearWidth = LinearWidth[i];
+
+                        sprintf(toPutty, "\n\rAdjDist: %f\tX: %lf\tY: %lf\n\r", adjDist, obs[i].x, obs[i].y);
+                        j = 0;
+                        while (toPutty[j] != '\0') {
+                              uart_sendChar(toPutty[j]);
+                              j++;
+                          }
+
                     }
 
 
@@ -190,5 +203,124 @@ object* scan(){
 //                            }
                 
                     return obs;
+}
+
+int scanAndRewrite(object **currentObs,int obsCount)
+{
+    int i;
+    int flag;
+    char message[90];
+
+
+    object *obsTemp = scan();
+    while(obsTemp->linearWidth!= 0.0)
+    {
+        flag = 1;//assume that the new object is new
+        for(i = 0; i<obsCount; i++)
+        {
+            if(vectorDifMag(obsTemp,&(*currentObs)[i]) < objMatchThresh)
+            {//rewritten might work
+                (*currentObs)[i].linearWidth = ((*currentObs)[i].linearWidth + obsTemp->linearWidth)/2;
+                flag = 0;//the object is found to be not new
+                break;
+            }
+
+        }
+        if(flag)
+        {
+            obsCount++;
+            (*currentObs) = realloc((*currentObs),sizeof(object)*obsCount);
+            (*currentObs)[obsCount-1].x = obsTemp->x;
+            (*currentObs)[obsCount-1].y = obsTemp->y;
+            (*currentObs)[obsCount-1].linearWidth = obsTemp->linearWidth;
+        }
+        
+    obsTemp++;
+    }
+    for(i = 0; i<obsCount; i++)
+    {
+        sprintf(message,"obs %d: x: %.2f y:%.2f Width:%.2f\n\r",i,(*currentObs)[i].x,(*currentObs)[i].y,(*currentObs)[i].linearWidth);
+        uart_sendStr(message);
+    }//prints all objects
+    
+    //sprintf(message,"Hunter location x:%lf y:%lf heading: %lf\n\r", coord->x,coord->y,coord->heading);
+    //uart_sendStr(message);
+    free(obsTemp);
+
+    return obsCount;
+}
+
+float vectorDifMag(object *obs,object *obs2)
+{
+    float newX = obs->x - obs2->x;
+    float newY = obs->y - obs2->y;
+    return sqrt((newX*newX) + (newY*newY));
+}
+
+// Finds and returns the largest object based on linearWidth
+
+object findLargestObject() {
+    object *obs = scan(); // Call the scan function to get an array of objects
+
+    int i;
+    int m;
+    char toPutty[100];      //Used to make the PuTTy output a message
+    char *toPutty_ptr = toPutty;
+
+    //Initially assume the first object is the largest
+    object largestObject = obs[0];
+
+    // Find the object with the largest linearWidth
+        for (i = 0; i < count; i++) {  // Iterating through the number of objects
+            if (obs[i].linearWidth > largestObject.linearWidth) {
+                largestObject = obs[i];
+            }
+        }
+
+        //print largest object info to Putty
+        sprintf(toPutty, "\n\rLargest Object: %f\tX Coordinate: %f\tY Coordinate: %f\n\r", largestObject.linearWidth, largestObject.x, largestObject.y);
+        m = 0;
+        while (toPutty[m] != '\0') {
+            uart_sendChar(toPutty[m]);
+            m++;
+       }
+
+    free(obs); // Free the allocated memory from scan() MAY NEED TO BE CHANGED DEPENDING ON PURPOSE
+
+    return largestObject;
+
+
+}
+
+// Finds and returns the largest object based on linearWidth.
+object* realFindLargestObj(object **currentObs, int obsCount) {
+
+    int i;
+    int m;
+
+    int indexLargest = 0; // Start assuming the first object is the largest.
+    float maxWidth = (*currentObs)[0].linearWidth; // Initial max width set to the first object's width.
+
+    char toPutty[100];           //Used to make the PuTTy output a message
+    char *toPutty_ptr = toPutty; //Used to make the PuTTy output a message
+
+
+    //find the largest object in the struct
+    for (i = 1; i < obsCount; i++) {
+        if ((*currentObs)[i].linearWidth > maxWidth) {
+            maxWidth = (*currentObs)[i].linearWidth;
+            indexLargest = i;
+        }
+    }
+
+    //print the largest object in the struct to Putty
+    sprintf(toPutty, "\n\rLargest Object: %f\tX Coordinate: %f\tY Coordinate: %f\n\r", (*currentObs)[indexLargest].linearWidth, (*currentObs)[indexLargest].x, (*currentObs)[indexLargest].y);
+    m = 0;
+    while (toPutty[m] != '\0') {
+        uart_sendChar(toPutty[m]);
+        m++;
+    }
+
+    return &((*currentObs)[indexLargest]); // Return a pointer to the largest object found.
 }
 

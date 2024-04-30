@@ -419,7 +419,7 @@ char oi_uartReceive(void)
     // uint32_t tempData; //used for error checking
     char data;
 
-    while ((UART4_FR_R & UART_FR_RXFE))
+    while ((UART4_FR_R & UART_FR_RXFE))//if it hangs here the bot is not on b/c the board has not heard back from bot
         ; // wait here until data is recieved
 
     data = (char)(UART4_DR_R & 0xFF);
@@ -625,4 +625,32 @@ double oi_getMotorCalibrationLeft(void) { return motor_cal_factor_L; }
  * @return double right motor calibration factor
  */
 double oi_getMotorCalibrationRight(void) { return motor_cal_factor_R; }
+
+/**
+ * @brief Defines the song, index, number of notes, notes, and their durations
+ * @author Luca Cano
+ *
+ * @return void
+ */
+
+void play_victoryChant(){
+    //Song 1 (Godzilla Theme)
+    int song_index0 = 0;
+    int num_notes = 6;
+    unsigned char notes[] = {64, 68, 62, 63, 57, 58}; // MIDI notes for Middle C and D
+    unsigned char durations1[] = {56, 32, 24, 24, 24, 64}; // Durations in ticks
+
+    //Song 2 (McDonalds Jingle)
+    int song_index1 = 1;
+    int num_jingle = 8;
+    unsigned char jingle[] = {60, 62, 64, 69, 67};
+    unsigned char durations2[] = {16, 16, 16, 16, 32};
+
+    // Load the songs into the iRobot
+    oi_loadSong(song_index0, num_notes, notes, durations1);
+    oi_loadSong(song_index1, num_jingle, jingle, durations2);
+
+    // Play the song
+    oi_play_song(song_index0);
+}
 
