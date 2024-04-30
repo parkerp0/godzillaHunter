@@ -26,7 +26,7 @@
 #define IR_SERVO_OFFSET 38.1 // distance from the outward face of the IR sensor to the center of the servo in mm
 
 object* scan();
-object findLargestObject();
+object* findLargestObj(object **currentObs, int obsCount);
 
 int scanAndRewrite(object **currentObs,int obsCount);
 
