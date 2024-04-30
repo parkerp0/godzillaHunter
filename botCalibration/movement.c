@@ -39,32 +39,39 @@ double move_forward(oi_t *sensor_data, double distance_mm) {
         sum += sensor_data->distance;
 
         if (distance_mm - sum > power  && power < 200)
-            power += 10;
-//        else if (sum > distance_mm/2.0  && power > 100)
-        else if (distance_mm - sum < power  && power > 20)
-            power -= 15;
+                {
+                    power += 10;
+                    oi_setWheels(power-TWISTOFFSET, power + TWISTOFFSET);
+                }
+                else if (distance_mm - sum < power  && power > 20)
+                {
+                    power -= 15;
+                    oi_setWheels(power + TWISTOFFSET, power - TWISTOFFSET);
+                }
 
-        if (sensor_data->bumpLeft){
-            move_backward(sensor_data, 100.0);
-            timer_waitMillis(500);
-            turn_right(sensor_data, 45.0);
-            timer_waitMillis(500);
-            move_forward(sensor_data, 330.0);
-            timer_waitMillis(500);
-            turn_left(sensor_data, 60.0);
-            oi_setWheels(0,0);
-            return 0;
-        } else if (sensor_data->bumpRight){
-            move_backward(sensor_data, 100.0);
-            timer_waitMillis(500);
-            turn_left(sensor_data, 45.0);
-            timer_waitMillis(500);
-            move_forward(sensor_data, 330.0);
-            timer_waitMillis(500);
-            turn_right(sensor_data, 60.0);
-            oi_setWheels(0,0);
-            return 0;
-        }
+
+//
+//        if (sensor_data->bumpLeft){
+//            move_backward(sensor_data, 100.0);
+//            timer_waitMillis(500);
+//            turn_right(sensor_data, 45.0);
+//            timer_waitMillis(500);
+//            move_forward(sensor_data, 330.0);
+//            timer_waitMillis(500);
+//            turn_left(sensor_data, 60.0);
+//            oi_setWheels(0,0);
+//            return 0;
+//        } else if (sensor_data->bumpRight){
+//            move_backward(sensor_data, 100.0);
+//            timer_waitMillis(500);
+//            turn_left(sensor_data, 45.0);
+//            timer_waitMillis(500);
+//            move_forward(sensor_data, 330.0);
+//            timer_waitMillis(500);
+//            turn_right(sensor_data, 60.0);
+//            oi_setWheels(0,0);
+//            return 0;
+//        }
 
         oi_setWheels(power-TWISTOFFSET, power + TWISTOFFSET);
         lcd_printf("%lf", sum);
