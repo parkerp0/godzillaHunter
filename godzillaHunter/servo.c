@@ -1,7 +1,7 @@
 #include "servo.h"
 
-#define START_VAL 7100
-#define END_VAL   33940
+#define START_VAL 7050
+#define END_VAL   33990
 
 void servo_init()
 {
