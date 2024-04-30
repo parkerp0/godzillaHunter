@@ -145,10 +145,7 @@ object* scan(){
                     }
 
                     obs = malloc(sizeof(object)*(l+1));
-                    obs[l].x = 0.0;
-                    obs[l].y = 0.0;
-                    obs[l].linearWidth = 0.0;
-                    for(i = 0; i<l; i++)
+                    for(i = 0,j=0; j<l; i++ ,j++)
                     {
 
 
@@ -162,15 +159,25 @@ object* scan(){
 
                     	 // Adjust the angle to be aligned with the robot's heading system
 
-                        obs[i].x = adjDist*sin(adjAngle - (robotCoords->heading * degreesToRadians)) + robotCoords->x; //add current x/y coord to it
-                        obs[i].y = adjDist*cos(adjAngle - (robotCoords->heading * degreesToRadians)) + robotCoords->y;
-                        obs[i].linearWidth = LinearWidth[i];
+
+                        obs[j].x = adjDist*sin(adjAngle - (robotCoords->heading * degreesToRadians)) + robotCoords->x; //add current x/y coord to it
+                        obs[j].y = adjDist*cos(adjAngle - (robotCoords->heading * degreesToRadians)) + robotCoords->y;
+                        obs[j].linearWidth = LinearWidth[i] * 1000; //standardize to mm
+
+                        if(obs[j].x < 0 || obs[j].x >FIELD_WIDTH || obs[j].y < 0 || obs[j].y > FIELD_LENGTH)
+                        {
+                            j--;
+                            l--;
+                        }
 
                         sprintf(toPutty, "\n\rAdjDist: %f A:%f B:%f AdjAngle:%f \n\r", adjDist,a,SERVO_CENTER_OFFSET,adjAngle * radianToDegrees);
                         uart_sendStr(toPutty);
                         j = 0;//?
 
                     }
+                    obs[l].x = 0.0;
+                    obs[l].y = 0.0;
+                    obs[l].linearWidth = 0.0;
 
 
 //                    for (i = 0; i < l; i++) {
