@@ -260,34 +260,36 @@ float vectorDifMag(object *obs,object *obs2)
     return sqrt((newX*newX) + (newY*newY));
 }
 
-// Finds and returns the largest object based on linearWidth
+//Finds and returns the largest object based on linearWidth. 
+//*CALL AFTER* scanAndRewrite. Will break if you call it before
 
-object findLargestObject() {
-    object *obs = scan(); // Call the scan function to get an array of objects
+object* findLargestObj(object **currentObs, int obsCount) {
 
     int i;
     int m;
-    char toPutty[100];      //Used to make the PuTTy output a message
 
-    //Initially assume the first object is the largest
-    object largestObject = obs[0];
+    int indexLargest = 0; // Start assuming the first object is the largest.
+    float maxWidth = (*currentObs)[0].linearWidth; // Initial max width set to the first object's width.
 
-    // Find the object with the largest linearWidth
-        for (i = 0; i < count; i++) {  // Iterating through the number of objects
-            if (obs[i].linearWidth > largestObject.linearWidth) {
-                largestObject = obs[i];
-            }
+    char toPutty[100];           //Used to make the PuTTy output a message
+    char *toPutty_ptr = toPutty; //Used to make the PuTTy output a message
+
+
+    //find the largest object in the struct
+    for (i = 1; i < obsCount; i++) {
+        if ((*currentObs)[i].linearWidth > maxWidth) {
+            maxWidth = (*currentObs)[i].linearWidth;
+            indexLargest = i;
         }
+    }
 
-        //print largest object info to Putty
-        sprintf(toPutty, "Largest Object Information: %f\tX Coordinate: %f\tY Coordinate: %f\n\r", largestObject.linearWidth, largestObject.x, largestObject.y);
-        m = 0;
-        while (toPutty[m] != '\0') {
-            uart_sendChar(toPutty[m]);
-            m++;
-       }
+    //print the largest object in the struct to Putty
+    sprintf(toPutty, "\n\rLargest Object: %f\tX Coordinate: %f\tY Coordinate: %f\n\r", (*currentObs)[indexLargest].linearWidth, (*currentObs)[indexLargest].x, (*currentObs)[indexLargest].y);
+    m = 0;
+    while (toPutty[m] != '\0') {
+        uart_sendChar(toPutty[m]);
+        m++;
+    }
 
-    free(obs); // Free the allocated memory from scan()
-
-    return largestObject;
+    return &((*currentObs)[indexLargest]); // Return a pointer to the largest object found.
 }
