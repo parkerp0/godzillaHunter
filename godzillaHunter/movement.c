@@ -2,55 +2,64 @@
 
 extern coords *robotCoords;
 
-//int main (void) {
-//
-//            oi_t *sensorD = oi_alloc();
-//            oi_init(sensorD);
-//
-//            timer_init();
-//            lcd_init();
-//            uart_interrupt_init();
-//            button_init();
-//
-//
-//
-//            robotCoords = malloc(sizeof(coords));
-//            robotCoords->x = START_X;
-//            robotCoords->y = START_Y;
-//            robotCoords->heading = 0;
-//
-//            oi_setWheels(0,0);
-//
-//            int numObs = 1;
-//            object *obs = malloc(sizeof(object) * numObs);
-//
-//            obs[0].x = 500 + START_X; // mm
-//            obs[0].y = 500 + START_Y;
-//            obs[0].linearWidth = 2.54*4; // about 4 inches wide (in mm)
-////
-////
-////            obs[1].x = 200; // mm
-////            obs[1].y = 600;
-////            obs[1].linearWidth = 2.54*4; // about 4 inches wide (in mm)
-////
-////
-////
-////            obs[2].x = 300; // mm
-////            obs[2].y = 1500;
-////            obs[2].linearWidth = 2.54*4; // about 4 inches wide (in mm)
+int main (void) {
+
+            oi_t *sensorD = oi_alloc();
+            oi_init(sensorD);
+
+            timer_init();
+            lcd_init();
+            uart_interrupt_init();
+            button_init();
+
+
+
+            robotCoords = malloc(sizeof(coords));
+            robotCoords->x = START_X;
+            robotCoords->y = START_Y;
+            robotCoords->heading = 0;
+
+            oi_setWheels(0,0);
+
+            int numObs = 1;
+            object *obs = malloc(sizeof(object) * numObs);
+
+            obs[0].x = 500 + START_X; // mm
+            obs[0].y = 500 + START_Y;
+            obs[0].linearWidth = 2.54*4; // about 4 inches wide (in mm)
 //
 //
-//            lcd_printf("Move To Point test");
-//        	uart_sendStr("-----------------------------Move to Point test--------------------------------\n\r");
-//            int status = move_to_point(sensorD, obs, &numObs, 0, 1000+START_X, 1000+START_Y);
+//            obs[1].x = 200; // mm
+//            obs[1].y = 600;
+//            obs[1].linearWidth = 2.54*4; // about 4 inches wide (in mm)
 //
+//
+//
+//            obs[2].x = 300; // mm
+//            obs[2].y = 1500;
+//            obs[2].linearWidth = 2.54*4; // about 4 inches wide (in mm)
+
+            object godzilla;
+            godzilla.x = 2500;
+            godzilla.y = 2500;
+            godzilla.linearWidth = 20;
+
+
+            lcd_printf("Move To Point test");
+            oi_setWheels(0,0);
+        	uart_sendStr("-----------------------------Move to Point test--------------------------------\n\r");
+//            int status = move_to_point(sensorD, obs, &numObs, 0, 1000+START_X, 1000+START_Y, 1);
+//        	turn_right(sensorD, 45);
+//        	    int status = 0;
+        	int status = move_to_godzilla(sensorD, obs, &numObs, 0, &godzilla, 1);
+
 //            sprintf(toPutty, "FINAL STATUS: %d\n\r", status);
 //            uart_sendStr(toPutty);
-//
-//            oi_setWheels(0,0);
-////            oi_free(sensorD);
-//            while(1);
-//}
+
+            oi_setWheels(0,0);
+//            oi_free(sensorD);
+            while(1);
+}
 
 
 
@@ -409,22 +418,31 @@ float ram(oi_t *sensor_data)
     return 0.0;
 }
 
-coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs, int numAttempts, int angle, int dir){
+coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs, int numAttempts, int dir){
+
+//    if (numAttempts > 10) // keep it from going in circles forever
+//        return ;
     float dx = (godzilla->x) - (robotCoords->x); 
     float dy = (godzilla->y) - (robotCoords->y); 
-    float length = sqrt(dx*dx + dy * dy);
+    float length = sqrt(dx*dx + dy*dy);
 
     // Negate the unit vector to be on the side closer to the robot 
-    float unitX = -dx / length;
-    float unitY = -dy / length;
+    float unitX = dx / length;
+    float unitY = dy / length;
+
+   float radians = numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE + (M_PI);
+   float newX = (unitX * cos(radians)) - (unitY * sin(radians));
+   float newY = (unitX * sin(radians)) + (unitY * cos(radians));
 
     // calculate the coordinates of the new point (may need to swap cos and sin)
     coords newPoint;
-    newPoint.x = godzila.x + (GODZILLA_RAM_DISTANCE * cos(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitX) - (GODZILLA_RAM_DISTANCE * sin(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitY);
-    newPoint.y = godzila.y + (GODZILLA_RAM_DISTANCE * sin(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitX) + (GODZILLA_RAM_DISTANCE * cos(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitY);
+    newPoint.x = (godzilla->x) + (newX * GODZILLA_RAM_DISTANCE * 2); //(GODZILLA_RAM_DISTANCE * cos(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitX) - (GODZILLA_RAM_DISTANCE * sin(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitY);
+    newPoint.y = (godzilla->y) + (newY * GODZILLA_RAM_DISTANCE * 2); //(GODZILLA_RAM_DISTANCE * sin(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitX) + (GODZILLA_RAM_DISTANCE * cos(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitY);
 
-    sprintf(toPutty, "GODZILLA TARGET LOCATION: X: %lf\t Y: %lf\n\r", newPoint.x, newPoint.y);
+    sprintf(toPutty, "GODZILLA TARGET LOCATION: (%lf, %lf)\n\r", newPoint.x, newPoint.y);
 	uart_sendStr(toPutty);
+    sprintf(toPutty, "new unit vectors: (%lf, %lf)\n\r\n\r\n\r", newX, newY);
+    uart_sendStr(toPutty);
 
     // Check if there is an obstacle too close to the target point or along the path to godzilla
     int j;
@@ -433,7 +451,7 @@ coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs, int n
         if ((((obs[j].linearWidth/2.0) + sqrt(((obs[j].x-(newPoint.x))*(obs[j].x-(newPoint.x))) +
             ((obs[j].y-(newPoint.y))*(obs[j].y-(newPoint.y))))) <= ((ROBOT_WIDTH/2.0) + (AVOID_DISTANCE)))
             || // Check if there is an obstacle too close to the path
-            calcDistToPathGodzilla(obs[j], godzilla, newPoint, numObs) - (obs[j].linearWidth / 2.0) - (ROBOT_WIDTH / 2.0) <= AVOID_DISTANCE) { 
+            calcDistToPathGodzilla(&obs[j], godzilla, newPoint, numObs) - (obs[j].linearWidth / 2.0) - (ROBOT_WIDTH / 2.0) <= AVOID_DISTANCE) {
                 return get_target_for_godzilla(obs, godzilla, numObs, numAttempts+1, dir);
         }
     }
@@ -473,13 +491,13 @@ float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, int numAttem
         if (status == -1) {
             sprintf(toPutty, "WARNING! COULD NOT NAVIGATE TO GODZILLA!");
             uart_sendStr(toPutty);
-            return 0.0;
+            return -1;
         }
     }
     
     // Rotate to face Godzilla
-    float deltaX = (target->x) - robotCoords->x;
-    float deltaY = (target->y) - robotCoords->y;
+    float deltaX = (target.x) - robotCoords->x;
+    float deltaY = (target.y) - robotCoords->y;
     float targetHeading = fmod(atan2(deltaX, deltaY) * 180.0 / M_PI, 360); // lock in the degrees to be -360 to 360
     float deltaHeading = fabs(robotCoords->heading - targetHeading);
 
