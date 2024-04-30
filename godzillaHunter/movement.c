@@ -51,7 +51,7 @@ int main (void) {
 //            int status = move_to_point(sensorD, obs, &numObs, 0, 1000+START_X, 1000+START_Y, 1);
 //        	turn_right(sensorD, 45);
 //        	    int status = 0;
-        	int status = move_to_godzilla(sensorD, obs, &numObs, 0, &godzilla, 1);
+        	int status = move_to_godzilla(sensorD, obs, &numObs, &godzilla, 1);
 
 //            sprintf(toPutty, "FINAL STATUS: %d\n\r", status);
 //            uart_sendStr(toPutty);
@@ -418,46 +418,91 @@ float ram(oi_t *sensor_data)
     return 0.0;
 }
 
-coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs, int numAttempts, int dir){
+coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs){
+    int numAttempts = 0;
 
-//    if (numAttempts > 10) // keep it from going in circles forever
-//        return ;
-    float dx = (godzilla->x) - (robotCoords->x); 
-    float dy = (godzilla->y) - (robotCoords->y); 
-    float length = sqrt(dx*dx + dy*dy);
+    float robotAngle = atan2f((godzilla->y) - (robotCoords->y), (godzilla->x) - (robotCoords->x));
+    float angle = robotAngle; // the angle of the line between the robot and godzilla
 
-    // Negate the unit vector to be on the side closer to the robot 
-    float unitX = dx / length;
-    float unitY = dy / length;
+    // Iterative version to save memory
+    while ((numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) < (M_PI)){ // keep it from going in circles forever M_PI makes it check 180 degrees
+        // M_PI to flip it 180 degrees and then the correct angle offset based on the attempt
+        angle = robotAngle + M_PI + (numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE);
 
-   float radians = numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE + (M_PI);
-   float newX = (unitX * cos(radians)) - (unitY * sin(radians));
-   float newY = (unitX * sin(radians)) + (unitY * cos(radians));
+        // This should work I'm pretty sure
+        newPoint.x = (godzilla->x) + (GODZILLA_RAM_DISTANCE * cos(angle));
+        newPoint.y = (godzilla->y) + (GODZILLA_RAM_DISTANCE * sin(angle));
 
-    // calculate the coordinates of the new point (may need to swap cos and sin)
-    coords newPoint;
-    newPoint.x = (godzilla->x) + (newX * GODZILLA_RAM_DISTANCE * 2); //(GODZILLA_RAM_DISTANCE * cos(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitX) - (GODZILLA_RAM_DISTANCE * sin(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitY);
-    newPoint.y = (godzilla->y) + (newY * GODZILLA_RAM_DISTANCE * 2); //(GODZILLA_RAM_DISTANCE * sin(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitX) + (GODZILLA_RAM_DISTANCE * cos(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitY);
+        // TODO if we have time make it check both clockwise and ccw at the same time and choose whichever we get first so it is closer to the robot
 
-    sprintf(toPutty, "GODZILLA TARGET LOCATION: (%lf, %lf)\n\r", newPoint.x, newPoint.y);
-	uart_sendStr(toPutty);
-    sprintf(toPutty, "new unit vectors: (%lf, %lf)\n\r\n\r\n\r", newX, newY);
-    uart_sendStr(toPutty);
+        // Print it
+        sprintf(toPutty, "GODZILLA TARGET LOCATION before obs check: (%lf, %lf)\n\r", newPoint.x, newPoint.y);
+	    uart_sendStr(toPutty);
 
-    // Check if there is an obstacle too close to the target point or along the path to godzilla
-    int j;
-    for (j = 0; j < *numObs; j++) {
-        // Check if there is an obstacle too close to the target location
-        if ((((obs[j].linearWidth/2.0) + sqrt(((obs[j].x-(newPoint.x))*(obs[j].x-(newPoint.x))) +
-            ((obs[j].y-(newPoint.y))*(obs[j].y-(newPoint.y))))) <= ((ROBOT_WIDTH/2.0) + (AVOID_DISTANCE)))
-            || // Check if there is an obstacle too close to the path
-            calcDistToPathGodzilla(&obs[j], godzilla, newPoint, numObs) - (obs[j].linearWidth / 2.0) - (ROBOT_WIDTH / 2.0) <= AVOID_DISTANCE) {
-                return get_target_for_godzilla(obs, godzilla, numObs, numAttempts+1, dir);
+        // Check if there is an obstacle too close to the target point or along the path to godzilla
+        int j;
+        for (j = 0; j < *numObs; j++) {
+            // Check if there is an obstacle too close to the target location
+            if ((((obs[j].linearWidth/2.0) + sqrt(((obs[j].x-(newPoint.x))*(obs[j].x-(newPoint.x))) +
+                ((obs[j].y-(newPoint.y))*(obs[j].y-(newPoint.y))))) <= ((ROBOT_WIDTH/2.0) + (AVOID_DISTANCE)))
+                || // Check if there is an obstacle too close to the path
+                calcDistToPathGodzilla(&obs[j], godzilla, newPoint, numObs) - (obs[j].linearWidth / 2.0) - (ROBOT_WIDTH / 2.0) <= AVOID_DISTANCE) {
+                    numAttempts++;
+                    continue; // go on to the next possible location
+            }
+            return newPoint;
         }
     }
 
-    // If there are no obstacles too close
+    coords newPoint;
+    newPoint.x = -1;
+    newPoint.y = -1;
+    newPoint.heading = -1;
+
     return newPoint;
+
+// Recursive solution might work
+//    if ((numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) > (2 * M_PI)) // keep it from going in circles forever
+//        return NULL;
+
+//     float dx = (godzilla->x) - (robotCoords->x); 
+//     float dy = (godzilla->y) - (robotCoords->y); 
+//     // float length = sqrt(dx*dx + dy*dy);
+//     float angle = atan2f(dy, dx);
+
+//     // M_PI to flip it 180 degrees and then the correct angle offset based on the attempt
+//     angle += M_PI + (numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE);
+    
+//     // float radians = numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE + (M_PI);
+//     // float newX = (unitX * cos(radians)) - (unitY * sin(radians));
+//     // float newY = (unitX * sin(radians)) + (unitY * cos(radians));
+
+//     // calculate the coordinates of the new point (may need to swap cos and sin)
+//     coords newPoint;
+//     newPoint.x = (godzilla->x) + (GODZILLA_RAM_DISTANCE * cos(angle));
+//     newPoint.y = (godzilla->y) + (GODZILLA_RAM_DISTANCE * sin(angle));
+//     // newPoint.x = (godzilla->x) + (newX * GODZILLA_RAM_DISTANCE * 2); //(GODZILLA_RAM_DISTANCE * cos(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitX) - (GODZILLA_RAM_DISTANCE * sin(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitY);
+//     // newPoint.y = (godzilla->y) + (newY * GODZILLA_RAM_DISTANCE * 2); //(GODZILLA_RAM_DISTANCE * sin(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitX) + (GODZILLA_RAM_DISTANCE * cos(numAttempts * AVOID_DISTANCE / GODZILLA_RAM_DISTANCE) * unitY);
+
+//     sprintf(toPutty, "GODZILLA TARGET LOCATION: (%lf, %lf)\n\r", newPoint.x, newPoint.y);
+// 	uart_sendStr(toPutty);
+//     sprintf(toPutty, "new unit vectors: (%lf, %lf)\n\r\n\r\n\r", newX, newY);
+//     uart_sendStr(toPutty);
+
+//     // Check if there is an obstacle too close to the target point or along the path to godzilla
+//     int j;
+//     for (j = 0; j < *numObs; j++) {
+//         // Check if there is an obstacle too close to the target location
+//         if ((((obs[j].linearWidth/2.0) + sqrt(((obs[j].x-(newPoint.x))*(obs[j].x-(newPoint.x))) +
+//             ((obs[j].y-(newPoint.y))*(obs[j].y-(newPoint.y))))) <= ((ROBOT_WIDTH/2.0) + (AVOID_DISTANCE)))
+//             || // Check if there is an obstacle too close to the path
+//             calcDistToPathGodzilla(&obs[j], godzilla, newPoint, numObs) - (obs[j].linearWidth / 2.0) - (ROBOT_WIDTH / 2.0) <= AVOID_DISTANCE) {
+//                 return get_target_for_godzilla(obs, godzilla, numObs, numAttempts+1, dir);
+//         }
+//     }
+
+//     // If there are no obstacles too close
+//     return newPoint;
 
 }
 
@@ -477,22 +522,18 @@ float calcDistToPathGodzilla(object *obs, object *godzilla, coords target, int *
 	return top/bot;
 }
 
-float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, int numAttempts, object *godzilla, int dir){
+float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, object *godzilla, int dir){
 
-    coords target = get_target_for_godzilla(obs, godzilla, numObs, numAttempts, dir);
+    coords target = get_target_for_godzilla(obs, godzilla, numObs);
 
-    int status = move_to_point(sensor_data,obs,numObs,0,target.x,target.y,dir);
-    if (status == -1){
-        sprintf(toPutty, "TRYING THE OTHER DIRECTION! (FOR GODZILLA)");
+    if (target.x == -1 && target.y == -1 && target.heading == -1){
+        sprintf(toPutty, "WARNING! COULD NOT NAVIGATE TO GODZILLA! get_target_for_godzilla\n\r");
         uart_sendStr(toPutty);
+    }
 
-        target = get_target_for_godzilla(obs, godzilla, numObs, numAttempts, -dir);
-        status = move_to_point(sensor_data,obs,numObs,0,target.x,target.y,-dir);
-        if (status == -1) {
-            sprintf(toPutty, "WARNING! COULD NOT NAVIGATE TO GODZILLA!");
-            uart_sendStr(toPutty);
-            return -1;
-        }
+    if (move_to_point(sensor_data,obs,numObs,0,target.x,target.y,dir) == -1){ // basically if status == -1
+        sprintf(toPutty, "WARNING! COULD NOT NAVIGATE TO GODZILLA! move_to_point\n\r");
+        uart_sendStr(toPutty);
     }
     
     // Rotate to face Godzilla
