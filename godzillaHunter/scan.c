@@ -256,7 +256,8 @@ float vectorDifMag(object *obs,object *obs2)
     return sqrt((newX*newX) + (newY*newY));
 }
 
-// Finds and returns the largest object based on linearWidth. *CALL AFTER* scanAndRewrite. Will break if you call it before
+//Finds and returns the largest object based on linearWidth. 
+//*CALL AFTER* scanAndRewrite. Will break if you call it before
 
 object* findLargestObj(object **currentObs, int obsCount) {
 
