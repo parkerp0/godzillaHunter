@@ -90,7 +90,7 @@ coords *robotCoords;
                             if(command_byte == 'b')break;//breaks out after the most recent loop for a restart
                             if(upFlag)targetY+=500;//increment in the correct direction
                             else targetY-=500;
-                            move_to_point(sensorD,obs,&obsCount,0,targetX,targetY,1);
+                            move_to_point(sensorD,&obs,&obsCount,0,targetX,targetY,1);
                         }
                         if(command_byte == 'b')
                         {
