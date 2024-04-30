@@ -39,13 +39,22 @@ extern coords *robotCoords;
 ////            obs[2].y = 1500;
 ////            obs[2].linearWidth = 2.54*4; // about 4 inches wide (in mm)
 //
+//            object godzilla;
+//            godzilla.x = 2500;
+//            godzilla.y = 2500;
+//            godzilla.linearWidth = 20;
+//
 //
 //            lcd_printf("Move To Point test");
+//            oi_setWheels(0,0);
 //        	uart_sendStr("-----------------------------Move to Point test--------------------------------\n\r");
-//            int status = move_to_point(sensorD, obs, &numObs, 0, 1000+START_X, 1000+START_Y);
+////            int status = move_to_point(sensorD, obs, &numObs, 0, 1000+START_X, 1000+START_Y, 1);
+////        	turn_right(sensorD, 45);
+////        	    int status = 0;
+//        	int status = move_to_godzilla(sensorD, obs, &numObs, &godzilla, 1);
 //
-//            sprintf(toPutty, "FINAL STATUS: %d\n\r", status);
-//            uart_sendStr(toPutty);
+////            sprintf(toPutty, "FINAL STATUS: %d\n\r", status);
+////            uart_sendStr(toPutty);
 //
 //            oi_setWheels(0,0);
 ////            oi_free(sensorD);
@@ -248,8 +257,6 @@ coords calculatePerpendicularPoint(object targetCoords, int dir) {
 
 
 float calcDistToPath(object *obs, float global_x, float global_y){
-
-
 	sprintf(toPutty, "obs: %d   \n\r", sizeof(*obs));
 	uart_sendStr(toPutty);
 	sprintf(toPutty, "Obs at point: X: %lf\t Y: %lf\n\r", obs->x, obs->y);
@@ -396,47 +403,6 @@ float turn_left(oi_t *sensor, float degrees) {
     return sum;
 }
 
-//float moveCalibrate(oi_t *sensor_data)
-//{
-//    lcd_printf("PRESS 4 To move 1 meter");
-//    while(button_getButton() != 4);
-//    move_forward(sensor_data, 1000);
-//
-//    lcd_printf("PRESS 4 To move 2 meters");
-//    while(button_getButton() != 4);
-//    move_forward(sensor_data, 2000);
-//    return 0.0;
-//}
-//
-//float turnCalibrate(oi_t *sensor_data)
-//{
-//
-//    lcd_printf("PRESS 4 to start turn calibration");
-//    while(button_getButton() != 4);
-//
-//    float sum;
-//    sum = turn_left(sensor_data, 90);
-//    while(1)
-//        {
-//            switch(button_getButton())
-//            {
-//            case(1):
-//                sum+=turn_left(sensor_data, 1);
-//                break;
-//            case(2):
-//                sum+=turn_right(sensor_data, 1);
-//                break;
-//            case(3):
-//                sum+=turn_left(sensor_data, 20);
-//                break;
-//            case(4):
-//                sum+=turn_right(sensor_data, 20);
-//                break;
-//            }
-//            lcd_printf("1: left 1 \n2: right 1 \n3:left 20 \n4:right 20\n%lf", sum);
-//        }
-//    return 0.0;
-//}
 
 float ram(oi_t *sensor_data)
 {
@@ -453,10 +419,98 @@ float ram(oi_t *sensor_data)
     return 0.0;
 }
 
-void manuever(oi_t *sensor_data, float distance_mm){
-    float distance = 0;
-    oi_update(sensor_data);
+coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs){
+    int numAttempts = 0;
 
+    float robotAngle = atan2f((godzilla->y) - (robotCoords->y), (godzilla->x) - (robotCoords->x));
+    float angle = robotAngle + M_PI; // the angle of the line between the robot and godzilla
+
+    sprintf(toPutty, "BEFORE WHILE LOOP! %lf\t%lf\t%lf\t%lf\t%lf\n\r",numAttempts * (AVOID_DISTANCE / (1.0 *GODZILLA_RAM_DISTANCE)), numAttempts*1.0, AVOID_DISTANCE, GODZILLA_RAM_DISTANCE, (robotAngle + (3 * M_PI))* (180.0/M_PI));
+    uart_sendStr(toPutty);
+
+    // Iterative version to save memory
+    while ((angle) < (robotAngle + (3 * M_PI))){ // keep it from going in circles forever
+        angle += (M_PI/12);
+
+        sprintf(toPutty, "Attempt: %d\tAngle: %lf\n\r", numAttempts, angle * (180.0/M_PI));
+        uart_sendStr(toPutty);
+
+        // This should work I'm pretty sure
+        coords newPoint;
+        newPoint.x = (godzilla->x) + ((GODZILLA_RAM_DISTANCE) * cos(angle));
+        newPoint.y = (godzilla->y) + ((GODZILLA_RAM_DISTANCE) * sin(angle));
+
+        // TODO if we have time make it check both clockwise and ccw at the same time and choose whichever we get first so it is closer to the robot
+
+        // Print it
+        sprintf(toPutty, "GODZILLA TARGET LOCATION before obs check: (%lf, %lf)\n\r", newPoint.x, newPoint.y);
+	    uart_sendStr(toPutty);
+
+        // Check if there is an obstacle too close to the target point or along the path to godzilla
+        int j;
+        for (j = 0; j < *numObs; j++) {
+            // Check if the obstacle is between the robot and the target
+            // Greater than 0 ensures that the obstacle is not behind or to the side of the robot.
+            // the targetVector part ensures that the obstacle is not past the target vector.
+            // Check if there is an obstacle too close to the target location
+            if ((((obs[j].linearWidth/2.0) + sqrt(((obs[j].x-(newPoint.x))*(obs[j].x-(newPoint.x))) +
+                             ((obs[j].y-(newPoint.y))*(obs[j].y-(newPoint.y))))) <= ((ROBOT_WIDTH/2.0) + (AVOID_DISTANCE)))){
+                numAttempts++;
+                continue; // go on to the next possible location
+            }
+
+            // Calculate the vector from the target to godzilla
+            float targetVectorX = godzilla->x - newPoint.x;
+            float targetVectorY = godzilla->y - newPoint.y;
+
+            // Calculate the vector from the obstacle to the target
+            float obstacleVectorX = obs[j].x - newPoint.x;
+            float obstacleVectorY = obs[j].y - newPoint.y;
+
+            // Calculate the dot product of the two vectors
+            float dotProduct = targetVectorX * obstacleVectorX + targetVectorY * obstacleVectorY;
+            if (dotProduct > 0 && dotProduct < (targetVectorX * targetVectorX + targetVectorY * targetVectorY)) {
+
+                if ((calcDistToPathGodzilla(&obs[j], godzilla, newPoint, numObs) - (obs[j].linearWidth / 2.0) - (ROBOT_WIDTH / 2.0)) <= AVOID_DISTANCE){
+                    numAttempts++;
+                    continue; // go on to the next possible location
+                }
+            }
+
+            sprintf(toPutty, "GODZILLA TARGET LOCATION CONFIRMED: (%lf, %lf)\n\r", newPoint.x, newPoint.y);
+            uart_sendStr(toPutty);
+            return newPoint;
+        }
+    }
+
+    coords newPoint;
+    newPoint.x = -1;
+    newPoint.y = -1;
+    newPoint.heading = -1;
+
+    return newPoint;
+}
+
+float calcDistToPathGodzilla(object *obs, object *godzilla, coords target, int *numObs){
+	// Convert two points into a line for the path
+	float A = (godzilla->y) - (robotCoords->y);
+	float B = (robotCoords->x) - (godzilla->x);
+	float C = ((robotCoords->y) * (-B)) - (A * (robotCoords->x));
+
+	float top = fabsf((A * (obs->x)) + (B * (obs->y)) + C);
+	float bot = sqrt((A*A) + (B*B));
+
+
+	sprintf(toPutty, "GODZILLA A: %.2f\tB: %.2f\tC: %.2f\tTop: %.2f\tBot: %.2f\tFinal: %.2f\n\r", A, B, C, top, bot, top/bot);
+	uart_sendStr(toPutty);
+
+	return top/bot;
+}
+
+void manuever(oi_t *sensor_data, float distance_mm){
+//    float distance = 0;
+//    oi_update(sensor_data);
+//
 //    while (distance < distance_mm){
 //        oi_update(sensor_data);
 //        distance += move_forward(sensor_data, distance);

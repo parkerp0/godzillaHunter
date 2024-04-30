@@ -58,8 +58,8 @@ coords *robotCoords;
             object largest;
             int obsCount = 0;
 
-            int targetX;
-            int targetY;
+            int targetX = START_X;
+            int targetY = START_Y;
 
             int i;
             int upFlag;

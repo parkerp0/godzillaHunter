@@ -16,7 +16,9 @@
 
 #define DEGREES_TO_RADS M_PI / 180.0
 #define ROBOT_WIDTH 340
-#define AVOID_DISTANCE 50
+#define AVOID_DISTANCE 50.0
+#define GODZILLA_RAM_DISTANCE (AVOID_DISTANCE*2.0) + ROBOT_WIDTH // can be adjusted
+
 
 #define TILE_WIDTH 590 // mm
 #define FIELD_WIDTH 2 * TILE_WIDTH
@@ -42,6 +44,9 @@ float move_backward(oi_t *sensor_data, float distance_mm);
 float turn_right(oi_t *sensor, float degrees);
 float turn_left(oi_t *sensor, float degrees);
 float ram(oi_t *sensor_data);
+float calcDistToPathGodzilla(object *obs, object *godzilla, coords target, int *numObs);
+coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs);
+float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, object *godzilla, int dir); // global x and y should be godzilla's
 
 void manuever(oi_t *sensor_data, float distance_mm);
 int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir);
