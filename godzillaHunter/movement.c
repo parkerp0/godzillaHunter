@@ -139,8 +139,8 @@ float checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttemp
 //	sprintf(toPutty, "numObs: %d\n\r", *numObs);
 //	uart_sendStr(toPutty);
 
-    if (numAttempts >= *numObs)
-    	return 1; // return positive 1 because it isn't really an error, and idk if it should be considered a normal exit condition
+    if ((numAttempts >= (*numObs)) || (numAttempts >= 4))
+    	return -1.0; // return positive 1 because it isn't really an error, and idk if it should be considered a normal exit condition
 
     int j;
     for (j = numAttempts; j < *numObs; j++) {
@@ -649,7 +649,7 @@ void manuever(oi_t *sensor_data, float distance_mm){
 
 //Helper method for detecting cliffs and or objects when navigating
 int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir){
-    oi_update(sensor_data);
+
 
     if (sensor_data->cliffLeft){
         *numObs = addObject(obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
@@ -683,7 +683,7 @@ int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir){
                   (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((45 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
     } 
 
-    oi_update(sensor_data);
+
     // TODO finalize the avoidance algorithm  
     if(sensor_data->cliffRightSignal > 2600
                     || sensor_data->cliffLeftSignal > 2600
