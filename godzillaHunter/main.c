@@ -55,7 +55,7 @@ coords *robotCoords;
             robotCoords->y = START_Y;
 
             object *obs = malloc(0);
-            object largest;
+            //object largest;
             int obsCount = 0;
 
             int targetX = START_X;
@@ -70,7 +70,7 @@ coords *robotCoords;
             char message[90];
 
             oi_setWheels(0,0);
-            command_byte = -1;
+            command_byte = 0;
 
 
 
@@ -78,7 +78,7 @@ coords *robotCoords;
             {
                 if(command_byte == 'q')
                 {
-                    command_byte = -1;
+                    command_byte = 0;
                     obsCount = scanAndRewrite(&obs,obsCount);
                     move_to_point(sensorD,&obs,&obsCount,0,obs[0].x*2,obs[0].y*2,1);
                 }
@@ -93,7 +93,7 @@ coords *robotCoords;
 
                 if(command_byte == 't')//start the overall scanning routine
                 {
-                    command_byte = -1;
+                    command_byte = 0;
                     upFlag = 1;
                     targetX = START_X;
 //                    obsCount = scanAndRewrite(&obs,obsCount);
@@ -111,14 +111,14 @@ coords *robotCoords;
 
                             if(command_byte == 'b')
                             {
-                                command_byte = -1;
+                                //command_byte = 0;can't reset command byte here because it doesn't break the second loop if you do
                                 break;
                             }
                         }
 
                         if(command_byte == 'b')
                         {
-                            command_byte = -1;
+                            command_byte = 0;
                             break;
                         }
 
@@ -135,7 +135,7 @@ coords *robotCoords;
 
                 if(command_byte == 'b')//debug block to allow for the putty op to look at the robot state
                 {
-                    command_byte = -1;
+                    command_byte = 0;
                     sprintf(message,"\n\r\n\r\n\rcurrent location \n\rX: %.3f, \n\rY: %.3f, \n\rHeading: %.3f\n\r",robotCoords->x,robotCoords->y,robotCoords->heading);
                     uart_sendStr(message);
                     for(i = 0; i<obsCount; i++)
@@ -147,7 +147,7 @@ coords *robotCoords;
 
                 if(command_byte == 'r')//reset the program to allow it to be restarted from putty without having to hardware restart it
                 {
-                    command_byte = -1;
+                    command_byte = 0;
                     free(obs);
                     obs = NULL;
                     obsCount = 0;
@@ -171,22 +171,22 @@ coords *robotCoords;
 
                 if(command_byte == 'w')//movement block wasd forward/backward 10 cm left/right 45 degrees
                 {
-                    command_byte = -1;
+                    command_byte = 0;
                     move_forward(sensorD, &obs, &obsCount, 100, 1, 0);
                 }
                 if(command_byte == 'a')
                 {
-                    command_byte = -1;
+                    command_byte = 0;
                     turn_left(sensorD,45);
                 }
                 if(command_byte == 's')
                 {
-                    command_byte = -1;
+                    command_byte = 0;
                     move_backward(sensorD,100);
                 }
                 if(command_byte == 'd')
                 {
-                    command_byte = -1;
+                    command_byte = 0;
                     turn_right(sensorD,45);
                 }
                 if(command_byte == 'k')

@@ -16,7 +16,7 @@
 #include "uart-interrupt.h"
 
 // These variables are declared as examples for your use in the interrupt handler.
-volatile char command_byte = -1; // byte value for special character used as a command
+volatile char command_byte = 0; // byte value for special character used as a command
 volatile int command_flag = 0; // flag to tell the main program a special command was received
 
 void uart_interrupt_init(void){

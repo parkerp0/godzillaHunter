@@ -276,7 +276,6 @@ object* findLargestObj(object **currentObs, int obsCount) {
     float maxWidth = (*currentObs)[0].linearWidth; // Initial max width set to the first object's width.
 
     char toPutty[100];           //Used to make the PuTTy output a message
-    char *toPutty_ptr = toPutty; //Used to make the PuTTy output a message
 
 
     //find the largest object in the struct
