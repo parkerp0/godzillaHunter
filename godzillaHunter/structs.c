@@ -2,6 +2,9 @@
 
 coords *robotCoords;
 
+float prevY;
+float prevX;
+
 int addObject(object** currentList, int obsCount, float x,float y, float linearWidth)
 {
     obsCount++;

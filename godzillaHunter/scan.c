@@ -6,11 +6,12 @@
  */
 #include "scan.h"
 
-#define objMatchThresh 10 //threshold for deciding if objects are the same might be mm idk
+#define objMatchThresh 100 //threshold for deciding if objects are the same might be mm idk
 
 int count = 0;
 
 object* scan(){
+            if(prevX == robotCoords->x && prevY == robotCoords->y)return 0x0;
             int i = 0;              //Constants and counters for for loops
             int j = 0;
             int k = 0;
@@ -170,9 +171,8 @@ object* scan(){
                             l--;
                         }
 
-                        sprintf(toPutty, "\n\rAdjDist: %f A:%f B:%f AdjAngle:%f \n\r", adjDist,a,SERVO_CENTER_OFFSET,adjAngle * radianToDegrees);
+                        sprintf(toPutty, "\n\rAdjDist: %f A:%f B:%f AdjAngle:%f \tl: %d\n\r", adjDist,a,SERVO_CENTER_OFFSET,adjAngle * radianToDegrees, l);
                         uart_sendStr(toPutty);
-                        j = 0;//?
 
                     }
                     obs[l].x = 0.0;
@@ -211,6 +211,9 @@ object* scan(){
 //                                uart_sendChar(toPutty[m]);
 //                                m++;
 //                            }
+                    prevX = robotCoords ->x;
+                    prevY = robotCoords ->y;
+
                 
                     return obs;
 }
@@ -223,6 +226,7 @@ int scanAndRewrite(object **currentObs,int obsCount)
 
 
     object *obsTemp = scan();
+    if(obsTemp == 0x0)return obsCount;
     while(obsTemp->linearWidth!= 0.0)
     {
         flag = 1;//assume that the new object is new
@@ -272,7 +276,6 @@ object* findLargestObj(object **currentObs, int obsCount) {
     float maxWidth = (*currentObs)[0].linearWidth; // Initial max width set to the first object's width.
 
     char toPutty[100];           //Used to make the PuTTy output a message
-    char *toPutty_ptr = toPutty; //Used to make the PuTTy output a message
 
 
     //find the largest object in the struct
