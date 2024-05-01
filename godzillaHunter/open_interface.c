@@ -634,13 +634,13 @@ double oi_getMotorCalibrationRight(void) { return motor_cal_factor_R; }
  */
 
 void play_victoryChant(){
-    //Song 1
+    //Song 1 (Godzilla Theme)
     int song_index0 = 0;
-    int num_notes = 2;
-    unsigned char notes[] = {60, 62}; // MIDI notes for Middle C and D
-    unsigned char durations1[] = {64, 64}; // Durations in ticks (1 second each)
+    int num_notes = 6;
+    unsigned char notes[] = {64, 68, 62, 63, 57, 58}; // MIDI notes for Middle C and D
+    unsigned char durations1[] = {56, 32, 24, 24, 24, 64}; // Durations in ticks
 
-    //Song 2
+    //Song 2 (McDonalds Jingle)
     int song_index1 = 1;
     int num_jingle = 8;
     unsigned char jingle[] = {60, 62, 64, 69, 67};
@@ -651,5 +651,5 @@ void play_victoryChant(){
     oi_loadSong(song_index1, num_jingle, jingle, durations2);
 
     // Play the song
-    oi_play_song(song_index1);
+    oi_play_song(song_index0);
 }
