@@ -113,10 +113,15 @@ float move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempt
     float deltaHeading = fabs((robotCoords->heading) - targetHeading);
 
     // Figure out which way to turn
-    if (targetHeading < robotCoords->heading) // Turn left
+    int turnDir = 1;
+    if (targetHeading < robotCoords->heading){ // Turn left
         turn_left(sensor_data, deltaHeading);
-    else
+        turnDir = 1;
+    }
+    else {
         turn_right(sensor_data, deltaHeading); // Turn right
+        turnDir = -1;
+    }
 
     lcd_printf("TurnDIR: %d\nTarget: %f\nCurrent: %f\nDelta: %f", (targetHeading < robotCoords->heading) ? -1 : 1, targetHeading, robotCoords->heading, deltaHeading);
 
@@ -125,7 +130,10 @@ float move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempt
     float distance = sqrt(deltaX*deltaX + deltaY*deltaY);
     move_forward(sensor_data, obs, numObs, distance, dir,numAttempts);
 
-    if (targetHeading < robotCoords->heading) // Turn left
+    sprintf(toPutty, "TURNING BACK AFTER DODGE: Degrees: %f\n\r", deltaHeading);
+    uart_sendStr(toPutty);
+
+    if (turnDir == 1)
         turn_right(sensor_data, deltaHeading);
     else
         turn_left(sensor_data, deltaHeading);

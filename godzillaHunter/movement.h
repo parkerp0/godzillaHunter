@@ -4,7 +4,7 @@
 #define MOVEOFFSET 0
 #define TURNOFFSET 13 // - for undershoot + for overshoot degrees off of correct turn
 
-#define TWISTOFFSET -3 //positive is clockwise driving forward
+#define TWISTOFFSET -9 //positive is clockwise driving forward
 
 
 #include "open_interface.h"
@@ -22,8 +22,8 @@
 
 
 #define TILE_WIDTH 590 // mm
-#define FIELD_WIDTH 4 * TILE_WIDTH
-#define FIELD_LENGTH 7 * TILE_WIDTH
+#define FIELD_WIDTH 2 * TILE_WIDTH
+#define FIELD_LENGTH 3 * TILE_WIDTH
 
 #define START_X ROBOT_WIDTH/2.0
 #define START_Y ROBOT_WIDTH/2.0
