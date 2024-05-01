@@ -6,7 +6,7 @@
  */
 #include "scan.h"
 
-#define objMatchThresh 10 //threshold for deciding if objects are the same might be mm idk
+#define objMatchThresh 100 //threshold for deciding if objects are the same might be mm idk
 
 int count = 0;
 

@@ -22,8 +22,8 @@
 
 
 #define TILE_WIDTH 590 // mm
-#define FIELD_WIDTH 2 * TILE_WIDTH
-#define FIELD_LENGTH 3 * TILE_WIDTH
+#define FIELD_WIDTH 2 * TILE_WIDTH // 4
+#define FIELD_LENGTH 3 * TILE_WIDTH // 7
 
 #define START_X ROBOT_WIDTH/2.0
 #define START_Y ROBOT_WIDTH/2.0

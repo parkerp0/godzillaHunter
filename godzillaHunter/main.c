@@ -88,7 +88,7 @@ coords *robotCoords;
                     command_byte = -1;
                     upFlag = 1;
                     targetX = START_X;
-                    obsCount = scanAndRewrite(&obs,obsCount);
+//                    obsCount = scanAndRewrite(&obs,obsCount);
                     while(targetX < FIELD_WIDTH)
                     {
                         if(upFlag)targetY = START_Y + 20;
@@ -113,6 +113,8 @@ coords *robotCoords;
                             command_byte = -1;
                             break;
                         }
+
+                        turn_right(sensorD, 180);
                         if(upFlag)upFlag = 0;
                         else upFlag = 1;//flip the up and down
                         targetX+= 500;
