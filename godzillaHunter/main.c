@@ -54,12 +54,15 @@ coords *robotCoords;
             robotCoords->x = START_X;
             robotCoords->y = START_Y;
 
-            object *obs = NULL;
+            object *obs = malloc(0);
             object largest;
             int obsCount = 0;
 
             int targetX = START_X;
             int targetY = START_Y;
+
+            prevX = 0;
+            prevY = 0;
 
             int i;
             int upFlag;

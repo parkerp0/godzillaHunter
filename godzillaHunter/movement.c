@@ -147,18 +147,18 @@ float checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttemp
 //	sprintf(toPutty, "numObs: %d\n\r", *numObs);
 //	uart_sendStr(toPutty);
 
-    if ((numAttempts >= (*numObs)) || (numAttempts >= 4))
+    if ( (numAttempts >= 4))
     	return -1.0; // return positive 1 because it isn't really an error, and idk if it should be considered a normal exit condition
 
     int j;
-    for (j = numAttempts; j < *numObs; j++) {
+    for (j = 0; j < *numObs; j++) {
 		sprintf(toPutty, "Obs %d at point: X: %lf\t Y: %lf\n\r", j, (*obs)[j].x, (*obs)[j].y);
 		uart_sendStr(toPutty);
     }
 
     // Loop through sorted obstacles
     int i;
-    for (i = numAttempts; i < *numObs; i++) {
+    for (i = 0; i < *numObs; i++) {
 
     	sprintf(toPutty, "Inside of checkObs outer loop: i = %d\n\r", i);
     	uart_sendStr(toPutty);
