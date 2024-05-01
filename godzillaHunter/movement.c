@@ -84,7 +84,7 @@ float move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempt
 	sprintf(toPutty, "Moving To point: X: %lf\t Y: %lf\n\r", global_x, global_y);
 	uart_sendStr(toPutty);
 
-	*numObs = scanAndRewrite(obs,*numObs);//add scan block to find more thing in between rerouting
+	//*numObs = scanAndRewrite(obs,*numObs);//add scan block to find more thing in between rerouting
 
 	if(checkPerpendicularPoint((*obs),*numObs,global_x,global_y)!=1)return -1.0;
 
@@ -94,6 +94,7 @@ float move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempt
 
 
     int status = checkObstacles(sensor_data, obs, numObs, numAttempts, global_x, global_y, dir);
+    if(checkPerpendicularPoint((*obs),*numObs,global_x,global_y)!=1)return -1.0;
     sprintf(toPutty, "MTP STATUS AFTER ATTEMPT %d: %d\n\r", numAttempts, status);
     uart_sendStr(toPutty);
 
@@ -123,6 +124,11 @@ float move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempt
     timer_waitMillis(500);
     float distance = sqrt(deltaX*deltaX + deltaY*deltaY);
     move_forward(sensor_data, obs, numObs, distance, dir);
+
+    if (targetHeading < robotCoords->heading) // Turn left
+        turn_right(sensor_data, deltaHeading);
+    else
+        turn_left(sensor_data, deltaHeading);
 
     return 0.0;
 }
@@ -193,6 +199,13 @@ float checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttemp
 
                 // Recursively avoid each object in the path.
                 int status = move_to_point(sensor_data, obs, numObs, numAttempts + 1, newTarget.x, newTarget.y, dir);
+                int tempObsC = *numObs;
+                *numObs = scanAndRewrite(obs,*numObs);
+
+                sprintf(toPutty, "oldObs : %d newObs: %d\n\r", tempObsC, *numObs);
+                uart_sendStr(toPutty);
+                if(tempObsC != *numObs)
+                     i = 0;
 
                 sprintf(toPutty, "CHECK OBS STATUS AFTER ATTEMPT %d: %d\n\r", numAttempts, status);
                 uart_sendStr(toPutty);
@@ -235,6 +248,7 @@ int checkPerpendicularPoint(object *obs, int numObs, float global_x, float globa
                 global_x > (FIELD_WIDTH - (ROBOT_WIDTH/2.0)) || global_y > (FIELD_LENGTH - (ROBOT_WIDTH/2.0))) // Here x is the shorter way and y is the longer direction
         {
             sprintf(toPutty, "POINT OUTSIDE OF FIELD: X: %f\t Y: %f\n\r", global_x, global_y);
+            uart_sendStr(toPutty);
             return -1;//point is out of the field
         }
 
@@ -245,6 +259,7 @@ int checkPerpendicularPoint(object *obs, int numObs, float global_x, float globa
         padDist = (0.5 * obs[j].linearWidth) + (ROBOT_WIDTH * 0.5) + AVOID_DISTANCE; //closest it can be
         if(distToObs < padDist){
             sprintf(toPutty, "POINT IS INTERSECTING A OBJECT: X: %f\t Y: %f\n\r", global_x, global_y);
+            uart_sendStr(toPutty);
             return 0;//point is inside of a robot (or obstacle?)
         }
     }
@@ -634,7 +649,12 @@ void manuever(oi_t *sensor_data, float distance_mm){
 
 //Helper method for detecting cliffs and or objects when navigating
 int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir){
+    oi_update(sensor_data);
+
     if (sensor_data->cliffLeft){
+        *numObs = addObject(obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
+                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((-60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
+    } else if (sensor_data->cliffLeftSignal > 2600){
         *numObs = addObject(obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
                   (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((-60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
     } else if (sensor_data->cliffFrontLeft){
@@ -643,7 +663,16 @@ int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir){
     } else if (sensor_data->cliffFrontRight){
         *numObs = addObject(obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((20 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
                   (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((20 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
+    } else if (sensor_data->cliffFrontLeftSignal > 2600){
+        *numObs = addObject(obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((-20 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
+                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((260 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
+    } else if (sensor_data->cliffFrontRightSignal > 2600){
+        *numObs = addObject(obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((20 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
+                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((20 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
     } else if (sensor_data->cliffRight){
+        *numObs = addObject(obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
+                  (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
+    } else if (sensor_data->cliffRightSignal > 2600){
         *numObs = addObject(obs, *numObs, (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*sin((60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->x,
                   (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((60 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
     } else if (sensor_data->bumpLeft){
@@ -654,9 +683,18 @@ int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir){
                   (ROBOT_WIDTH/2.0 + BUMP_OBJECT_WIDTH/2.0)*cos((45 + robotCoords->heading)*DEGREES_TO_RADS) + robotCoords->y, BUMP_OBJECT_WIDTH);
     } 
 
+    oi_update(sensor_data);
     // TODO finalize the avoidance algorithm  
-    if(sensor_data->cliffRight || sensor_data->cliffLeft  || sensor_data->bumpLeft ||
-            sensor_data->bumpRight || sensor_data->cliffFrontLeft || sensor_data->cliffFrontRight)
+    if(sensor_data->cliffRightSignal > 2600
+                    || sensor_data->cliffLeftSignal > 2600
+                    || sensor_data->cliffFrontLeftSignal > 2600
+                    || sensor_data->cliffFrontRightSignal > 2600
+                    || sensor_data->bumpLeft
+                    || sensor_data->bumpRight
+                    || sensor_data->cliffFrontLeft
+                    || sensor_data->cliffFrontRight
+                    || sensor_data->cliffRight
+                    || sensor_data->cliffLeft)
     {
         // Turns around and maneuvers away
         lcd_printf("CLIFF DETECTED!!!!");
@@ -670,7 +708,7 @@ int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir){
             uart_sendStr(toPutty);
         }
 
-        move_backward(sensor_data, 100); // move back slightly
+        move_backward(sensor_data, 150); // move back slightly
 
         // Move perpendicular to it to avoid the object and continue the path
         coords newTarget = calculatePerpendicularPoint((*obs),*numObs,(*obs)[(*numObs)-1], dir);

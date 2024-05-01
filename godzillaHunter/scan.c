@@ -172,7 +172,6 @@ object* scan(){
 
                         sprintf(toPutty, "\n\rAdjDist: %f A:%f B:%f AdjAngle:%f \tl: %d\n\r", adjDist,a,SERVO_CENTER_OFFSET,adjAngle * radianToDegrees, l);
                         uart_sendStr(toPutty);
-                        j = 0;//?
 
                     }
                     obs[l].x = 0.0;
