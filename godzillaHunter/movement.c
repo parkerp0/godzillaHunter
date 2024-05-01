@@ -419,6 +419,44 @@ float ram(oi_t *sensor_data)
     return 0.0;
 }
 
+float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, object *godzilla, int dir){
+
+    coords target = get_target_for_godzilla(obs, godzilla, numObs);
+
+    if (target.x == -1 && target.y == -1 && target.heading == -1){
+        sprintf(toPutty, "WARNING! COULD NOT NAVIGATE TO GODZILLA! get_target_for_godzilla\n\r");
+        uart_sendStr(toPutty);
+    }
+
+    if (move_to_point(sensor_data,obs,numObs,0,target.x,target.y,dir) == -1){ // basically if status == -1
+        sprintf(toPutty, "WARNING! COULD NOT NAVIGATE TO GODZILLA! move_to_point\n\r");
+        uart_sendStr(toPutty);
+    }
+    
+    // Rotate to face Godzilla
+    float deltaX = (target.x) - robotCoords->x;
+    float deltaY = (target.y) - robotCoords->y;
+    float targetHeading = fmod(atan2(deltaX, deltaY) * 180.0 / M_PI, 360); // lock in the degrees to be -360 to 360
+    float deltaHeading = fabs(robotCoords->heading - targetHeading);
+
+    // Figure out which way to turn
+    int turnDir = 1; // default is turn right
+    if (targetHeading < robotCoords->heading) // Turn left instead
+        turnDir = -1;
+    if (turnDir == 1)
+        turn_right(sensor_data, deltaHeading);
+    else
+        turn_left(sensor_data, deltaHeading);
+
+    lcd_printf("TurnDIR: %d\nTarget: %f\nCurrent: %f\nDelta: %f", turnDir, targetHeading, robotCoords->heading, deltaHeading);
+
+
+    timer_waitMillis(500);
+    // Return the distance to Godzilla so that we can get confirmation and hit it.
+    return sqrt(deltaX*deltaX + deltaY*deltaY);
+
+}
+
 coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs){
     int numAttempts = 0;
 
