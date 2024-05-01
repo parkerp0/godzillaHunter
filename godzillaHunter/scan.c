@@ -11,6 +11,7 @@
 int count = 0;
 
 object* scan(){
+            if(prevX == robotCoords->x && prevY == robotCoords->y)return 0x0;
             int i = 0;              //Constants and counters for for loops
             int j = 0;
             int k = 0;
@@ -210,6 +211,9 @@ object* scan(){
 //                                uart_sendChar(toPutty[m]);
 //                                m++;
 //                            }
+                    prevX = robotCoords ->x;
+                    prevY = robotCoords ->y;
+
                 
                     return obs;
 }
@@ -222,6 +226,7 @@ int scanAndRewrite(object **currentObs,int obsCount)
 
 
     object *obsTemp = scan();
+    if(obsTemp == 0x0)return obsCount;
     while(obsTemp->linearWidth!= 0.0)
     {
         flag = 1;//assume that the new object is new
