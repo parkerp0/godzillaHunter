@@ -55,7 +55,6 @@ float calcDistToPathGodzilla(object *obs, object *godzilla, coords target, int *
 coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs);
 float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, object *godzilla, int dir); 
 
-void manuever(oi_t *sensor_data, float distance_mm);
 int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir,int depth);
 
 #endif

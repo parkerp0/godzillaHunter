@@ -85,7 +85,7 @@ coords *robotCoords;
 
                 if(command_byte == 'g')
                 {
-                    command_byte = -1;
+                    command_byte = 0;
                     obsCount = scanAndRewrite(&obs,obsCount);
 
                     move_to_godzilla(sensorD, obs, &obsCount, &obs[0], 1);
