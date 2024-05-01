@@ -80,12 +80,47 @@ coords *robotCoords;
                     largestObj = realFindLargestObj(&obs,obsCount);
                 }
 
+                if(command_byte == 'b')//debug block to allow for the putty op to look at the robot state
+                {
+                    command_byte = -1;
+                    sprintf(message,"\n\r\n\rcurrent location \n\rX: %.3f, \n\rY: %.3f, \n\rHeading: %.3f\n\r",robotCoords->x,robotCoords->y,robotCoords->heading);
+                    uart_sendStr(message);
+                    for(i = 0; i<obsCount; i++)
+                    {
+                        sprintf(message,"obsNum:%d X: %.3f, Y: %.3f, Width: %.3f\n\r",i,obs[i].x,obs[i].y,obs[i].linearWidth);
+                        uart_sendStr(message);
+                    }
+                }
+
                 //find a way to iterate through current obs and check for new obs in scan
 
-                while(command_byte == 't')
+                if(command_byte == 't')//start the overall scanning routine
                 {
-                    ;//hang here and wait for more input from the terminal
+                    command_byte = -1;
+
+                    while(targetX < FIELD_WIDTH)
+                    {
+                        while(targetY < FIELD_LENGTH)
+                        {
+                            obsCount = scanAndRewrite(&obs,obsCount);
+                            if(command_byte == 'b')break;//breaks out after the most recent loop for a restart
+                            targetY += 500;
+                            move_to_point(sensorD,obs,&obsCount,0,targetX,targetY,1);
+
+                        }
+                        if(command_byte == 'b')
+                        {
+                            command_byte = -1;
+                            break;
+                        }
+                        targetX+= 500;
+                    }
+                    //largest = findLargestObject();
+                    //move_to_point(sensorD,obs,obsCount,0,largest.x + 60,largest.y + 60);
+                    //sprintf(message,"Godzilla is X:%.3f Y:%.3f Width: %.3f\n\r Press k to ram",largest.x,largest.y,largest.linearWidth);
+                    //uart_sendStr(message);
                 }
+             
                 if(command_byte == 'f')
                 {
                     //stop the scanning routine and move toward the zone
@@ -99,14 +134,20 @@ coords *robotCoords;
                 {
                     command_byte = -1;
                     play_victoryChant();
-                    oi_free(sensorD);
+                    oi_update(sensorD);
+                }
+                while(command_byte == 'p')
+                {
+                    ;//hang here and wait for more input from the terminal
                 }
 
                 if(command_byte == 'w')//movement block wasd forward/backward 10 cm left/right 45 degrees
                 {
                     command_byte = -1;
-                    move_forward(sensorD, 100);
+                    //move_forward(sensorD, obs, &obsCount, 500, 1);
+                    manuever(sensorD, 500.0);
                 }
+             
                 if(command_byte == 'a')
                 {
                     command_byte = -1;
@@ -125,7 +166,7 @@ coords *robotCoords;
                 if(command_byte == 'k')
                 {
                     ram(sensorD);
-                    oi_free(sensorD);
+                    oi_update(sensorD);
                     break;
                 }
             }
