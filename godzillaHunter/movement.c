@@ -123,7 +123,7 @@ float move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempt
 
     timer_waitMillis(500);
     float distance = sqrt(deltaX*deltaX + deltaY*deltaY);
-    move_forward(sensor_data, obs, numObs, distance, dir);
+    move_forward(sensor_data, obs, numObs, distance, dir,numAttempts);
 
     if (targetHeading < robotCoords->heading) // Turn left
         turn_right(sensor_data, deltaHeading);
@@ -335,7 +335,7 @@ float calcDistToPath(object *obs, float global_x, float global_y){
 	return top/bot;
 }
 
-float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_mm, int dir) {
+float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_mm, int dir,int depth) {
 	float sum = 0;
     int power = 10;
 
@@ -354,7 +354,7 @@ float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_
         robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
         robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
 
-        if (cliff_detected(sensor_data, obs, numObs, dir) == -1) {
+        if (cliff_detected(sensor_data, obs, numObs, dir,depth) == -1) {
             return -1.0;
         }
 
@@ -648,7 +648,7 @@ void manuever(oi_t *sensor_data, float distance_mm){
 }
 
 //Helper method for detecting cliffs and or objects when navigating
-int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir){
+int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir, int depth){
 
 
     if (sensor_data->cliffLeft){
@@ -720,7 +720,7 @@ int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir){
         uart_sendStr(toPutty);
 
         // Recursively avoid each object in the path.
-        int status = move_to_point(sensor_data, obs, numObs, 0, newTarget.x, newTarget.y, dir);
+        int status = move_to_point(sensor_data, obs, numObs, depth, newTarget.x, newTarget.y, dir);
         if (status == -1) return -1;
 
 //        turn_right(sensor_data, 180.0);

@@ -34,7 +34,7 @@ char toPutty[55];
 //float moveCalibrate(oi_t *sensor_data);
 //float turnCalibrate(oi_t *sensor_data);
 
-float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_mm, int dir);
+float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_mm, int dir,int depth);
 float move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempts, float global_x, float global_y, int dir); // dir: -1 for left, +1 for right
 float checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttempts, float global_x, float global_y, int dir);
 int checkPerpendicularPoint(object *obs, int numObs, float global_x, float global_y);
@@ -51,6 +51,6 @@ coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs);
 float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, object *godzilla, int dir); // global x and y should be godzilla's
 
 void manuever(oi_t *sensor_data, float distance_mm);
-int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir);
+int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir,int depth);
 
 #endif

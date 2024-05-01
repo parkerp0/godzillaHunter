@@ -159,7 +159,7 @@ coords *robotCoords;
                 if(command_byte == 'w')//movement block wasd forward/backward 10 cm left/right 45 degrees
                 {
                     command_byte = -1;
-                    move_forward(sensorD, &obs, &obsCount, 100, 1);
+                    move_forward(sensorD, &obs, &obsCount, 100, 1, 0);
                 }
                 if(command_byte == 'a')
                 {
