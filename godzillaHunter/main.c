@@ -33,6 +33,7 @@
  #include "button.h"
  #include <inc/tm4c123gh6pm.h>
 #include "structs.h"
+#include "imu.h"
 
 coords *robotCoords;
 oi_t *sensorD;

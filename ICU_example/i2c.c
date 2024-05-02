@@ -154,5 +154,3 @@ uint8_t* i2c_recBytes(uint8_t addr, size_t dataLen) {
     }
     return recData;
 }
-
-
