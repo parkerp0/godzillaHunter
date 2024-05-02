@@ -18,29 +18,40 @@ int move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempts,
 
     int status = checkObstacles(sensor_data, obs, numObs, numAttempts, global_x, global_y, dir);
     if(checkPerpendicularPoint((*obs),*numObs,global_x,global_y)!=1)return -1.0;
-    sprintf(toPutty, "MTP STATUS AFTER ATTEMPT %d: %d\n\r", numAttempts, status);
-    uart_sendStr(toPutty);
 
     if (status == -1) return -1;
 
-	sprintf(toPutty, "MTP After obstacles: X: %.2f\t Y: %.2f\n\r", global_x, global_y);
+	sprintf(toPutty, "MTP After obs check: X: %.2f\t Y: %.2f\n\r", global_x, global_y);
 	uart_sendStr(toPutty);
 
     float deltaX = global_x - robotCoords->x;
     float deltaY = global_y - robotCoords->y;
-    float targetHeading = fmod(360 + (atan2(deltaX, deltaY) * 180.0 / M_PI), 360); // lock in the degrees to be -360 to 360
+    
 //    float deltaHeading = (robotCoords->heading) - targetHeading;
 
+    
+    float distance = sqrt(deltaX*deltaX + deltaY*deltaY);
+    if(distance > RESCAN_DIST)
+    {
+        move_to_point(sensor_data, obs, numObs,numAttempts, robotCoords->x + (deltaX/distance * (distance - RESCAN_DIST)), robotCoords->y + (deltaY/distance * (distance - RESCAN_DIST)), 1);
+        *numObs = scanAndRewrite(obs,*numObs);
+        checkObstacles(sensor_data, obs, numObs,numAttempts,global_x,global_y,dir);
+
+        deltaX = global_x - robotCoords->x;
+        deltaY = global_y - robotCoords->y;
+        distance = sqrt(deltaX*deltaX + deltaY*deltaY);
+    }
+
+    float targetHeading = fmod(360 + (atan2(deltaX, deltaY) * 180.0 / M_PI), 360); // lock in the degrees to be -360 to 360
     float prevHeading = robotCoords->heading;
     set_heading(sensor_data, targetHeading);
 
     timer_waitMillis(500);
-    float distance = sqrt(deltaX*deltaX + deltaY*deltaY);
+
     status = move_forward(sensor_data, obs, numObs, distance, dir,numAttempts);
-    if(status == 2.0f)
-    {
-        uart_sendStr("move exceded bounds and is rechecking all obs");
-        return 2;
+    if(status == -2.0f)
+    {//if move forward fails due to bump try to move there again b/c bump correction has already fixed perpendicular
+        move_to_point(sensor_data, obs, numObs,numAttempts,global_x,global_y, 1);
     }
 
     sprintf(toPutty, "TURNING BACK AFTER DODGE: prevHeading: %f\n\r", prevHeading);
@@ -70,11 +81,10 @@ int checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttempts
     int i;
     for (i = 0; i < *numObs; i++) {
 
-    	sprintf(toPutty, "Inside of checkObs outer loop: i = %d\n\r", i);
-    	uart_sendStr(toPutty);
+//    	sprintf(toPutty, "Inside of checkObs outer loop: i = %d\n\r", i);
+//    	uart_sendStr(toPutty);
 
-    	sprintf(toPutty, "Obs at point: X: %lf\t Y: %lf\n\r", (*obs)[i].x, (*obs)[i].y);
-    	uart_sendStr(toPutty);
+
 
         // Calculate the vector from the robot to the target
     	float targetVectorX = global_x - robotCoords->x;
@@ -106,6 +116,8 @@ int checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttempts
 //            	uart_sendStr(toPutty);
 
 //            	uart_sendStr("Inside of avoid obstacle part.\n\r");
+                sprintf(toPutty, "Obs at point: X: %lf\t Y: %lf is intersecting line X:%f Y:f\n\r", (*obs)[i].x, (*obs)[i].y, global_x, global_y);
+                uart_sendStr(toPutty);
 
                 coords newTarget = calculatePerpendicularPoint((*obs),*numObs,(*obs)[i], dir);
                 if (newTarget.x == -1 && newTarget.y == -1 && newTarget.heading == -1){
@@ -121,7 +133,7 @@ int checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttempts
                 if(tempObsC != *numObs || status == 2)
                      i = 0;
 
-                sprintf(toPutty, "CHECK OBS STATUS AFTER ATTEMPT %d: %d\n\r", numAttempts, status);
+                sprintf(toPutty, "CHECK OBS STATUS AFTER ATTEMPT %d: %d\n\r\n\r", numAttempts, status);
                 uart_sendStr(toPutty);
 
                 if (status == -1)
@@ -161,8 +173,8 @@ int checkPerpendicularPoint(object *obs, int numObs, float global_x, float globa
     if (global_x < START_X || global_y < START_Y ||
                 global_x > FIELD_WIDTH || global_y > FIELD_LENGTH) // Here x is the shorter way and y is the longer direction
         {
-            sprintf(toPutty, "POINT OUTSIDE OF FIELD: X: %f\t Y: %f\n\r", global_x, global_y);
-            uart_sendStr(toPutty);
+            //sprintf(toPutty, "POINT OUTSIDE OF FIELD: X: %f\t Y: %f\n\r", global_x, global_y);
+            //uart_sendStr(toPutty);
             return -1;//point is out of the field
         }
 
@@ -172,8 +184,8 @@ int checkPerpendicularPoint(object *obs, int numObs, float global_x, float globa
         distToObs = sqrt((obs[j].x - global_x)*(obs[j].x - global_x) + (obs[j].y - global_y) * (obs[j].y - global_y));//how close it is
         padDist = (0.5 * obs[j].linearWidth) + (ROBOT_WIDTH * 0.5) + AVOID_DISTANCE; //closest it can be
         if(distToObs < padDist){
-            sprintf(toPutty, "POINT IS INTERSECTING A OBJECT: X: %f\t Y: %f\n\r", global_x, global_y);
-            uart_sendStr(toPutty);
+            //sprintf(toPutty, "POINT IS INTERSECTING A OBJECT: X: %f\t Y: %f\n\r", global_x, global_y);
+            //uart_sendStr(toPutty);
             return 0;//point is inside of a robot (or obstacle?)
         }
     }
@@ -233,8 +245,6 @@ coords calculatePerpendicularPoint(object *obs, int obsCount, object targetCoord
 
 
 float calcDistToPath(object *obs, float global_x, float global_y){
-	sprintf(toPutty, "obs: %d   \n\r", sizeof(*obs));
-	uart_sendStr(toPutty);
 	sprintf(toPutty, "Obs at point: X: %lf\t Y: %lf\n\r", obs->x, obs->y);
 	uart_sendStr(toPutty);
 	// Convert two points into a line for the path
@@ -246,8 +256,8 @@ float calcDistToPath(object *obs, float global_x, float global_y){
 	float bot = sqrt((A*A) + (B*B));
 
 
-	sprintf(toPutty, "A: %.2f\tB: %.2f\tC: %.2f\tTop: %.2f\tBot: %.2f\tFinal: %.2f\n\r", A, B, C, top, bot, top/bot);
-	uart_sendStr(toPutty);
+	// sprintf(toPutty, "A: %.2f\tB: %.2f\tC: %.2f\tTop: %.2f\tBot: %.2f\tFinal: %.2f\n\r", A, B, C, top, bot, top/bot);
+	// uart_sendStr(toPutty);
 
 	return top/bot;
 }
@@ -255,6 +265,7 @@ float calcDistToPath(object *obs, float global_x, float global_y){
 float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_mm, int dir,int depth) {
 	float sum = 0;
     int power = 10;
+    int status;
 
     oi_update(sensor_data);
     lcd_printf("%lf", sensor_data->distance);
@@ -271,8 +282,12 @@ float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_
         robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
         robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
 
-        if (cliff_detected(sensor_data, obs, numObs, dir,depth) == -1) {
+        status = cliff_detected(sensor_data, obs, numObs, dir,depth);
+        if (status == -1) {
             return -1.0;
+        }else if(status == -2)
+        {
+            return -2.0;
         }
 
 
@@ -332,24 +347,14 @@ void set_heading(oi_t *sensor_data,float degrees)
     if (deltaHeading >= 0){
         if (deltaHeading > 180){
             turn_left(sensor_data, 360-deltaHeading);
-            sprintf(toPutty, "Delta Heading was GREATER than 180: 360-deltaHeading = %f\n\r", 360-deltaHeading);
-            uart_sendStr(toPutty);
         } else {
             turn_right(sensor_data, deltaHeading);
-            sprintf(toPutty, "Delta Heading was LESS than 180: deltaHeading = %f\n\r", deltaHeading);
-            uart_sendStr(toPutty);
         }
     } else {
-        sprintf(toPutty, "DELTA HEADING NEGATIVE: deltaHeading = %f\n\r", deltaHeading);
-        uart_sendStr(toPutty);
         if (deltaHeading < -180) {
             turn_right(sensor_data, 360+deltaHeading);
-            sprintf(toPutty, "Delta Heading was LESS than -180: 360-deltaHeading = %f\n\r", 360+deltaHeading);
-            uart_sendStr(toPutty);
         } else {
             turn_left(sensor_data, -deltaHeading);
-            sprintf(toPutty, "Delta Heading was GREATER than -180: deltaHeading = %f\n\r", -deltaHeading);
-            uart_sendStr(toPutty);
         }
     }
     
@@ -358,24 +363,21 @@ void set_heading(oi_t *sensor_data,float degrees)
 float turn_right(oi_t *sensor,  float degrees) {
 	float sum = 0;
     oi_setWheels(-150, 150);
-    while (sum > -degrees + TURNOFFSET) {//+ 8.5 for robot 10
+    while (sum > -degrees * TURNOFFSET) {//+ 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
-//        float deltaDistance = sensor->distance;
-//        float deltaHeading = -sensor->angle;
+        float deltaDistance = sensor->distance;
+        float deltaHeading = -sensor->angle;
 
-//        robotCoords->heading += deltaHeading;
-//        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
-//
-//        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-//        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
-//        lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
+        robotCoords->heading += deltaHeading;
+        robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
+
+        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
+        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
+        lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     }
 
 
-    robotCoords->heading += degrees;
-    robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
-    lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     oi_setWheels(0,0);
     sprintf(toPutty, "AFTER TURN RIGHT: %f\nX: %f\nY: %f\nA: %f\tDegrees: %f\n\r", sum, robotCoords->x, robotCoords->y, robotCoords->heading, degrees);
     uart_sendStr(toPutty);
@@ -385,24 +387,24 @@ float turn_right(oi_t *sensor,  float degrees) {
 float turn_left(oi_t *sensor, float degrees) {
 	float sum = 0;
     oi_setWheels(150, -150);
-    while (sum < degrees - TURNOFFSET) {//- 8.5 for robot 10
+    while (sum < degrees * TURNOFFSET) {//- 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
-//        float deltaDistance = sensor->distance;
-//        float deltaHeading = -sensor->angle;
 
-//        robotCoords->heading += deltaHeading;
-//        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
-//
-//        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-//        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
-//        lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
+        float deltaDistance = sensor->distance;
+        float deltaHeading = -sensor->angle;
+
+        robotCoords->heading += deltaHeading;
+        robotCoords->heading = fmod(360+ (robotCoords->heading), 360);
+        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
+
+        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
+        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
+        lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     }
 
 
-    robotCoords->heading -= degrees;
-    robotCoords->heading = fmod(360+ (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
-    lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
+
     oi_setWheels(0,0);
     sprintf(toPutty, "AFTER TURN LEFT: %f\nX: %f\nY: %f\nA: %f\tDegrees: %f\n\r", sum, robotCoords->x, robotCoords->y, robotCoords->heading, degrees);
     uart_sendStr(toPutty);
@@ -638,9 +640,9 @@ int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir, int de
 
 //        turn_right(sensor_data, 180.0);
 //        manuever(sensor_data, 400.0);
-        return 0;
+        return -2;
     } else {
     	lcd_clear();
     }
-    return 0;
+    return 1;
 }

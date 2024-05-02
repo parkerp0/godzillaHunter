@@ -107,7 +107,7 @@ double move_backward(oi_t *sensor_data, double distance_mm) {
 double turn_right(oi_t *sensor, double degrees) {
     double sum = 0;
     oi_setWheels(-200, 200);
-    while (sum > -degrees + TURNOFFSET) {//+ 8.5 for robot 10
+    while (sum > -degrees * TURNOFFSET) {//+ 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
         lcd_printf("%lf", sum);
@@ -119,7 +119,7 @@ double turn_right(oi_t *sensor, double degrees) {
 double turn_left(oi_t *sensor, double degrees) {
     double sum = 0;
     oi_setWheels(200, -200);
-    while (sum < degrees - TURNOFFSET) {//- 8.5 for robot 10
+    while (sum < degrees * TURNOFFSET) {//- 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
         lcd_printf("%lf", sum);
@@ -148,24 +148,9 @@ double turnCalibrate(oi_t *sensor_data)
 
     double sum;
     sum = turn_left(sensor_data,90);
-    while(1)
-        {
-            switch(button_getButton())
-            {
-            case(1):
-                sum+=turn_left(sensor_data,1);
-                break;
-            case(2):
-                sum+=turn_right(sensor_data,1);
-                break;
-            case(3):
-                sum+=turn_left(sensor_data,20);
-                break;
-            case(4):
-                sum+=turn_right(sensor_data,20);
-                break;
-            }
-            lcd_printf("1: left 1 \n2: right 1 \n3:left 20 \n4:right 20\n%lf", sum);
-        }
+
+    lcd_printf("PRESS 4 to start turn calibration");
+    while(button_getButton()!= 4);
+    sum = turn_right(sensor_data,180);
     return 0.0;
 }

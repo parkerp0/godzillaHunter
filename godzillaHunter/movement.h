@@ -2,9 +2,9 @@
 #define MOVEMENT_H
 
 #define MOVEOFFSET 0
-#define TURNOFFSET 14 // - for undershoot + for overshoot degrees off of correct turn
+#define TURNOFFSET 0.87 // - for undershoot + for overshoot degrees off of correct turn
 
-#define TWISTOFFSET -0 //positive is clockwise driving forward
+#define TWISTOFFSET 0 //positive is clockwise driving forward
 
 
 #include "open_interface.h"
@@ -19,7 +19,7 @@
 #define ROBOT_WIDTH 340
 #define AVOID_DISTANCE 50.0
 #define GODZILLA_RAM_DISTANCE (AVOID_DISTANCE*2.0) + ROBOT_WIDTH // can be adjusted
-#define RESCAN_DIST 750 // mm that the robot should travel before rescanning
+#define RESCAN_DIST 450 // mm that the robot should travel before rescanning
 
 
 #define TILE_WIDTH 590 // mm

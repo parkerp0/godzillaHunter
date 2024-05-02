@@ -100,7 +100,7 @@ coords *robotCoords;
 //                    obsCount = scanAndRewrite(&obs,obsCount);
                     while(targetX < FIELD_WIDTH)
                     {
-                        if(upFlag)targetY = START_Y + 20;
+                        if(upFlag)targetY = START_Y + 1000;
                         else targetY = FIELD_LENGTH - 190;
                         while(targetY < FIELD_LENGTH && targetY > START_Y)
                         {

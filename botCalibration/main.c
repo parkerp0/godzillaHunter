@@ -10,7 +10,7 @@
  * main.c
  */
 int main(void)
-a{
+{
 
     oi_t *sensorD = oi_alloc();
     oi_init(sensorD);
