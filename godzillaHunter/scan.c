@@ -8,6 +8,7 @@
 
 #define objMatchThresh 100 //threshold for deciding if objects are the same might be mm idk
 
+extern oi_t *sensorD;
 int count = 0;
 
 object* scan(){
@@ -240,7 +241,28 @@ int scanAndRewrite(object **currentObs,int obsCount)
             }
 
         }
-        if(flag) obsCount = addObject(currentObs,obsCount,obsTemp->x,obsTemp->y,obsTemp->linearWidth);
+        if(flag)
+        {
+            obsCount = addObject(currentObs,obsCount,obsTemp->x,obsTemp->y,obsTemp->linearWidth);
+
+            //run the Godzilla check here!!!!
+            // TODO confirm godzilla
+
+            object *checkGodzilla = detectGodzilla(currentObs, obsCount-1);
+
+            if (((checkGodzilla->x) == (*currentObs)[obsCount - 1].x) && ((checkGodzilla->y) == (*currentObs)[obsCount - 1].y) && ((checkGodzilla->linearWidth) == (*currentObs)[obsCount - 1].linearWidth)){
+              //work in progress
+              //Do something in the program to go ram Godzilla
+              //if detectGozilla is successful, it returns the object you gave it
+                sprintf(message,"FOUND GODZILLA AT: (%f, %f) width: %f", checkGodzilla->x, checkGodzilla->y, checkGodzilla->linearWidth);
+                uart_sendStr(message);
+                move_to_godzilla(sensorD, *currentObs, &obsCount, checkGodzilla, 1);
+                sprintf(message,"RAMMM GODZILLA AT: (%f, %f) width: %f", checkGodzilla->x, checkGodzilla->y, checkGodzilla->linearWidth);
+                uart_sendStr(message);
+                timer_waitMillis(500);
+                ram(sensorD);
+            }
+        }
 
     obsTemp++;
     }
@@ -295,4 +317,53 @@ object* findLargestObj(object **currentObs, int obsCount) {
     }
 
     return &((*currentObs)[indexLargest]); // Return a pointer to the largest object found.
+}
+
+//called to detectGodzilla
+object* detectGodzilla(object **currentObs, int obsCount) {
+    if (obsCount == 0) return NULL; // No objects to check
+
+    char toPutty[100];           //Used to make the PuTTy output a message
+
+
+    //Test if object is Godzilla
+    if ((*currentObs)[obsCount].linearWidth >= tMinLW && (*currentObs)[obsCount].linearWidth <= tMaxLW) {
+        sprintf(toPutty,"\n\rGodzilla Sighting at: \tX Coordinate: %f\tY Coordinate: %f\t Linear Width: %f\n\r", (*currentObs)[obsCount].x, (*currentObs)[obsCount].y, (*currentObs)[obsCount].linearWidth);
+        uart_sendStr(toPutty);
+        sprintf(toPutty,"Confirming...");
+        uart_sendStr(toPutty);
+    } else {//scenario where Godzilla was not within the threshold
+        sprintf(toPutty,"\n\rFalse Alarm... Not Godzilla.\n\r");
+        uart_sendStr(toPutty);
+        return NULL;
+    }
+    if (confirmGodzilla()){
+        return &((*currentObs)[obsCount]); // Return a pointer to the Godzilla object found.
+    } else { //scenario where Godzilla was not confirmed
+        sprintf(toPutty,"\n\rFalse Alarm... Not Godzilla.\n\r");
+        uart_sendStr(toPutty);
+        return NULL;
+    }
+}
+
+bool confirmGodzilla(){
+    int confirmations = 0;
+    int attempt;
+
+    for (attempt = 0; attempt < 5; attempt++) {
+        object* obsArray = scan();
+        int i = 0;
+        while (obsArray[i].linearWidth != 0.0) { //linearWidth of 0.0 indicates the end of objects
+            if (obsArray[i].linearWidth >= tMinLW && obsArray[i].linearWidth <= tMaxLW) {
+                confirmations++;
+                break; // Stop checking once we find a valid object
+            }
+            i++;
+        }
+        free(obsArray); // frees allocated memory after use
+        if (confirmations >= 3) {
+            return true;
+        }
+    }
+    return false;
 }

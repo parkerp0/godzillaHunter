@@ -35,10 +35,11 @@
 #include "structs.h"
 
 coords *robotCoords;
+oi_t *sensorD;
 
  int main (void) {
 
-             oi_t *sensorD = oi_alloc();
+             sensorD = oi_alloc();
              oi_init(sensorD);
 
              timer_init();
@@ -100,11 +101,12 @@ coords *robotCoords;
 //                    obsCount = scanAndRewrite(&obs,obsCount);
                     while(targetX < FIELD_WIDTH)
                     {
-                        if(upFlag)targetY = START_Y + 1000;
-                        else targetY = FIELD_LENGTH - 190;
+                        if(upFlag)targetY = START_Y + 20;
+                        else targetY = FIELD_LENGTH - 20;
                         while(targetY < FIELD_LENGTH && targetY > START_Y)
                         {
                             move_to_point(sensorD,&obs,&obsCount,0,targetX,targetY,1);
+                            set_heading(sensorD, upFlag ? 0 : 180);
                             obsCount = scanAndRewrite(&obs,obsCount);
                             if(command_byte == 'b')break;//breaks out after the most recent loop for a restart
                             if(upFlag)targetY+=500;//increment in the correct direction

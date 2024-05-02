@@ -363,19 +363,22 @@ void set_heading(oi_t *sensor_data,float degrees)
 float turn_right(oi_t *sensor,  float degrees) {
 	float sum = 0;
     oi_setWheels(-150, 150);
-    while (sum > -degrees * TURNOFFSET) {//+ 8.5 for robot 10
+    while (sum > -degrees + TURNOFFSET) {//+ 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
         float deltaDistance = sensor->distance;
         float deltaHeading = -sensor->angle;
 
-        robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
-
-        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
+//        robotCoords->heading += deltaHeading;
+//        robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
+//
+//        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
+//        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
         lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     }
+
+    robotCoords->heading += degrees;
+    robotCoords->heading = fmod(360+ (robotCoords->heading), 360);
 
 
     oi_setWheels(0,0);
@@ -387,22 +390,24 @@ float turn_right(oi_t *sensor,  float degrees) {
 float turn_left(oi_t *sensor, float degrees) {
 	float sum = 0;
     oi_setWheels(150, -150);
-    while (sum < degrees * TURNOFFSET) {//- 8.5 for robot 10
+    while (sum < degrees - TURNOFFSET) {//- 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
 
         float deltaDistance = sensor->distance;
         float deltaHeading = -sensor->angle;
 
-        robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(360+ (robotCoords->heading), 360);
-        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
+//        robotCoords->heading += deltaHeading;
+//        robotCoords->heading = fmod(360+ (robotCoords->heading), 360);
+//        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
 
-        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
+//        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
+//        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
         lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     }
 
+    robotCoords->heading += degrees;
+    robotCoords->heading = fmod(360+ (robotCoords->heading), 360);
 
 
     oi_setWheels(0,0);
