@@ -5,10 +5,14 @@
 #include "servo.h"
 #include "Timer.h"
 #include "button.h"
+#include "uart-interrupt.h"
+#include "bno055.h"
 
 /**
  * main.c
  */
+
+bno_calib_t *bno_calib = 0x0;
 int main(void)
 {
 
@@ -23,17 +27,20 @@ int main(void)
 	ping_init();
 	button_init();
 	IR_init();
+	uart_interrupt_init();
 
-	//moveCalibrate(sensorD);
-	//
+	bno_t *bno = bno_alloc();
+	bno_initCalib(bno_calib);
 
-	//pingCalibrate();
+	char buffer[90];
+
+
 	while(1)
 	{
 	    switch(button_getButton())
 	    {
 	    case 0:
-	        lcd_printf("1:Move \n2:Servo \n3:Ping \n4:IR");
+	        lcd_printf("1:Move \n2:Servo \n3:Ping \n4:IMU out");
 	    break;
 	    case 1:
 	        moveCalibrate(sensorD);
@@ -50,8 +57,16 @@ int main(void)
 	        timer_waitMillis(1000);
 	    break;
 	    case 4:
-	        IR_calibrate(sensorD);
-	        timer_waitMillis(1000);
+	        bno_calibrateInteractive();
+	        while(1)
+	        {
+	            bno_update(bno);
+	            sprintf(buffer,"HEADING: %d, ROLL %d, PITCH: %d \r\nHEADING: %d, ROLL %d, PITCH: %d",
+	                    bno->euler.heading, bno->euler.roll, bno->euler.pitch,
+	                    bno->euler.heading /16., bno->euler.roll /16., bno->euler.pitch/16.);
+	            uart_sendStr(buffer);
+	            timer_waitMillis(100);
+	        }
 	    break;
 
 	    }
