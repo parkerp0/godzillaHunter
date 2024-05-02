@@ -2,9 +2,9 @@
 #define MOVEMENT_H
 
 #define MOVEOFFSET 0
-#define TURNOFFSET 13 // - for undershoot + for overshoot degrees off of correct turn
+#define TURNOFFSET 14 // - for undershoot + for overshoot degrees off of correct turn
 
-#define TWISTOFFSET -9 //positive is clockwise driving forward
+#define TWISTOFFSET -0 //positive is clockwise driving forward
 
 
 #include "open_interface.h"
@@ -23,8 +23,8 @@
 
 
 #define TILE_WIDTH 590 // mm
-#define FIELD_WIDTH ((2 * TILE_WIDTH) - START_X) // 4
-#define FIELD_LENGTH ((3 * TILE_WIDTH) - START_Y) // 7
+#define FIELD_WIDTH ((4 * TILE_WIDTH) - START_X) // 4
+#define FIELD_LENGTH ((7 * TILE_WIDTH) - START_Y) // 7
 //changed to be the maximum bounds that the robot can have
 
 #define START_X ROBOT_WIDTH/2.0
@@ -48,8 +48,11 @@ int compareDistances(const void *a, const void *b);
 float calcDistToRobot(object *obs);
 float calcDistToPath(object *obs, float global_x, float global_y);
 float move_backward(oi_t *sensor_data, float distance_mm);
+
+void set_heading(oi_t *sensor,float degrees);
 float turn_right(oi_t *sensor, float degrees);
 float turn_left(oi_t *sensor, float degrees);
+
 float ram(oi_t *sensor_data);
 float calcDistToPathGodzilla(object *obs, object *godzilla, coords target, int *numObs);
 coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs);

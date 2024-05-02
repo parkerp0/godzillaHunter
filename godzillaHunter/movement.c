@@ -28,22 +28,11 @@ int move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempts,
 
     float deltaX = global_x - robotCoords->x;
     float deltaY = global_y - robotCoords->y;
-    float targetHeading = fmod(atan2(deltaX, deltaY) * 180.0 / M_PI, 360); // lock in the degrees to be -360 to 360
-    float deltaHeading = fabs((robotCoords->heading) - targetHeading);
+    float targetHeading = fmod(360 + (atan2(deltaX, deltaY) * 180.0 / M_PI), 360); // lock in the degrees to be -360 to 360
+//    float deltaHeading = (robotCoords->heading) - targetHeading;
 
-    // Figure out which way to turn
-    int turnDir = 1;
-    if (targetHeading < robotCoords->heading){ // Turn left
-        turn_left(sensor_data, deltaHeading);
-        turnDir = 1;
-    }
-    else {
-        turn_right(sensor_data, deltaHeading); // Turn right
-        turnDir = -1;
-    }
-
-    lcd_printf("TurnDIR: %d\nTarget: %f\nCurrent: %f\nDelta: %f", (targetHeading < robotCoords->heading) ? -1 : 1, targetHeading, robotCoords->heading, deltaHeading);
-
+    float prevHeading = robotCoords->heading;
+    set_heading(sensor_data, targetHeading);
 
     timer_waitMillis(500);
     float distance = sqrt(deltaX*deltaX + deltaY*deltaY);
@@ -54,13 +43,10 @@ int move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempts,
         return 2;
     }
 
-    sprintf(toPutty, "TURNING BACK AFTER DODGE: Degrees: %f\n\r", deltaHeading);
+    sprintf(toPutty, "TURNING BACK AFTER DODGE: prevHeading: %f\n\r", prevHeading);
     uart_sendStr(toPutty);
 
-    if (turnDir == 1)
-        turn_right(sensor_data, deltaHeading);
-    else
-        turn_left(sensor_data, deltaHeading);
+    set_heading(sensor_data, prevHeading);
 
     return 0;
 }
@@ -235,6 +221,8 @@ coords calculatePerpendicularPoint(object *obs, int obsCount, object targetCoord
         }
     }
 
+    
+
     // Calculate new point coordinates
     coords newPoint;
     newPoint.x = targetCoords.x - (dir * perpendicularX);
@@ -278,7 +266,7 @@ float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_
         float deltaHeading = -sensor_data->angle;
 
         robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
+        robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
 
         robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
         robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
@@ -305,7 +293,8 @@ float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_
     return sum;
 }
 
-float move_backward(oi_t *sensor_data, float distance_mm) {
+float move_backward(oi_t *sensor_data, float distance_mm)
+{
 	float sum = 0;
     int power = -10;
 
@@ -319,7 +308,7 @@ float move_backward(oi_t *sensor_data, float distance_mm) {
         float deltaHeading = -sensor_data->angle;
 
         robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
+        robotCoords->heading = fmod(360+ (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
 
         robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
         robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
@@ -336,9 +325,39 @@ float move_backward(oi_t *sensor_data, float distance_mm) {
     return sum;
 }
 
+void set_heading(oi_t *sensor_data,float degrees)
+{
+    float deltaHeading = degrees - (robotCoords->heading);
+
+    if (deltaHeading >= 0){
+        if (deltaHeading > 180){
+            turn_left(sensor_data, 360-deltaHeading);
+            sprintf(toPutty, "Delta Heading was GREATER than 180: 360-deltaHeading = %f\n\r", 360-deltaHeading);
+            uart_sendStr(toPutty);
+        } else {
+            turn_right(sensor_data, deltaHeading);
+            sprintf(toPutty, "Delta Heading was LESS than 180: deltaHeading = %f\n\r", deltaHeading);
+            uart_sendStr(toPutty);
+        }
+    } else {
+        sprintf(toPutty, "DELTA HEADING NEGATIVE: deltaHeading = %f\n\r", deltaHeading);
+        uart_sendStr(toPutty);
+        if (deltaHeading < -180) {
+            turn_right(sensor_data, 360+deltaHeading);
+            sprintf(toPutty, "Delta Heading was LESS than -180: 360-deltaHeading = %f\n\r", 360+deltaHeading);
+            uart_sendStr(toPutty);
+        } else {
+            turn_left(sensor_data, -deltaHeading);
+            sprintf(toPutty, "Delta Heading was GREATER than -180: deltaHeading = %f\n\r", -deltaHeading);
+            uart_sendStr(toPutty);
+        }
+    }
+    
+}
+
 float turn_right(oi_t *sensor,  float degrees) {
 	float sum = 0;
-    oi_setWheels(-200, 200);
+    oi_setWheels(-150, 150);
     while (sum > -degrees + TURNOFFSET) {//+ 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
@@ -355,7 +374,7 @@ float turn_right(oi_t *sensor,  float degrees) {
 
 
     robotCoords->heading += degrees;
-    robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
+    robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
     lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     oi_setWheels(0,0);
     sprintf(toPutty, "AFTER TURN RIGHT: %f\nX: %f\nY: %f\nA: %f\tDegrees: %f\n\r", sum, robotCoords->x, robotCoords->y, robotCoords->heading, degrees);
@@ -365,7 +384,7 @@ float turn_right(oi_t *sensor,  float degrees) {
 
 float turn_left(oi_t *sensor, float degrees) {
 	float sum = 0;
-    oi_setWheels(200, -200);
+    oi_setWheels(150, -150);
     while (sum < degrees - TURNOFFSET) {//- 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
@@ -382,7 +401,7 @@ float turn_left(oi_t *sensor, float degrees) {
 
 
     robotCoords->heading -= degrees;
-    robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
+    robotCoords->heading = fmod(360+ (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
     lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     oi_setWheels(0,0);
     sprintf(toPutty, "AFTER TURN LEFT: %f\nX: %f\nY: %f\nA: %f\tDegrees: %f\n\r", sum, robotCoords->x, robotCoords->y, robotCoords->heading, degrees);
@@ -441,7 +460,7 @@ float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, object *godz
     // Rotate to face Godzilla
     float deltaX = (target.x) - (robotCoords->x);
     float deltaY = (target.y) - (robotCoords->y);
-    float targetHeading = fmod(atan2(deltaX, deltaY) * 180.0 / M_PI, 360); // lock in the degrees to be -360 to 360
+    float targetHeading = fmod(360 + (atan2(deltaX, deltaY) * 180.0 / M_PI), 360); // lock in the degrees to be -360 to 360
     float deltaHeading = fabs(robotCoords->heading - targetHeading);
 
     // Figure out which way to turn
@@ -460,45 +479,6 @@ float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, object *godz
 
 }
 
-//DELETE THIS ONCE WE DOUBLE CHECK
-
-// float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, object *godzilla, int dir){
-
-//     coords target = get_target_for_godzilla(obs, godzilla, numObs);
-
-//     if (target.x == -1 && target.y == -1 && target.heading == -1){
-//         sprintf(toPutty, "WARNING! COULD NOT NAVIGATE TO GODZILLA! get_target_for_godzilla\n\r");
-//         uart_sendStr(toPutty);
-//     }
-
-//     if (move_to_point(sensor_data,obs,numObs,0,target.x,target.y,dir) == -1){ // basically if status == -1
-//         sprintf(toPutty, "WARNING! COULD NOT NAVIGATE TO GODZILLA! move_to_point\n\r");
-//         uart_sendStr(toPutty);
-//     }
-    
-//     // Rotate to face Godzilla
-//     float deltaX = (target.x) - robotCoords->x;
-//     float deltaY = (target.y) - robotCoords->y;
-//     float targetHeading = fmod(atan2(deltaX, deltaY) * 180.0 / M_PI, 360); // lock in the degrees to be -360 to 360
-//     float deltaHeading = fabs(robotCoords->heading - targetHeading);
-
-//     // Figure out which way to turn
-//     int turnDir = 1; // default is turn right
-//     if (targetHeading < robotCoords->heading) // Turn left instead
-//         turnDir = -1;
-//     if (turnDir == 1)
-//         turn_right(sensor_data, deltaHeading);
-//     else
-//         turn_left(sensor_data, deltaHeading);
-
-//     lcd_printf("TurnDIR: %d\nTarget: %f\nCurrent: %f\nDelta: %f", turnDir, targetHeading, robotCoords->heading, deltaHeading);
-
-
-//     timer_waitMillis(500);
-//     // Return the distance to Godzilla so that we can get confirmation and hit it.
-//     return sqrt(deltaX*deltaX + deltaY*deltaY);
-
-// }
 
 coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs){
     int numAttempts = 0;
@@ -618,7 +598,8 @@ int cliff_detected(oi_t *sensor_data, object **obs, int *numObs, int dir, int de
             robotCoords->y = (robotCoords->y - START_Y < FIELD_LENGTH - robotCoords->y) ? START_Y - BOUNDRY_OVERSHOOT: FIELD_LENGTH + BOUNDRY_OVERSHOOT;
 
         move_backward(sensor_data,150);
-        return 2.0;//break out of current move to point and try to force the obscheck to run again
+        turn_right(sensor_data,90);
+        return -1.0;//break out of current move to point and try to force the obscheck to run again
     }
     else if(
            sensor_data->bumpLeft
