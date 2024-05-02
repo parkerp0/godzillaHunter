@@ -112,6 +112,28 @@ oi_t *sensorD;
                             if(upFlag)targetY+=500;//increment in the correct direction
                             else targetY-=500;
 
+//                            largest = findLargestObj(&obs, obsCount);
+//                            //oi_t *sensor_data, object *obs, int *numObs, object *godzilla, int dir
+//                            sprintf(message,"Largest object is X:%.3f Y:%.3f Width: %.3f\n\r",largest->x,largest->y,largest->linearWidth);
+//                            uart_sendStr(message);
+//
+//                            if ((largest->linearWidth) >= tMinLW) {
+//                                sprintf(message, "BIG BOY GODZILLA!\n\r");
+//                                uart_sendStr(message);
+////                                move_to_godzilla(sensorD,obs,&obsCount,largest, 1);
+//
+//                                float godzillaHeading = atan2((largest->x) - (robotCoords->x), (largest->y) - (robotCoords->y)) * 180/M_PI;
+//                                sprintf(message,"godzillaHeading: %f\n\r", godzillaHeading);
+//                                uart_sendStr(message);
+//                                set_heading(sensorD, godzillaHeading);
+//
+//                                ram(sensorD);
+//                                while(1); // Don't do anything else
+//                            } else {
+//                                sprintf(message, "Not big enough to be godzilla!\n\r");
+//                                uart_sendStr(message);
+//                            }
+
                             if(command_byte == 'b')
                             {
                                 //command_byte = 0;can't reset command byte here because it doesn't break the second loop if you do

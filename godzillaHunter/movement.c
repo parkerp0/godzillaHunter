@@ -427,7 +427,8 @@ float ram(oi_t *sensor_data)
         dist += sensor_data->distance;
     }
   
-    move_backward(sensor_data, 700);
+    move_backward(sensor_data, 400);
+    play_victoryChant();
 
     return dist;
 }
