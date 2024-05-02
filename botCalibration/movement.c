@@ -106,7 +106,7 @@ double move_backward(oi_t *sensor_data, double distance_mm) {
 
 double turn_right(oi_t *sensor, double degrees) {
     double sum = 0;
-    oi_setWheels(-200, 200);
+    oi_setWheels(-100, 100);
     while (sum > -degrees * TURNOFFSET) {//+ 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
@@ -118,7 +118,7 @@ double turn_right(oi_t *sensor, double degrees) {
 
 double turn_left(oi_t *sensor, double degrees) {
     double sum = 0;
-    oi_setWheels(200, -200);
+    oi_setWheels(100, -100);
     while (sum < degrees * TURNOFFSET) {//- 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;

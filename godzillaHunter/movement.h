@@ -2,7 +2,7 @@
 #define MOVEMENT_H
 
 #define MOVEOFFSET 0
-#define TURNOFFSET 0.87 // - for undershoot + for overshoot degrees off of correct turn
+#define TURNOFFSET 0.895 // - for undershoot + for overshoot degrees off of correct turn
 
 #define TWISTOFFSET 0 //positive is clockwise driving forward
 

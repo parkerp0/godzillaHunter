@@ -14,12 +14,20 @@ typedef struct
     float x;
     float y;
     float linearWidth;
+    int age;
 }object;
 
 extern coords *robotCoords;
 extern float prevY;
 extern float prevX;
+static int totalObj;
 
-int addObject(object** currentList, int obsCount, float x,float y, float linearWidth);//reutrns the new number of obstacles
+#define MAXOBJCOUNT 10
+
+int addObject(object** currentList, int obsCount, float x,float y, float linearWidth);//returns the new number of obstacles
+
+int trimObj(object **currentObs, int obsCount);//
+
+int compareObjAge(const void *a, const void *b);
 
 #endif

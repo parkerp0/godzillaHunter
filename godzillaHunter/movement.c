@@ -34,7 +34,7 @@ int move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempts,
     if(distance > RESCAN_DIST)
     {
         move_to_point(sensor_data, obs, numObs,numAttempts, robotCoords->x + (deltaX/distance * (distance - RESCAN_DIST)), robotCoords->y + (deltaY/distance * (distance - RESCAN_DIST)), 1);
-        *numObs = scanAndRewrite(obs,*numObs);
+        (*obs) = scanAndRewrite(obs,*numObs);
         checkObstacles(sensor_data, obs, numObs,numAttempts,global_x,global_y,dir);
 
         deltaX = global_x - robotCoords->x;
@@ -361,51 +361,50 @@ void set_heading(oi_t *sensor_data,float degrees)
 }
 
 float turn_right(oi_t *sensor,  float degrees) {
+    oi_update(sensor);
 	float sum = 0;
-    oi_setWheels(-150, 150);
+	int power = 10;
     while (sum > -degrees * TURNOFFSET) {//+ 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
-        float deltaDistance = sensor->distance;
-        float deltaHeading = -sensor->angle;
 
-        robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
-
-        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
-        lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
+        if(sum > (-degrees * TURNOFFSET * 0.5))
+        {
+            power+=15;
+        }else
+            power-=5;
+        oi_setWheels(-power,power);
     }
-
-
     oi_setWheels(0,0);
+
+    robotCoords->heading +=degrees;
+    robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
+    lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     sprintf(toPutty, "AFTER TURN RIGHT: %f\nX: %f\nY: %f\nA: %f\tDegrees: %f\n\r", sum, robotCoords->x, robotCoords->y, robotCoords->heading, degrees);
     uart_sendStr(toPutty);
     return sum;
 }
 
 float turn_left(oi_t *sensor, float degrees) {
+    oi_update(sensor);
 	float sum = 0;
-    oi_setWheels(150, -150);
+	int power = 10;
     while (sum < degrees * TURNOFFSET) {//- 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
 
-        float deltaDistance = sensor->distance;
-        float deltaHeading = -sensor->angle;
-
-        robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(360+ (robotCoords->heading), 360);
-        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
-
-        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
-        lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
+        if(sum < (degrees * TURNOFFSET * 0.5))
+        {
+             power+=15;
+        }else
+             power-=5;
+        oi_setWheels(power,-power);
     }
-
-
-
     oi_setWheels(0,0);
+
+    robotCoords->heading -= sum;
+    robotCoords->heading = fmod(360+ (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
+    lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     sprintf(toPutty, "AFTER TURN LEFT: %f\nX: %f\nY: %f\nA: %f\tDegrees: %f\n\r", sum, robotCoords->x, robotCoords->y, robotCoords->heading, degrees);
     uart_sendStr(toPutty);
     return sum;

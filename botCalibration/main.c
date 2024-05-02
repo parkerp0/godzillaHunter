@@ -27,13 +27,17 @@ int main(void)
 	//moveCalibrate(sensorD);
 	//
 
+	oi_setMotorCalibration(1.0,15);
 	//pingCalibrate();
 	while(1)
 	{
+
+
 	    switch(button_getButton())
 	    {
 	    case 0:
-	        lcd_printf("1:Move \n2:Servo \n3:Ping \n4:IR");
+	        lcd_printf("oi_calLeft: %lf \noi_calRight %lf",oi_getMotorCalibrationLeft(),oi_getMotorCalibrationRight());
+
 	    break;
 	    case 1:
 	        moveCalibrate(sensorD);

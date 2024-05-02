@@ -36,7 +36,7 @@
 
 coords *robotCoords;
 
- int main (void) {
+int main (void) {
 
              oi_t *sensorD = oi_alloc();
              oi_init(sensorD);
