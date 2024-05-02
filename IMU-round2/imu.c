@@ -12,6 +12,7 @@
 #include "imu.h"
 #include "timer.h"
 #include "timer.h"
+#include "lcd.h"
 
 /******************************************************************************
             Static Function Prototypes
@@ -84,10 +85,10 @@ float imu_getHeading() {
          heading = (x < 0)? 180 : 0;
      }
 
-            uint8_t* euler = imu_readRegBytes(IMU_EUL_Heading_LSB,2);
+            uint8_t* euler = imu_readRegBytes(IMU_EUL_HEAD_LSB,2);
             int16_t eulerHead = euler[0] + (euler[1] << 8);
-            eulerHead = fmod((eulerHead/16.) + 360,360);
-            lcd_printf("Hx: %d\nHy: %d\nHeading: %f\nEHeading: %d",x,y,heading,eulerHead);
+            float Eheading = fmod((eulerHead/16.) + 360,360);
+            lcd_printf("Hx: %d\nHy: %d\nHeading: %f\nEHeading: %f",x,y,heading,Eheading);
             
 
      return heading;

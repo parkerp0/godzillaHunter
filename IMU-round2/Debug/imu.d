@@ -22,6 +22,11 @@ imu.obj: C:/ti/TivaWare_C_Series-2.2.0.295/inc/tm4c123gh6pm.h
 imu.obj: ../imu.h
 imu.obj: ../timer.h
 imu.obj: C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/interrupt.h
+imu.obj: ../lcd.h
+imu.obj: C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdio.h
+imu.obj: C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdarg.h
+imu.obj: C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/string.h
+imu.obj: C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/xlocale/_string.h
 
 ../imu.c:
 
@@ -66,4 +71,14 @@ C:/ti/TivaWare_C_Series-2.2.0.295/inc/tm4c123gh6pm.h:
 ../timer.h:
 
 C:/ti/TivaWare_C_Series-2.2.0.295/driverlib/interrupt.h:
+
+../lcd.h:
+
+C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdio.h:
+
+C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/stdarg.h:
+
+C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/string.h:
+
+C:/ti/ccs1230/ccs/tools/compiler/ti-cgt-arm_20.2.7.LTS/include/xlocale/_string.h:
 
