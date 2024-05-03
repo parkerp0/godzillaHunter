@@ -80,15 +80,16 @@ oi_t *sensorD;
                 if(command_byte == 'q')
                 {
                     command_byte = 0;
-//                    obsCount = scanAndRewrite(&obs,obsCount);
-//                    move_to_point(sensorD,&obs,&obsCount,0,obs[0].x*2,obs[0].y*2,1);
+                    obsCount = scanAndRewrite(&obs,obsCount);
+                    move_to_point(sensorD,&obs,&obsCount,0,obs[0].x*2,obs[0].y*2,1);
                     set_heading(sensorD, -135);
                 }
 
                 if(command_byte == 'g')
                 {
-                    command_byte = 0;
-                    obsCount = scanAndRewrite(&obs,obsCount);
+                    object* test = scan();
+                    //command_byte = 0;
+                    //obsCount = scanAndRewrite(&obs,obsCount);
 
                     move_to_godzilla(sensorD, obs, &obsCount, &obs[0], 1);
                 }
