@@ -31,6 +31,7 @@ float imu_getHeading() {
             int16_t eulerHead = euler[0] + (euler[1] << 8);
             float Eheading = fmod((eulerHead/16.) + 360 + headingOffset,360);//adding the headingOffset allows for the heading value to be aligned with whatever the roomba wants 0 to be
             lcd_printf("EHeading: %f",Eheading);
+            timer_waitMillis(500);
             
 
      return Eheading;

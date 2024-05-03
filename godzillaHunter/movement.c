@@ -7,7 +7,6 @@ int move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempts,
 	sprintf(toPutty, "Moving To point: X: %lf\t Y: %lf\n\r", global_x, global_y);
 	uart_sendStr(toPutty);
 
-	//*numObs = scanAndRewrite(obs,*numObs);//add scan block to find more thing in between rerouting
 
 	if(checkPerpendicularPoint((*obs),*numObs,global_x,global_y)!=1)return -1.0;
 
@@ -270,14 +269,13 @@ float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_
     oi_update(sensor_data);
     lcd_printf("%lf", sensor_data->distance);
 
+    robotCoords->heading = imu_getHeading();
+
     while (sum < distance_mm + MOVEOFFSET) {
         oi_update(sensor_data);
         sum += sensor_data->distance;
         float deltaDistance = sensor_data->distance;
-        float deltaHeading = -sensor_data->angle;
 
-        robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
 
         robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
         robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
@@ -301,6 +299,8 @@ float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_
 
     }
 
+    robotCoords->heading = imu_getHeading();
+
 
 	sprintf(toPutty, "Robot X: %f\tRobot Y: %f\tRobot Heading: %f\tPower: %d\n\r", robotCoords->x, robotCoords->y, robotCoords->heading, power);
 	uart_sendStr(toPutty);
@@ -316,14 +316,12 @@ float move_backward(oi_t *sensor_data, float distance_mm)
     oi_update(sensor_data);
     lcd_printf("%lf", sensor_data->distance);
 
+    robotCoords->heading = imu_getHeading();
+
     while (sum > -distance_mm - MOVEOFFSET) {
         oi_update(sensor_data);
         sum += sensor_data->distance;
         float deltaDistance = sensor_data->distance;
-        float deltaHeading = -sensor_data->angle;
-
-        robotCoords->heading += deltaHeading;
-        robotCoords->heading = fmod(360+ (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
 
         robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
         robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
@@ -337,6 +335,8 @@ float move_backward(oi_t *sensor_data, float distance_mm)
         lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     }
     oi_setWheels(0,0);
+
+    robotCoords->heading = imu_getHeading();
     return sum;
 }
 
@@ -362,23 +362,14 @@ void set_heading(oi_t *sensor_data,float degrees)
 
 float turn_right(oi_t *sensor,  float degrees) {
 	float sum = 0;
-    oi_setWheels(-150, 150);
+    oi_setWheels(-100, 100);
     while (sum > -degrees + TURNOFFSET) {//+ 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
-        float deltaDistance = sensor->distance;
-        float deltaHeading = -sensor->angle;
-
-//        robotCoords->heading += deltaHeading;
-//        robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
-//
-//        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-//        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
         lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     }
 
-    robotCoords->heading += degrees;
-    robotCoords->heading = fmod(360+ (robotCoords->heading), 360);
+    robotCoords->heading = imu_getHeading();
 
 
     oi_setWheels(0,0);
@@ -389,25 +380,14 @@ float turn_right(oi_t *sensor,  float degrees) {
 
 float turn_left(oi_t *sensor, float degrees) {
 	float sum = 0;
-    oi_setWheels(150, -150);
+    oi_setWheels(100, -100);
     while (sum < degrees - TURNOFFSET) {//- 8.5 for robot 10
         oi_update(sensor);
         sum += sensor->angle;
-
-        float deltaDistance = sensor->distance;
-        float deltaHeading = -sensor->angle;
-
-//        robotCoords->heading += deltaHeading;
-//        robotCoords->heading = fmod(360+ (robotCoords->heading), 360);
-//        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
-
-//        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-//        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
         lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     }
 
-    robotCoords->heading += degrees;
-    robotCoords->heading = fmod(360+ (robotCoords->heading), 360);
+    robotCoords->heading = imu_getHeading();
 
 
     oi_setWheels(0,0);

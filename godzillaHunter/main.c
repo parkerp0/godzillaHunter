@@ -83,6 +83,7 @@ oi_t *sensorD;
                 {
                     command_byte = 0;
                     Eheading = imu_getHeading();
+                    //set_heading(sensorD,0);
                 }
 
                 if(command_byte == 'q')
@@ -113,6 +114,7 @@ oi_t *sensorD;
                         else targetY = FIELD_LENGTH - 20;
                         while(targetY < FIELD_LENGTH && targetY > START_Y)
                         {
+                            robotCoords->heading = imu_getHeading();
                             move_to_point(sensorD,&obs,&obsCount,0,targetX,targetY,1);
                             set_heading(sensorD, upFlag ? 0 : 180);
                             obsCount = scanAndRewrite(&obs,obsCount);

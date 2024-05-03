@@ -9,6 +9,7 @@
 #include "imu.h"
 #include "timer.h"
 #include "lcd.h"
+#include "button.h"
 #include "open_interface.h"
 
 void imu_printChipInfo();
@@ -28,6 +29,7 @@ int main() {
         heading = imu_getHeading();
         //lcd_printf("heading: %f",heading);
         fflush(stdout);
+        if(button_getButton() ==4)imu_reset();
 
         timer_waitMillis(500);   // This is a simple 1 second delay call.
     }
