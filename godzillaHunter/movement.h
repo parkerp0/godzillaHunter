@@ -37,8 +37,14 @@
 #define BOUNDRY_OVERSHOOT 30
 char toPutty[55];
 
-//float moveCalibrate(oi_t *sensor_data);
-//float turnCalibrate(oi_t *sensor_data);
+// Our coordinate system is x,y, and a heading
+// Y is positive going forward
+// X is positive going right
+// The heading is between 0 (when facing forward) and 359. (180 is backward)
+// The heading goes up when the robot turns clockwise (until it loops back around)
+// We use trigonometry to use the heading to calculate the x and y of the robot
+// It looks a little different than your usual conversion because of how the heading tracks.
+// Each movement direction (forward, backward, and turning) keep track of the coordinates
 
 float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_mm, int dir,int depth);
 int move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempts, float global_x, float global_y, int dir); // dir: -1 for left, +1 for right

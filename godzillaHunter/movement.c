@@ -15,7 +15,7 @@ int move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempts,
     qsort((*obs), *numObs, sizeof(object), compareDistances);
 
 
-
+    // Check if there are any obstacles in the path. This method recursively calls move_to_point to avoid each obstacle in the path.
     int status = checkObstacles(sensor_data, obs, numObs, numAttempts, global_x, global_y, dir);
     if(checkPerpendicularPoint((*obs),*numObs,global_x,global_y)!=1)return -1.0;
 
@@ -33,6 +33,7 @@ int move_to_point(oi_t *sensor_data, object **obs, int *numObs, int numAttempts,
     float distance = sqrt(deltaX*deltaX + deltaY*deltaY);
     if(distance > RESCAN_DIST)
     {
+        // Move in small increments so we can scan the field as we go and avoid any new obstacles that we find
         move_to_point(sensor_data, obs, numObs,numAttempts, robotCoords->x + (deltaX/distance * (distance - RESCAN_DIST)), robotCoords->y + (deltaY/distance * (distance - RESCAN_DIST)), 1);
         *numObs = scanAndRewrite(obs,*numObs);
         checkObstacles(sensor_data, obs, numObs,numAttempts,global_x,global_y,dir);
@@ -68,8 +69,9 @@ int checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttempts
 //	sprintf(toPutty, "numObs: %d\n\r", *numObs);
 //	uart_sendStr(toPutty);
 
+    // If we have gone too deep in the recursion then exit to prevent a stack overflow
     if ( (numAttempts >= 4))
-    	return -1.0; // return positive 1 because it isn't really an error, and idk if it should be considered a normal exit condition
+    	return -1.0;
 
     int j;
     for (j = 0; j < *numObs; j++) {
@@ -77,14 +79,9 @@ int checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttempts
 		uart_sendStr(toPutty);
     }
 
-    // Loop through sorted obstacles
+    // Loop through sorted obstacles and call move_to_point to avoid them
     int i;
     for (i = 0; i < *numObs; i++) {
-
-//    	sprintf(toPutty, "Inside of checkObs outer loop: i = %d\n\r", i);
-//    	uart_sendStr(toPutty);
-
-
 
         // Calculate the vector from the robot to the target
     	float targetVectorX = global_x - robotCoords->x;
@@ -102,33 +99,26 @@ int checkObstacles(oi_t *sensor_data, object **obs, int *numObs, int numAttempts
         // the targetVector part ensures that the obstacle is not past the target vector.
         if (dotProduct > 0 && dotProduct < (targetVectorX * targetVectorX + targetVectorY * targetVectorY)) {
 
-
-//        	uart_sendStr("Inside of the dot product check.\n\r");
-//        	sprintf(toPutty, "Dot product: %f\tTargetVectorSquared: %f\n\r", dotProduct, (targetVectorX * targetVectorX + targetVectorY * targetVectorY));
-//        	uart_sendStr(toPutty);
             // Obstacle lies between robot and target, calculate distPath
-//            if (obs[i] == NULL) return 0.0;
-
             float distPath = calcDistToPath(&(*obs)[i], global_x, global_y);
-            if ((distPath - ((*obs)[i].linearWidth / 2.0) - (ROBOT_WIDTH / 2.0)) <= AVOID_DISTANCE) {
-                // Avoid obstacle
-//            	sprintf(toPutty, "Dist to path: %f \n\r", distPath);
-//            	uart_sendStr(toPutty);
-
-//            	uart_sendStr("Inside of avoid obstacle part.\n\r");
+            if ((distPath - ((*obs)[i].linearWidth / 2.0) - (ROBOT_WIDTH / 2.0)) <= AVOID_DISTANCE) { // the obstacle is too close to the path so move around
                 sprintf(toPutty, "Obs at point: X: %lf\t Y: %lf is intersecting line X:%f Y:f\n\r", (*obs)[i].x, (*obs)[i].y, global_x, global_y);
                 uart_sendStr(toPutty);
 
+                // Calculate a point that is perpendicular to the path that the robot will take to its target and the obstacle so that we can get a new point that will direct us around the object
                 coords newTarget = calculatePerpendicularPoint((*obs),*numObs,(*obs)[i], dir);
                 if (newTarget.x == -1 && newTarget.y == -1 && newTarget.heading == -1){
                     return -1;
                 }
+
             	sprintf(toPutty, "New target: X: %lf\t Y: %lf\n\r", newTarget.x, newTarget.y);
             	uart_sendStr(toPutty);
 
                 // Recursively avoid each object in the path.
                 int status = move_to_point(sensor_data, obs, numObs, numAttempts + 1, newTarget.x, newTarget.y, dir);
                 int tempObsC = *numObs;
+
+                // Scan again so that after we move to the perpendicular point, we can check to make sure there are no new obstacles to avoid.
                 *numObs = scanAndRewrite(obs,*numObs);
                 if(tempObsC != *numObs || status == 2)
                      i = 0;
@@ -159,6 +149,7 @@ int compareDistances(const void *a, const void *b) {
     else return 0;
 }
 
+// Calculates the distance an object is away from the robot
 float calcDistToRobot(object *obs){
     if (obs == NULL) return 1; // make null values be last
 	return sqrt(((obs->x-robotCoords->x)*(obs->x-robotCoords->x)) + ((obs->y-robotCoords->y)*(obs->y-robotCoords->y)));
@@ -173,8 +164,6 @@ int checkPerpendicularPoint(object *obs, int numObs, float global_x, float globa
     if (global_x < START_X || global_y < START_Y ||
                 global_x > FIELD_WIDTH || global_y > FIELD_LENGTH) // Here x is the shorter way and y is the longer direction
         {
-            //sprintf(toPutty, "POINT OUTSIDE OF FIELD: X: %f\t Y: %f\n\r", global_x, global_y);
-            //uart_sendStr(toPutty);
             return -1;//point is out of the field
         }
 
@@ -213,6 +202,7 @@ coords calculatePerpendicularPoint(object *obs, int obsCount, object targetCoord
     sprintf(toPutty, "Calculate Perpendicular Point: (%lf, %lf) \n\r", perpendicularX, perpendicularY);
     uart_sendStr(toPutty);
 
+    // This will keep checking points on either side of the object/path so that we can find a new point that the robot can go to
     while(checkPerpendicularPoint(obs,obsCount,targetCoords.x - (dir * perpendicularX),targetCoords.y - (dir * perpendicularY))!= 1)
     {
         dir*=-1;//switch the direction that it checking
@@ -262,6 +252,7 @@ float calcDistToPath(object *obs, float global_x, float global_y){
 	return top/bot;
 }
 
+// The actual method that moves the robot forward and tracks the coordinates
 float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_mm, int dir,int depth) {
 	float sum = 0;
     int power = 10;
@@ -290,7 +281,8 @@ float move_forward(oi_t *sensor_data, object **obs, int *numObs, float distance_
             return -2.0;
         }
 
-
+        // To increase accuracy and consistency, we speed up and slow down slowly.
+        // This prevents the robot from doing wheelies or the wheels slipping
         if (distance_mm - sum > power  && power < 200)
             power += 10;
         else if (distance_mm - sum < power  && power > 20)
@@ -340,6 +332,7 @@ float move_backward(oi_t *sensor_data, float distance_mm)
     return sum;
 }
 
+// Given a particular number of degrees, the robot will move to that heading regardless of the robot's previous orientation
 void set_heading(oi_t *sensor_data,float degrees)
 {
     float deltaHeading = degrees - (robotCoords->heading);
@@ -369,11 +362,11 @@ float turn_right(oi_t *sensor,  float degrees) {
         float deltaDistance = sensor->distance;
         float deltaHeading = -sensor->angle;
 
-//        robotCoords->heading += deltaHeading;
-//        robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
-//
-//        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-//        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
+        robotCoords->heading += deltaHeading;
+        robotCoords->heading = fmod(360 + (robotCoords->heading), 360); // lock in the degrees to be -360 to 360
+
+        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
+        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
         lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     }
 
@@ -397,12 +390,12 @@ float turn_left(oi_t *sensor, float degrees) {
         float deltaDistance = sensor->distance;
         float deltaHeading = -sensor->angle;
 
-//        robotCoords->heading += deltaHeading;
-//        robotCoords->heading = fmod(360+ (robotCoords->heading), 360);
-//        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
+        robotCoords->heading += deltaHeading;
+        robotCoords->heading = fmod(360+ (robotCoords->heading), 360);
+        robotCoords->heading = fmod(robotCoords->heading, 360); // lock in the degrees to be -360 to 360
 
-//        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
-//        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
+        robotCoords->x += deltaDistance * sin(robotCoords->heading * DEGREES_TO_RADS);
+        robotCoords->y += deltaDistance * cos(robotCoords->heading * DEGREES_TO_RADS);
         lcd_printf("%lf\nX: %lf\nY: %lf\nA: %lf", sum, robotCoords->x, robotCoords->y, robotCoords->heading);
     }
 
@@ -416,7 +409,7 @@ float turn_left(oi_t *sensor, float degrees) {
     return sum;
 }
 
-
+// Ram into godzilla, move backward, and play the victory chant.
 float ram(oi_t *sensor_data)
 {
 	float dist = 0;
@@ -450,7 +443,7 @@ float calcDistToPathGodzilla(object *obs, object *godzilla, coords target, int *
 }
 
 
-//pretty sure this is the correct godzilla function but leaving the other until I ask
+// Finds a point near godzilla that has a clear path to him so that later we can ram into him without hitting any obstacles. This also rotates to face godzilla
 float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, object *godzilla, int dir){
 
     coords target = get_target_for_godzilla(obs, godzilla, numObs);
@@ -487,7 +480,7 @@ float move_to_godzilla(oi_t *sensor_data, object *obs, int *numObs, object *godz
 
 }
 
-
+// A helper function for the move_to_godzilla function to get the point that is unobstructed by obstacles.
 coords get_target_for_godzilla(object *obs, object *godzilla, int *numObs){
     int numAttempts = 0;
 

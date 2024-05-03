@@ -160,12 +160,11 @@ object* scan(){
 						float adjAngle = asin(a * sin((avgAngle[i]+90)*degreesToRadians)/adjDist);
 
                     	 // Adjust the angle to be aligned with the robot's heading system
-
-
                         obs[j].x = adjDist*sin(adjAngle - (robotCoords->heading * degreesToRadians)) + robotCoords->x; //add current x/y coord to it
                         obs[j].y = adjDist*cos(adjAngle - (robotCoords->heading * degreesToRadians)) + robotCoords->y;
                         obs[j].linearWidth = LinearWidth[i] * 1000; //standardize to mm
 
+                        // Throw out the objects if they are outside the field
                         if(obs[j].x < 0 || obs[j].x >FIELD_WIDTH || obs[j].y < 0 || obs[j].y > FIELD_LENGTH)
                         {
                             j--;
@@ -180,38 +179,6 @@ object* scan(){
                     obs[l].y = 0.0;
                     obs[l].linearWidth = 0.0;
 
-
-//                    for (i = 0; i < l; i++) {
-//                        if (LinearWidth[i] < SmallestWidth) {   //Finds the object with the smallest linear width and finds their angle and distance
-//                            SmallestWidth = LinearWidth[i];
-//                            SmallestWidthAngle = avgAngle[i];
-//                            SmallestWidthDistance = avgDist[i];
-//                        }
-//                    }
-                
-//                    for (i = 0; i < l; i++) {
-//                        if (LinearWidth[i] > LargestWidth) {   //Finds the object with the largest linear width and finds their angle and distance
-//                            LargestWidth = LinearWidth[i];
-//                            LargestWidthAngle = avgAngle[i];
-//                            LargestWidthDistance = avgDist[i];
-//                        }
-//                    }
-
-                            //print smallest object info to Putty
-//                            sprintf(toPutty, "Smallest object width: %d\tAngle: %d\tDistance: %d\n\r", SmallestWidth, SmallestWidthAngle, SmallestWidthDistance);
-//                            j = 0;
-//                            while (toPutty[j] != '\0') {
-//                            uart_sendChar(toPutty[j]);
-//                            j++;
-//                            }
-//
-//                            //print largest object info to Putty
-//                            sprintf(toPutty, "Largest object width: %d\tAngle: %d\tDistance: %d\n\r", LargestWidth, LargestWidthAngle, LargestWidthDistance);
-//                            m = 0;
-//                            while (toPutty[m] != '\0') {
-//                                uart_sendChar(toPutty[m]);
-//                                m++;
-//                            }
                     prevX = robotCoords ->x;
                     prevY = robotCoords ->y;
 
@@ -234,7 +201,7 @@ int scanAndRewrite(object **currentObs,int obsCount)
         for(i = 0; i<obsCount; i++)
         {
             if(vectorDifMag(obsTemp,&(*currentObs)[i]) < objMatchThresh)
-            {//rewritten might work
+            {
                 (*currentObs)[i].linearWidth = ((*currentObs)[i].linearWidth + obsTemp->linearWidth)/2;
                 flag = 0;//the object is found to be not new
                 break;
@@ -252,29 +219,6 @@ int scanAndRewrite(object **currentObs,int obsCount)
     {
         sprintf(message,"obs %d: x: %.2f y:%.2f Width:%.2f\n\r",i,(*currentObs)[i].x,(*currentObs)[i].y,(*currentObs)[i].linearWidth);
         uart_sendStr(message);
-
-
-
-
-        //////////////////////////////////////// I tried getting this to work but the print statements in detectGodzilla don't print (even the ones that have no conditions) and this code just doesn't seem to get called.
-//        //run the Godzilla check here!!!!
-//        // TODO confirm godzilla
-//        detectGodzilla(currentObs, i);
-//
-//        bool checkGodzilla = detectGodzilla(currentObs, i);
-//
-//        if (checkGodzilla){
-//          //work in progress
-//          //Do something in the program to go ram Godzilla
-//          //if detectGozilla is successful, it returns the object you gave it
-//            sprintf(message,"FOUND GODZILLA AT: (%f, %f) width: %f",(*currentObs)[i].x,(*currentObs)[i].y,(*currentObs)[i].linearWidth);
-//            uart_sendStr(message);
-//            move_to_godzilla(sensorD, *currentObs, &obsCount, &(*currentObs)[i], 1);
-//            sprintf(message,"RAMMM GODZILLA AT: (%f, %f) width: %f",(*currentObs)[i].x,(*currentObs)[i].y,(*currentObs)[i].linearWidth);
-//            uart_sendStr(message);
-//            timer_waitMillis(500);
-//            ram(sensorD);
-//        }
     }//prints all objects
     
     //sprintf(message,"Hunter location x:%lf y:%lf heading: %lf\n\r", coord->x,coord->y,coord->heading);
@@ -282,20 +226,21 @@ int scanAndRewrite(object **currentObs,int obsCount)
     free(obsTemp);
 
     object *largest = findLargestObj(currentObs, obsCount);
-    //oi_t *sensor_data, object *obs, int *numObs, object *godzilla, int dir
     sprintf(message,"Largest object is X:%.3f Y:%.3f Width: %.3f\n\r",largest->x,largest->y,largest->linearWidth);
     uart_sendStr(message);
 
+    // Check if the obstacle is the correct size to be godzilla
     if ((largest->linearWidth) >= tMinLW && (largest->linearWidth) <= tMaxLW) {
         sprintf(message, "BIG BOY GODZILLA!\n\r");
         uart_sendStr(message);
-//                                move_to_godzilla(sensorD,obs,&obsCount,largest, 1);
 
+        // Calculate and rotate to face godzilla
         float godzillaHeading = atan2((largest->x) - (robotCoords->x), (largest->y) - (robotCoords->y)) * 180/M_PI;
         sprintf(message,"godzillaHeading: %f\n\r", godzillaHeading);
         uart_sendStr(message);
         set_heading(sensorD, godzillaHeading);
 
+        // EMINIATE THE TARGET!!!
         ram(sensorD);
         while(1); // Don't do anything else
     } else {
@@ -365,6 +310,7 @@ bool detectGodzilla(object **currentObs, int obsCount) { // not so much obsCount
         uart_sendStr(toPutty);
         return false;
     }
+    // A check that would rescan the object to make sure its godzilla but we ended up not using it
     if (confirmGodzilla()){
         return true;// &((*currentObs)[obsCount]); // Return a pointer to the Godzilla object found.
     } else { //scenario where Godzilla was not confirmed

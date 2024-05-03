@@ -1,26 +1,5 @@
-// /*
-//  * main.c
-//  *
-//  *  Created on: Apr 12, 2024
-//  *      Author: cdoran
-//  */
-//
-//
-//
-// //uart interrupt scheme
-//
-// //scan function with sweep: servo, ping, IR
-//
-// //functions for bump and cliff sensors
-//
-// //object classification
-//
-// //calibration software
-//
-// //mapping robot and obstacle locations
-//
-// //ram function
-//
+
+
  #include "Timer.h"
  #include "movement.h"
  #include "scan.h"
@@ -33,6 +12,22 @@
  #include "button.h"
  #include <inc/tm4c123gh6pm.h>
 #include "structs.h"
+
+/**
+ *
+ *          *** GODZILLA HUNTER ***
+ *
+ *
+ * Created by Parker, Jacob, Luca, and Collin
+ * CPRE 288 Final Project
+ * Completed 5/3/2024
+ *
+ * The mission objective is to search around a field of objects and autonomously avoid them.
+ * The robot will track its location in the field on an x,y coordinate system.
+ * The robot will also identify the obstacle that is within the range for Godzilla, the biggest tall object on the field.
+ * When the robot identifies Godzilla, it will eliminate the target, thus completing its objective.
+ *
+ */
 
 coords *robotCoords;
 oi_t *sensorD;
@@ -74,15 +69,15 @@ oi_t *sensorD;
             command_byte = 0;
 
 
-
+            // MAIN LOOP
+            // the different controls are explained in the readme
             while(1)
             {
                 if(command_byte == 'q')
                 {
                     command_byte = 0;
-//                    obsCount = scanAndRewrite(&obs,obsCount);
-//                    move_to_point(sensorD,&obs,&obsCount,0,obs[0].x*2,obs[0].y*2,1);
-                    set_heading(sensorD, -135);
+                    obsCount = scanAndRewrite(&obs,obsCount);
+                    move_to_point(sensorD,&obs,&obsCount,0,obs[0].x*2,obs[0].y*2,1);
                 }
 
                 if(command_byte == 'g')
@@ -107,32 +102,15 @@ oi_t *sensorD;
                         {
                             move_to_point(sensorD,&obs,&obsCount,0,targetX,targetY,1);
                             set_heading(sensorD, upFlag ? 0 : 180);
+
+
+                            // Scan to find the various obstacles with the IR sensor, this also checks to see if we have found godzilla
                             obsCount = scanAndRewrite(&obs,obsCount);
+
+
                             if(command_byte == 'b')break;//breaks out after the most recent loop for a restart
                             if(upFlag)targetY+=500;//increment in the correct direction
                             else targetY-=500;
-
-//                            largest = findLargestObj(&obs, obsCount);
-//                            //oi_t *sensor_data, object *obs, int *numObs, object *godzilla, int dir
-//                            sprintf(message,"Largest object is X:%.3f Y:%.3f Width: %.3f\n\r",largest->x,largest->y,largest->linearWidth);
-//                            uart_sendStr(message);
-//
-//                            if ((largest->linearWidth) >= tMinLW) {
-//                                sprintf(message, "BIG BOY GODZILLA!\n\r");
-//                                uart_sendStr(message);
-////                                move_to_godzilla(sensorD,obs,&obsCount,largest, 1);
-//
-//                                float godzillaHeading = atan2((largest->x) - (robotCoords->x), (largest->y) - (robotCoords->y)) * 180/M_PI;
-//                                sprintf(message,"godzillaHeading: %f\n\r", godzillaHeading);
-//                                uart_sendStr(message);
-//                                set_heading(sensorD, godzillaHeading);
-//
-//                                ram(sensorD);
-//                                while(1); // Don't do anything else
-//                            } else {
-//                                sprintf(message, "Not big enough to be godzilla!\n\r");
-//                                uart_sendStr(message);
-//                            }
 
                             if(command_byte == 'b')
                             {

@@ -1,8 +1,16 @@
-# godzillaHunter
-CPRE288 Final mission repo
+
+#         *** GODZILLA HUNTER ***
+Created by Parker, Jacob, Luca, and Collin
+CPRE 288 Final Project
+Completed 5/3/2024
+The mission objective is to search around a field of objects and autonomously avoid them.
+The robot will track its location in the field on an x,y coordinate system.
+The robot will also identify the obstacle that is within the range for Godzilla, the biggest tall object on the field.
+When the robot identifies Godzilla, it will eliminate the target, thus completing its objective.
+
 
 # Putty Commands:
-  q - runs a single scan and saves the objects useful for testing mostly <br>
+  q - runs a single scan and saves the objects, useful for testing mostly <br>
   t - Starts the overall scan process <br>
   b - while in the scan loop will break after the next scan is done if outside of the loop prints debug <br>
   r - free obs and resets coordinates for a manual restart <br>
@@ -11,6 +19,15 @@ CPRE288 Final mission repo
   w,a,s,d - manual movement just in case <br>
   k - kill, ram into whatever it is looking at<br>
 
+# Coordinate system
+Our coordinate system is x,y, and a heading
+ - Y is positive going forward
+ - X is positive going right
+ - The heading is between 0 (when facing forward) and 359. (180 is backward)
+ - The heading goes up when the robot turns clockwise (until it loops back around)
+We use trigonometry to use the heading to calculate the x and y of the robot
+It looks a little different than your usual conversion because of how the heading tracks.
+Each movement direction (forward, backward, and turning) keep track of the coordinates
 
 
 # Calibration Routine:
