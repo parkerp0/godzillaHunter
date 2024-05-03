@@ -50,6 +50,7 @@ oi_t *sensorD;
              ping_init();
              servo_init();
              button_init();
+             imu_init();
 
             robotCoords = malloc(sizeof(coords));
             robotCoords->heading = 0.0;
@@ -74,10 +75,16 @@ oi_t *sensorD;
             oi_setWheels(0,0);
             command_byte = 0;
 
-
+            float Eheading;
 
             while(1)
             {
+                if(command_byte == 'i')
+                {
+                    command_byte = 0;
+                    Eheading = imu_getHeading();
+                }
+
                 if(command_byte == 'q')
                 {
                     command_byte = 0;
