@@ -8,6 +8,7 @@
 #include <inc/tm4c123gh6pm.h>
 #include "lcd.h"
 #include "i2c.h"
+#include "structs.h"
 
 // All of the defines and a lot of the imu code was made by Braedon Giblin
 // modification were made to suit the use of heading finding
@@ -90,6 +91,6 @@ void imu_writeReg(uint8_t regAddr, uint8_t val);
 uint8_t imu_readRegByte(uint8_t regAddr);
 uint8_t* imu_readRegBytes(uint8_t regAddr, size_t dataLen);
 void imu_setDefaultUnits();
-
+void imu_rectifyHeading();
 
 #endif

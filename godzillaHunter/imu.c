@@ -1,5 +1,7 @@
 #include "imu.h"
 
+static float headingOffset;
+
 void imu_init() {
      i2c_init();
      // Enable clock to port B
@@ -19,15 +21,15 @@ void imu_init() {
      GPIO_PORTB_DATA_R |= 0x80;
 
      imu_writeReg(IMU_OPR_MODE, 12);//set to NDOF mode
+     imu_rectifyHeading();//sets the current heading to zero to be wherever the roomba points at start
 //     imu_reset();
 }
 
 float imu_getHeading() {
-    float heading;
 
             uint8_t* euler = imu_readRegBytes(IMU_EUL_HEAD_LSB,2);
             int16_t eulerHead = euler[0] + (euler[1] << 8);
-            float Eheading = fmod((eulerHead/16.) + 360,360);
+            float Eheading = fmod((eulerHead/16.) + 360 + headingOffset,360);//adding the headingOffset allows for the heading value to be aligned with whatever the roomba wants 0 to be
             lcd_printf("EHeading: %f",Eheading);
             
 
@@ -67,4 +69,10 @@ void imu_reset() {
     asm(" NOP");
     asm(" NOP");
     GPIO_PORTB_DATA_R |= 0x40;
+}
+
+void imu_rectifyHeading()
+{//call function to apply a correction to the calculated heading of the roomba
+    headingOffset = 0;
+    headingOffset = -imu_getHeading();
 }

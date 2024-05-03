@@ -14,6 +14,7 @@
 #include "Timer.h"
 #include "structs.h"
 #include "scan.h"
+#include "imu.h"
 #include <math.h>
 
 #define DEGREES_TO_RADS M_PI / 180.0
